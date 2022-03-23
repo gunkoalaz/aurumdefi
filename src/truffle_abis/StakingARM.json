@@ -123,7 +123,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -136,7 +137,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -155,7 +157,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -174,7 +177,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -187,7 +191,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -200,7 +205,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -213,7 +219,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -232,7 +239,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -245,7 +253,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -258,7 +267,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -271,7 +281,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -284,7 +295,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -303,7 +315,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -7108,7 +7121,7 @@
   "sourceMap": "119:11994:15:-:0;;;1965:292;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;2047:14;2036:8;;:25;;;;;;;;;;;;;;;;;;2086:17;2072:11;;:31;;;;;;;;;;;;;;;;;;2122:10;2114:5;;:18;;;;;;;;;;;;;;;;;;2168:7;2143:22;:32;;;;2234:15;2212:19;:37;;;;1965:292;;119:11994;;88:117:21;197:1;194;187:12;334:126;371:7;411:42;404:5;400:54;389:65;;334:126;;;:::o;466:96::-;503:7;532:24;550:5;532:24;:::i;:::-;521:35;;466:96;;;:::o;568:110::-;619:7;648:24;666:5;648:24;:::i;:::-;637:35;;568:110;;;:::o;684:150::-;771:38;803:5;771:38;:::i;:::-;764:5;761:49;751:77;;824:1;821;814:12;751:77;684:150;:::o;840:171::-;911:5;942:6;936:13;927:22;;958:47;999:5;958:47;:::i;:::-;840:171;;;;:::o;1017:563::-;1124:6;1132;1181:2;1169:9;1160:7;1156:23;1152:32;1149:119;;;1187:79;;:::i;:::-;1149:119;1307:1;1332:78;1402:7;1393:6;1382:9;1378:22;1332:78;:::i;:::-;1322:88;;1278:142;1459:2;1485:78;1555:7;1546:6;1535:9;1531:22;1485:78;:::i;:::-;1475:88;;1430:143;1017:563;;;;;:::o;119:11994:15:-;;;;;;;",
   "deployedSourceMap": "119:11994:15:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;3982:104;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;4406:116;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;8937:526;;;:::i;:::-;;5020:131;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;1764:22;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;5329:116;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;3875:101;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;7203:1720;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;3302:451;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;3790:79;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;5209:112;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;3068:128;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;4092:112;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;7092:97;;;:::i;:::-;;11785:325;;;:::i;:::-;;4247:117;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;9477:1676;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;1810:25;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;11211:518;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;3982:104;4036:4;4059:19;;4052:26;;3982:104;:::o;4406:116::-;4455:7;4481:8;;;;;;;;;;;:18;;;4508:4;4481:33;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;4474:40;;4406:116;:::o;8937:526::-;2718:6;;;;;;;;;;;2717:7;2709:16;;;;;;2745:4;2736:6;;:13;;;;;;;;;;;;;;;;;;9001:19:::1;:17;:19::i;:::-;9063:15;:27;9079:10;9063:27;;;;;;;;;;;;;;;;9039:20;:18;:20::i;:::-;:51;;9031:89;;;;;;;;;;;;:::i;:::-;;;;;;;;;9162:1;9134:15;:27;9150:10;9134:27;;;;;;;;;;;;;;;;:29;9131:325;;;9177:16;9196:15;:27;9212:10;9196:27;;;;;;;;;;;;;;;;9177:46;;9264:1;9236:15;:27;9252:10;9236:27;;;;;;;;;;;;;;;:29;;;;9351:11;;;;;;;;;;;:20;;;9372:10;9384:8;9351:42;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;9411:33;9423:10;9435:8;9411:33;;;;;;;:::i;:::-;;;;;;;;9164:292;9131:325;2831:5:::0;2822:6;;:14;;;;;;;;;;;;;;;;;;8937:526::o;5020:131::-;5070:7;5119:23;:21;:23::i;:::-;5099:17;:15;:17::i;:::-;:43;;;;:::i;:::-;5091:52;;5020:131;:::o;1764:22::-;;;;;;;;;;;;;:::o;5329:116::-;5391:7;5416:15;:21;5432:4;5416:21;;;;;;;;;;;;;;;;5409:28;;5329:116;;;:::o;3875:101::-;3927:4;3951:17;;3944:24;;3875:101;:::o;7203:1720::-;2718:6;;;;;;;;;;;2717:7;2709:16;;;;;;2745:4;2736:6;;:13;;;;;;;;;;;;;;;;;;7339:1:::1;7329:7;:11;7321:61;;;;;;;;;;;;:::i;:::-;;;;;;;;;7433:7;7401:8;;;;;;;;;;;:18;;;7420:10;7401:30;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;:39;;7393:89;;;;;;;;;;;;:::i;:::-;;;;;;;;;7743:19;:17;:19::i;:::-;7806:1;7778:15;:27;7794:10;7778:27;;;;;;;;;;;;;;;;:29;7775:252;;;7821:16;7840:15;:27;7856:10;7840:27;;;;;;;;;;;;;;;;7821:46;;7908:1;7880:15;:27;7896:10;7880:27;;;;;;;;;;;;;;;:29;;;;7922:11;;;;;;;;;;;:20;;;7943:10;7955:8;7922:42;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;7982:33;7994:10;8006:8;7982:33;;;;;;;:::i;:::-;;;;;;;;7808:219;7775:252;8103:8;;;;;;;;;;;:21;;;8125:10;8144:4;8150:7;8103:55;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;8199:7;8169:14;:26;8184:10;8169:26;;;;;;;;;;;;;;;;:37;;;;;;;:::i;:::-;;;;;;;;8289:9;:21;8299:10;8289:21;;;;;;;;;;;;;;;;;;;;;;;;;8285:120;;8326:7;8339:10;8326:24;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8389:4;8365:9;:21;8375:10;8365:21;;;;;;;;;;;;;;;;:28;;;;;;;;;;;;;;;;;;8285:120;8468:4;8444:9;:21;8454:10;8444:21;;;;;;;;;;;;;;;;:28;;;;;;;;;;;;;;;;;;8521:29;8553:20;:18;:20::i;:::-;8521:52;;8584:27;8614:19;:17;:19::i;:::-;8584:49;;8712:28;8798:22;;8775:19;8768:4;8744:21;:28;;;;:::i;:::-;:50;;;;:::i;:::-;8743:77;;;;:::i;:::-;8712:108;;8851:20;8831:17;:40;;;;8889:26;8895:10;8907:7;8889:26;;;;;;;:::i;:::-;;;;;;;;7260:1663;;;2831:5:::0;2822:6;;:14;;;;;;;;;;;;;;;;;;7203:1720;:::o;3302:451::-;3371:7;3389:17;3427:19;;3409:15;:37;;;;:::i;:::-;3389:57;;3472:22;;3460:9;:34;3457:97;;;3520:22;;3508:34;;3457:97;3564:21;3620:14;:23;3635:7;3620:23;;;;;;;;;;;;;;;;3600:17;;3588:9;:29;;;;:::i;:::-;:55;;;;:::i;:::-;3564:79;;3654:19;3703:13;3676:15;:24;3692:7;3676:24;;;;;;;;;;;;;;;;:40;;;;:::i;:::-;3654:62;;3734:11;3727:18;;;;;3302:451;;;:::o;3790:79::-;3830:7;3856:5;;;;;;;;;;;3849:12;;3790:79;:::o;5209:112::-;5266:7;5291:22;;5284:29;;5209:112;:::o;3068:128::-;3138:7;3165:14;:23;3180:7;3165:23;;;;;;;;;;;;;;;;3158:30;;3068:128;;;:::o;4092:112::-;4153:4;4176:14;:20;4191:4;4176:20;;;;;;;;;;;;;;;;4169:27;;4092:112;;;:::o;7092:97::-;2718:6;;;;;;;;;;;2717:7;2709:16;;;;;;2745:4;2736:6;;:13;;;;;;;;;;;;;;;;;;7162:19:::1;:17;:19::i;:::-;2831:5:::0;2822:6;;:14;;;;;;;;;;;;;;;;;;7092:97::o;11785:325::-;2718:6;;;;;;;;;;;2717:7;2709:16;;;;;;2745:4;2736:6;;:13;;;;;;;;;;;;;;;;;;11850:8:::1;;;;;;;;;;;:17;;;11868:10;11879:14;:26;11894:10;11879:26;;;;;;;;;;;;;;;;11850:56;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;11922:57;11940:10;11952:14;:26;11967:10;11952:26;;;;;;;;;;;;;;;;11922:57;;;;;;;:::i;:::-;;;;;;;;12014:5;11990:9;:21;12000:10;11990:21;;;;;;;;;;;;;;;;:29;;;;;;;;;;;;;;;;;;12060:1;12030:15;:27;12046:10;12030:27;;;;;;;;;;;;;;;:31;;;;12101:1;12072:14;:26;12087:10;12072:26;;;;;;;;;;;;;;;:30;;;;2831:5:::0;2822:6;;:14;;;;;;;;;;;;;;;;;;11785:325::o;4247:117::-;4294:7;4320:11;;;;;;;;;;;:21;;;4350:4;4320:36;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;4313:43;;4247:117;:::o;9477:1676::-;2718:6;;;;;;;;;;;2717:7;2709:16;;;;;;2745:4;2736:6;;:13;;;;;;;;;;;;;;;;;;9617:1:::1;9607:7;:11;9599:63;;;;;;;;;;;;:::i;:::-;;;;;;;;;9711:7;9681:14;:26;9696:10;9681:26;;;;;;;;;;;;;;;;:37;;9673:88;;;;;;;;;;;;:::i;:::-;;;;;;;;;10024:19;:17;:19::i;:::-;10087:1;10059:15;:27;10075:10;10059:27;;;;;;;;;;;;;;;;:29;10056:231;;;10102:11;;;;;;;;;;;:20;;;10123:10;10135:15;:27;10151:10;10135:27;;;;;;;;;;;;;;;;10102:61;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;10181:52;10193:10;10205:15;:27;10221:10;10205:27;;;;;;;;;;;;;;;;10181:52;;;;;;;:::i;:::-;;;;;;;;10274:1;10246:15;:27;10262:10;10246:27;;;;;;;;;;;;;;;:29;;;;10056:231;10335:8;;;;;;;;;;;:17;;;10353:10;10364:7;10335:37;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;10457:7;10427:14;:26;10442:10;10427:26;;;;;;;;;;;;;;;;:37;;;;;;;:::i;:::-;;;;;;;;10506:1;10478:14;:26;10493:10;10478:26;;;;;;;;;;;;;;;;:29;10475:89;;;10547:5;10523:9;:21;10533:10;10523:21;;;;;;;;;;;;;;;;:29;;;;;;;;;;;;;;;;;;10475:89;10612:29;10644:20;:18;:20::i;:::-;10612:52;;10675:27;10705:19;:17;:19::i;:::-;10675:49;;10858:1;10837:19;:22;10834:267;;;10894:1;10874:17;:21;;;;10834:267;;;11067:22;;11044:19;11038:4;11014:21;:28;;;;:::i;:::-;:49;;;;:::i;:::-;11013:76;;;;:::i;:::-;10993:17;:96;;;;10834:267;11118:27;11126:10;11137:7;11118:27;;;;;;;:::i;:::-;;;;;;;;9535:1618;;2831:5:::0;2822:6;;:14;;;;;;;;;;;;;;;;;;9477:1676;:::o;1810:25::-;;;;;;;;;;;;;:::o;11211:518::-;2614:5;;;;;;;;;;2600:19;;:10;:19;;;2592:28;;;;;;11288:19:::1;:17;:19::i;:::-;11353:16;11372:22;;11353:41;;11405:16;11436:2;11431::::0;11424:4:::1;:9;;;;:::i;:::-;:14;;;;:::i;:::-;11405:33;;11512:11;11487:22;:36;;;;11611:11;11588:19;:17;:19::i;:::-;11581:4;11558:20;:18;:20::i;:::-;:27;;;;:::i;:::-;:49;;;;:::i;:::-;11557:65;;;;:::i;:::-;11537:17;:85;;;;11670:51;11696:11;11709;11670:51;;;;;;;:::i;:::-;;;;;;;;11277:452;;11211:518:::0;:::o;5626:1458::-;5766:19;;5747:15;:38;5744:73;;5799:7;;5744:73;5827:22;5852:19;:17;:19::i;:::-;5827:44;;6027:1;6009:14;:19;6006:104;;;6064:15;6042:19;:37;;;;6092:7;;;6006:104;6120:23;6146:20;:18;:20::i;:::-;6120:46;;6249:1;6230:15;:20;6227:55;;;6264:7;;;;6227:55;6485:17;6523:19;;6505:15;:37;;;;:::i;:::-;6485:57;;6568:22;;6556:9;:34;6553:97;;;6616:22;;6604:34;;6553:97;6660:6;6677:15;6703:27;6733:7;6703:37;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;6779:1;6777:3;;6772:257;6786:10;:17;6783:1;:20;6772:257;;;6956:4;6944:9;6924:17;;6892:14;:29;6907:10;6918:1;6907:13;;;;;;;;:::i;:::-;;;;;;;;6892:29;;;;;;;;;;;;;;;;:49;;;;:::i;:::-;:61;;;;:::i;:::-;:68;;;;:::i;:::-;6879:81;;7007:10;6973:15;:30;6989:10;7000:1;6989:13;;;;;;;;:::i;:::-;;;;;;;;6973:30;;;;;;;;;;;;;;;;:44;;;;;;;:::i;:::-;;;;;;;;6806:3;;;;;:::i;:::-;;;;6772:257;;;7061:15;7039:19;:37;;;;5663:1421;;;;;;5626:1458;:::o;4572:414::-;4627:7;4646:27;4676:7;4646:37;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4766:18;4787:10;:17;4766:38;;4815:19;4849:6;4858:1;4849:10;;4845:105;4864:10;4861:1;:13;4845:105;;;4908:15;:30;4924:10;4935:1;4924:13;;;;;;;;:::i;:::-;;;;;;;;4908:30;;;;;;;;;;;;;;;;4893:45;;;;;:::i;:::-;;;4876:3;;;;;:::i;:::-;;;;4845:105;;;;4967:11;4960:18;;;;;4572:414;:::o;7:77:21:-;44:7;73:5;62:16;;7:77;;;:::o;90:118::-;177:24;195:5;177:24;:::i;:::-;172:3;165:37;90:118;;:::o;214:222::-;307:4;345:2;334:9;330:18;322:26;;358:71;426:1;415:9;411:17;402:6;358:71;:::i;:::-;214:222;;;;:::o;442:126::-;479:7;519:42;512:5;508:54;497:65;;442:126;;;:::o;574:60::-;602:3;623:5;616:12;;574:60;;;:::o;640:142::-;690:9;723:53;741:34;750:24;768:5;750:24;:::i;:::-;741:34;:::i;:::-;723:53;:::i;:::-;710:66;;640:142;;;:::o;788:126::-;838:9;871:37;902:5;871:37;:::i;:::-;858:50;;788:126;;;:::o;920:140::-;984:9;1017:37;1048:5;1017:37;:::i;:::-;1004:50;;920:140;;;:::o;1066:159::-;1167:51;1212:5;1167:51;:::i;:::-;1162:3;1155:64;1066:159;;:::o;1231:250::-;1338:4;1376:2;1365:9;1361:18;1353:26;;1389:85;1471:1;1460:9;1456:17;1447:6;1389:85;:::i;:::-;1231:250;;;;:::o;1568:117::-;1677:1;1674;1667:12;1814:96;1851:7;1880:24;1898:5;1880:24;:::i;:::-;1869:35;;1814:96;;;:::o;1916:122::-;1989:24;2007:5;1989:24;:::i;:::-;1982:5;1979:35;1969:63;;2028:1;2025;2018:12;1969:63;1916:122;:::o;2044:139::-;2090:5;2128:6;2115:20;2106:29;;2144:33;2171:5;2144:33;:::i;:::-;2044:139;;;;:::o;2189:329::-;2248:6;2297:2;2285:9;2276:7;2272:23;2268:32;2265:119;;;2303:79;;:::i;:::-;2265:119;2423:1;2448:53;2493:7;2484:6;2473:9;2469:22;2448:53;:::i;:::-;2438:63;;2394:117;2189:329;;;;:::o;2524:122::-;2597:24;2615:5;2597:24;:::i;:::-;2590:5;2587:35;2577:63;;2636:1;2633;2626:12;2577:63;2524:122;:::o;2652:139::-;2698:5;2736:6;2723:20;2714:29;;2752:33;2779:5;2752:33;:::i;:::-;2652:139;;;;:::o;2797:329::-;2856:6;2905:2;2893:9;2884:7;2880:23;2876:32;2873:119;;;2911:79;;:::i;:::-;2873:119;3031:1;3056:53;3101:7;3092:6;3081:9;3077:22;3056:53;:::i;:::-;3046:63;;3002:117;2797:329;;;;:::o;3132:118::-;3219:24;3237:5;3219:24;:::i;:::-;3214:3;3207:37;3132:118;;:::o;3256:222::-;3349:4;3387:2;3376:9;3372:18;3364:26;;3400:71;3468:1;3457:9;3453:17;3444:6;3400:71;:::i;:::-;3256:222;;;;:::o;3484:143::-;3541:5;3572:6;3566:13;3557:22;;3588:33;3615:5;3588:33;:::i;:::-;3484:143;;;;:::o;3633:351::-;3703:6;3752:2;3740:9;3731:7;3727:23;3723:32;3720:119;;;3758:79;;:::i;:::-;3720:119;3878:1;3903:64;3959:7;3950:6;3939:9;3935:22;3903:64;:::i;:::-;3893:74;;3849:128;3633:351;;;;:::o;3990:169::-;4074:11;4108:6;4103:3;4096:19;4148:4;4143:3;4139:14;4124:29;;3990:169;;;;:::o;4165:176::-;4305:28;4301:1;4293:6;4289:14;4282:52;4165:176;:::o;4347:366::-;4489:3;4510:67;4574:2;4569:3;4510:67;:::i;:::-;4503:74;;4586:93;4675:3;4586:93;:::i;:::-;4704:2;4699:3;4695:12;4688:19;;4347:366;;;:::o;4719:419::-;4885:4;4923:2;4912:9;4908:18;4900:26;;4972:9;4966:4;4962:20;4958:1;4947:9;4943:17;4936:47;5000:131;5126:4;5000:131;:::i;:::-;4992:139;;4719:419;;;:::o;5144:332::-;5265:4;5303:2;5292:9;5288:18;5280:26;;5316:71;5384:1;5373:9;5369:17;5360:6;5316:71;:::i;:::-;5397:72;5465:2;5454:9;5450:18;5441:6;5397:72;:::i;:::-;5144:332;;;;;:::o;5482:90::-;5516:7;5559:5;5552:13;5545:21;5534:32;;5482:90;;;:::o;5578:116::-;5648:21;5663:5;5648:21;:::i;:::-;5641:5;5638:32;5628:60;;5684:1;5681;5674:12;5628:60;5578:116;:::o;5700:137::-;5754:5;5785:6;5779:13;5770:22;;5801:30;5825:5;5801:30;:::i;:::-;5700:137;;;;:::o;5843:345::-;5910:6;5959:2;5947:9;5938:7;5934:23;5930:32;5927:119;;;5965:79;;:::i;:::-;5927:119;6085:1;6110:61;6163:7;6154:6;6143:9;6139:22;6110:61;:::i;:::-;6100:71;;6056:125;5843:345;;;;:::o;6194:180::-;6242:77;6239:1;6232:88;6339:4;6336:1;6329:15;6363:4;6360:1;6353:15;6380:191;6420:4;6440:20;6458:1;6440:20;:::i;:::-;6435:25;;6474:20;6492:1;6474:20;:::i;:::-;6469:25;;6513:1;6510;6507:8;6504:34;;;6518:18;;:::i;:::-;6504:34;6563:1;6560;6556:9;6548:17;;6380:191;;;;:::o;6577:224::-;6717:34;6713:1;6705:6;6701:14;6694:58;6786:7;6781:2;6773:6;6769:15;6762:32;6577:224;:::o;6807:366::-;6949:3;6970:67;7034:2;7029:3;6970:67;:::i;:::-;6963:74;;7046:93;7135:3;7046:93;:::i;:::-;7164:2;7159:3;7155:12;7148:19;;6807:366;;;:::o;7179:419::-;7345:4;7383:2;7372:9;7368:18;7360:26;;7432:9;7426:4;7422:20;7418:1;7407:9;7403:17;7396:47;7460:131;7586:4;7460:131;:::i;:::-;7452:139;;7179:419;;;:::o;7604:224::-;7744:34;7740:1;7732:6;7728:14;7721:58;7813:7;7808:2;7800:6;7796:15;7789:32;7604:224;:::o;7834:366::-;7976:3;7997:67;8061:2;8056:3;7997:67;:::i;:::-;7990:74;;8073:93;8162:3;8073:93;:::i;:::-;8191:2;8186:3;8182:12;8175:19;;7834:366;;;:::o;8206:419::-;8372:4;8410:2;8399:9;8395:18;8387:26;;8459:9;8453:4;8449:20;8445:1;8434:9;8430:17;8423:47;8487:131;8613:4;8487:131;:::i;:::-;8479:139;;8206:419;;;:::o;8631:442::-;8780:4;8818:2;8807:9;8803:18;8795:26;;8831:71;8899:1;8888:9;8884:17;8875:6;8831:71;:::i;:::-;8912:72;8980:2;8969:9;8965:18;8956:6;8912:72;:::i;:::-;8994;9062:2;9051:9;9047:18;9038:6;8994:72;:::i;:::-;8631:442;;;;;;:::o;9079:305::-;9119:3;9138:20;9156:1;9138:20;:::i;:::-;9133:25;;9172:20;9190:1;9172:20;:::i;:::-;9167:25;;9326:1;9258:66;9254:74;9251:1;9248:81;9245:107;;;9332:18;;:::i;:::-;9245:107;9376:1;9373;9369:9;9362:16;;9079:305;;;;:::o;9390:348::-;9430:7;9453:20;9471:1;9453:20;:::i;:::-;9448:25;;9487:20;9505:1;9487:20;:::i;:::-;9482:25;;9675:1;9607:66;9603:74;9600:1;9597:81;9592:1;9585:9;9578:17;9574:105;9571:131;;;9682:18;;:::i;:::-;9571:131;9730:1;9727;9723:9;9712:20;;9390:348;;;;:::o;9744:180::-;9792:77;9789:1;9782:88;9889:4;9886:1;9879:15;9913:4;9910:1;9903:15;9930:185;9970:1;9987:20;10005:1;9987:20;:::i;:::-;9982:25;;10021:20;10039:1;10021:20;:::i;:::-;10016:25;;10060:1;10050:35;;10065:18;;:::i;:::-;10050:35;10107:1;10104;10100:9;10095:14;;9930:185;;;;:::o;10121:226::-;10261:34;10257:1;10249:6;10245:14;10238:58;10330:9;10325:2;10317:6;10313:15;10306:34;10121:226;:::o;10353:366::-;10495:3;10516:67;10580:2;10575:3;10516:67;:::i;:::-;10509:74;;10592:93;10681:3;10592:93;:::i;:::-;10710:2;10705:3;10701:12;10694:19;;10353:366;;;:::o;10725:419::-;10891:4;10929:2;10918:9;10914:18;10906:26;;10978:9;10972:4;10968:20;10964:1;10953:9;10949:17;10942:47;11006:131;11132:4;11006:131;:::i;:::-;10998:139;;10725:419;;;:::o;11150:225::-;11290:34;11286:1;11278:6;11274:14;11267:58;11359:8;11354:2;11346:6;11342:15;11335:33;11150:225;:::o;11381:366::-;11523:3;11544:67;11608:2;11603:3;11544:67;:::i;:::-;11537:74;;11620:93;11709:3;11620:93;:::i;:::-;11738:2;11733:3;11729:12;11722:19;;11381:366;;;:::o;11753:419::-;11919:4;11957:2;11946:9;11942:18;11934:26;;12006:9;12000:4;11996:20;11992:1;11981:9;11977:17;11970:47;12034:131;12160:4;12034:131;:::i;:::-;12026:139;;11753:419;;;:::o;12178:332::-;12299:4;12337:2;12326:9;12322:18;12314:26;;12350:71;12418:1;12407:9;12403:17;12394:6;12350:71;:::i;:::-;12431:72;12499:2;12488:9;12484:18;12475:6;12431:72;:::i;:::-;12178:332;;;;;:::o;12516:180::-;12564:77;12561:1;12554:88;12661:4;12658:1;12651:15;12685:4;12682:1;12675:15;12702:233;12741:3;12764:24;12782:5;12764:24;:::i;:::-;12755:33;;12810:66;12803:5;12800:77;12797:103;;;12880:18;;:::i;:::-;12797:103;12927:1;12920:5;12916:13;12909:20;;12702:233;;;:::o",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\nimport \"@openzeppelin/contracts/token/ERC20/ERC20.sol\";\r\n\r\ncontract StakingARM {\r\n\r\n    //Owner address\r\n    address owner;    \r\n\r\n    //User variables\r\n    mapping(address => uint256) stakingBalance;   //User's staked ARM token\r\n    mapping(address => uint256) rewardBalanceOf;  //User's distributed reward from vault which 'NOT YET' claim\r\n    mapping(address => bool) hasStaked; //this variable check if the user used to stake in the vault to prevent duplication of 'stakers[]'.\r\n    mapping(address => bool) isStaking; //Staking status of individual address, FALSE if balance = 0\r\n    address[] stakers; //Address of stakers for rewarding reason\r\n    \r\n    //Vault variables manipulation\r\n    uint256 accRewardPerShare; // spending reward RATE per share :: calculate from TotalRewardRemaining / TotalStakingToken / rewardSpendingDuration\r\n    uint256 rewardSpendingDuration; // Duration in days that the reward will be distributed\r\n    // RewardSpendingDuration is the CONSTANT that indicate the RATE of the current reward will be distributed if no-one is updating the vault\r\n    // Everytime that users stake/unstake/claimReward, the spending rate (accRewardPerShare) will be re-calculated\r\n    uint256 lastRewardTimestamp; //Index of current updated rewardblock (blocktime)\r\n\r\n    //This code is modified from Masterchef contract\r\n        // Whenever a user stake or unstake to the vault.\r\n        //   1. The 'rewardBalance' (and `lastRewardTimestamp`) gets updated.\r\n        //   2. User receives the 'rewardBalanceOf' sent to his/her address. (rewardBalanceOf then set to 0)\r\n        //   3. User's `stakingBalance` gets updated.\r\n        //   4. User's `rewardBalanceOf` gets updated.\r\n\r\n\r\n    IERC20 public armToken;     // ARM token\r\n    IERC20 public rewardToken;  // BUSD token\r\n\r\n\r\n\r\n    //Set object of ARM to armToken and object of BUSD to rewardToken when the contract is deployed.\r\n    constructor(IERC20 importARMToken, IERC20 importRewardToken){\r\n        armToken = importARMToken;\r\n        rewardToken = importRewardToken;\r\n        owner = msg.sender;\r\n        rewardSpendingDuration = 30 days; // set default is 30 days\r\n        lastRewardTimestamp = block.timestamp;\r\n    }\r\n\r\n    event Stake(address _staker, uint _amount);\r\n    event Unstake(address _unstaker, uint _amount);\r\n    event ClaimReward(address _claimer, uint _amount);\r\n    event EmergencyWithdraw(address _withdrawer, uint _amount);\r\n    event SetRewardSpendingDuration(uint OldDuration, uint NewDuration);\r\n\r\n    modifier onlyOwner {\r\n      require(msg.sender == owner);\r\n      _;\r\n    }\r\n\r\n    bool internal locked;\r\n    modifier reentrancyGuard {\r\n        require(!locked);\r\n        locked = true; // lock the re-entrancy before contract execution\r\n        _;\r\n        locked = false; // unlock when finish\r\n    }\r\n\r\n    //--------------------------------------\r\n    //------Reading parameters function-----\r\n    //--------------------------------------\r\n\r\n    //Get the ARM staking for each requested address\r\n    function manualGetStakingBalance(address _staker) view public returns(uint256) {\r\n        return stakingBalance[_staker];\r\n    }\r\n\r\n    //Get the reward balance of each requested address (this included the pending update reward)\r\n    function manualGetRewardBalance(address _staker) view public returns(uint256) {\r\n      uint256 deltaTime = block.timestamp - lastRewardTimestamp;\r\n        if(deltaTime > rewardSpendingDuration){\r\n          deltaTime = rewardSpendingDuration;\r\n        }\r\n        uint256 pendingReward = deltaTime * accRewardPerShare * stakingBalance[_staker];\r\n        uint256 totalReward = rewardBalanceOf[_staker] + pendingReward;\r\n        return totalReward;\r\n    }\r\n\r\n    //Get the owner address\r\n    function getOwner() view public returns(address){\r\n        return owner;\r\n    }\r\n    function getAccRewardPerShare() view public returns(uint) {\r\n        return accRewardPerShare;\r\n    }\r\n    function getLastRewardTimestamp() view public returns(uint){\r\n        return lastRewardTimestamp;\r\n    }\r\n    function getStakingBalance(address user) view public returns(uint){\r\n        return stakingBalance[user];\r\n    }\r\n    //Get the BUSD balance in vault\r\n    function getVaultBalance() public view returns(uint256){\r\n        return rewardToken.balanceOf(address(this));\r\n    }\r\n    //Get the ARM balance in vault\r\n    function getTotalStakedARM() public view returns(uint256){\r\n        return armToken.balanceOf(address(this));\r\n    }\r\n    //Get Total reward pending to be claim\r\n    function getTotalRewardPending() internal view returns(uint256){\r\n        address[] memory varsStaker = stakers;  //get stakers to local memory vars to minimalize gas spend in for loop\r\n        uint256 numberUser = varsStaker.length;\r\n        uint256 totalreward;\r\n        for(uint i = 0; i< numberUser; i++){\r\n          totalreward += rewardBalanceOf[varsStaker[i]];\r\n        }\r\n        return totalreward;\r\n    }\r\n    //Get remaining reward\r\n    function getRewardRemaining() public view returns(uint256)  {\r\n        return (getVaultBalance() - getTotalRewardPending());\r\n    }\r\n    //Reward spending duration return in blocktime\r\n    function getRewardSpendingDuration() public view returns(uint256) {\r\n      return rewardSpendingDuration;\r\n    }\r\n\r\n    function getRewardBalanceOf(address user) public view returns(uint256) {\r\n      return rewardBalanceOf[user];\r\n    }\r\n    //-------------------------------------------------\r\n    //--------------Action function--------------------\r\n    //-------------------------------------------------\r\n\r\n\r\n    function updateRewardBlock() internal{\r\n        //If the lastRewardTimestamp is updated.  No need for update\r\n        if(block.timestamp <= lastRewardTimestamp){\r\n          return;\r\n        }\r\n        uint256 totalStakedARM = getTotalStakedARM(); //The ARM balance in vault contract\r\n        \r\n        //Check if this is the first staker then start the block reward here\r\n        if(totalStakedARM == 0){\r\n          lastRewardTimestamp = block.timestamp;\r\n          return;\r\n        }\r\n        uint256 remainingReward = getRewardRemaining();\r\n        \r\n        //Check if rewardPool is empty\r\n        if(remainingReward == 0){\r\n          return;\r\n        }\r\n\r\n        //Check if the reward block not update for long time (more than the rewardSpendingDuration)\r\n        //then deltaTime to be calculate should be equal to MAX (rewardSpendingDuration)\r\n        uint256 deltaTime = block.timestamp - lastRewardTimestamp;\r\n        if(deltaTime > rewardSpendingDuration){\r\n          deltaTime = rewardSpendingDuration;\r\n        }\r\n        uint i;\r\n        uint gainReward;\r\n        address[] memory varsStaker = stakers;  // gas optimization\r\n        for (i=0 ; i< varsStaker.length ; i++){\r\n          //gainReward is  1e18 :: e18*e18*uint / 1e18\r\n          gainReward = stakingBalance[varsStaker[i]] * accRewardPerShare * deltaTime / 1e18;\r\n          rewardBalanceOf[varsStaker[i]] += gainReward;\r\n        }\r\n        lastRewardTimestamp = block.timestamp;\r\n    }\r\n\r\n    function manualUpdateRewardBlock() external reentrancyGuard{\r\n        updateRewardBlock();\r\n    }\r\n    \r\n\r\n    function stakeARM(uint _amount) external reentrancyGuard {\r\n        //Check the amount and balance of staker\r\n        require(_amount > 0, \"Staking amount must greater than zero\");\r\n        require(armToken.balanceOf(msg.sender)>=_amount, \"Not enough ARM token to be deposited.\");\r\n        //1. update the reward vault to get lastRewardTimestamp\r\n        //2. claim the pending reward\r\n        //3. stake the ARM token\r\n        //4. update accRewardPerShare = totalRemainingBalance / totalStakingBalance / rewardSpendingDuration\r\n\r\n        updateRewardBlock();\r\n\r\n        if(rewardBalanceOf[msg.sender]>0){\r\n          uint256 toBePaid = rewardBalanceOf[msg.sender];\r\n          rewardBalanceOf[msg.sender]=0;\r\n          rewardToken.transfer(msg.sender, toBePaid);\r\n          emit ClaimReward(msg.sender, toBePaid);\r\n        }\r\n\r\n        //Transfer ARM to contract address then update balance\r\n        armToken.transferFrom(msg.sender,address(this),_amount);\r\n        stakingBalance[msg.sender] += _amount;\r\n\r\n        //add staker address to the arrays for rewarding reasons\r\n        if(!hasStaked[msg.sender]){\r\n            stakers.push(msg.sender);\r\n            hasStaked[msg.sender] = true;\r\n        }\r\n        //Currently staking\r\n        isStaking[msg.sender] = true;\r\n\r\n        //Update accRewardPerShare\r\n        uint256 totalRemainingBalance = getRewardRemaining();\r\n        uint256 totalStakingBalance = getTotalStakedARM();\r\n        // newAccRewardPerShare is 1e18 :: e18 * 1e18 / e18 / uint\r\n        uint256 newAccRewardPerShare = (totalRemainingBalance * 1e18 / totalStakingBalance) / rewardSpendingDuration;\r\n        accRewardPerShare = newAccRewardPerShare;\r\n\r\n        emit Stake(msg.sender, _amount);\r\n    }\r\n\r\n\r\n\r\n\r\n    function manualClaimReward() external reentrancyGuard{\r\n        updateRewardBlock();\r\n        require(getRewardRemaining() >= rewardBalanceOf[msg.sender],\"Not enough reward in pool.\");\r\n        if(rewardBalanceOf[msg.sender]>0){\r\n          uint256 toBePaid = rewardBalanceOf[msg.sender];\r\n          rewardBalanceOf[msg.sender]=0;    //set balance to 0 before transfer to double prevent reentrancy guard\r\n          rewardToken.transfer(msg.sender, toBePaid);\r\n          emit ClaimReward(msg.sender, toBePaid);\r\n        }\r\n    }\r\n\r\n\r\n\r\n\r\n    function unstakeARM(uint _amount) external reentrancyGuard{\r\n        //Check the amount and balancer of unstaker\r\n        require(_amount > 0, \"Unstaking amount must greater than zero\");\r\n        require(stakingBalance[msg.sender] >= _amount, \"Not enough ARM token to be withdrawed.\");\r\n        //1. update the reward vault to get lastRewardTimestamp\r\n        //2. claim the pending reward\r\n        //3. unstake the ARM token\r\n        //4. update accRewardPerShare = totalRemainingBalance / totalStakingBalance / rewardSpendingDuration\r\n\r\n        updateRewardBlock();\r\n\r\n        if(rewardBalanceOf[msg.sender]>0){\r\n          rewardToken.transfer(msg.sender, rewardBalanceOf[msg.sender]);\r\n          emit ClaimReward(msg.sender, rewardBalanceOf[msg.sender]);\r\n          rewardBalanceOf[msg.sender]=0;\r\n        }\r\n\r\n        //Transfer ARM to unstaker\r\n        armToken.transfer(msg.sender,_amount);\r\n        //calculate balance after transfer\r\n        stakingBalance[msg.sender] -= _amount;\r\n        if(stakingBalance[msg.sender]==0){\r\n            isStaking[msg.sender] = false;\r\n        }\r\n\r\n        //Update accRewardPerShare\r\n        uint256 totalRemainingBalance = getRewardRemaining();\r\n        uint256 totalStakingBalance = getTotalStakedARM();\r\n        //if totalStakiingBalance = 0 --> no ARM in vault = no reward then  accRewardPerShare = 0\r\n        if(totalStakingBalance==0) {\r\n          accRewardPerShare = 0;\r\n        } else {\r\n          // accRewardPerShare is 1e18 :: e18 * 1e18 / e18 / uint\r\n          accRewardPerShare = (totalRemainingBalance * 1e18 /totalStakingBalance) / rewardSpendingDuration;\r\n        }\r\n\r\n        emit Unstake(msg.sender,_amount);\r\n    }\r\n\r\n    //Set reward duration  only Owner can access\r\n    function setRewardDurationSpending (uint hour) external onlyOwner {\r\n        updateRewardBlock();  //update distribute reward before\r\n        uint OldDuration = rewardSpendingDuration;\r\n        uint NewDuration = hour * 60 * 60; // Input in 'hour', Stored in Seconds\r\n        rewardSpendingDuration = NewDuration; \r\n\r\n        accRewardPerShare = (getRewardRemaining() * 1e18 / getTotalStakedARM()) / NewDuration; // update the distribution RATE\r\n        emit SetRewardSpendingDuration(OldDuration, NewDuration);\r\n    }\r\n\r\n    //Withdraw ARM token without caring reward\r\n    function emergencyWithdraw() external reentrancyGuard {\r\n        armToken.transfer(msg.sender,stakingBalance[msg.sender]);\r\n        emit EmergencyWithdraw(msg.sender, stakingBalance[msg.sender]);\r\n        isStaking[msg.sender] = false;\r\n        rewardBalanceOf[msg.sender] = 0;\r\n        stakingBalance[msg.sender] = 0;\r\n    }\r\n}",
-  "sourcePath": "C:\\Users\\chana\\desktop\\aurum\\aurumdefi\\src\\contracts\\StakingARM.sol",
+  "sourcePath": "C:\\Users\\chana\\desktop\\aurumdefi\\src\\contracts\\StakingARM.sol",
   "ast": {
     "absolutePath": "project:/src/contracts/StakingARM.sol",
     "exportedSymbols": {
@@ -27933,18 +27946,19 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xE7F04Cf74819B323D0b20a88DAc98d11295238e7",
-      "transactionHash": "0x12ccf8784ad3e465cc516f18bfbdcadec9dc535077026031319fffdbeb40cdb4"
+      "address": "0x8EBb1C813947EE6D075A8A6Be0fA1Cd1F983Ee36",
+      "transactionHash": "0x4bb5cbf65cffbb191529c78075d926f6ed6701adde6e58d50d9d2004567287a5"
     },
     "55556": {
       "events": {},
       "links": {},
-      "address": "0xD49eAE2cd50F33d5a0AC9C215f2B98942709764D",
-      "transactionHash": "0x25a07d902384fb9968da7b5b2d9445b79e9ef4b0407e27cf502636aad6b1e812"
+      "address": "0x723De4a73D12A2878a891279269dDf4cFc81EfB3",
+      "transactionHash": "0x83b72ce935f78b7356d056570d825718013c28f332b19a367f632f6b31544ac8"
     }
   },
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-03-23T13:12:30.788Z",
+  "updatedAt": "2022-03-23T14:09:30.526Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},

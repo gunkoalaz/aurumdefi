@@ -15,7 +15,6 @@ const AurumPriceOracle = artifacts.require('AurumPriceOracle')
 
 module.exports = async function (deployer, network, accounts) {
     const owner = accounts[0]
-    const devAddress = '0x1AF04eD8835eaE2ed5e6c481ef192a7895DC8116'
     await deployer.deploy(Tether)
     const tether = await Tether.deployed()
     await deployer.deploy(BUSD)
@@ -130,10 +129,8 @@ module.exports = async function (deployer, network, accounts) {
 
 
     //Transfer tokens
-    await arm.transfer(compStorage.address, web3.utils.toWei('700000'), {from: owner})
+    await arm.transfer(compStorage.address, web3.utils.toWei('7000000'), {from: owner})
     console.log("Transfer ARM token to compStorage.")
-    await arm.transfer(devAddress, web3.utils.toWei('100000'), {from:owner})
-    console.log("Transfer ARM token to address " + devAddress)
     await busd.transfer(stakingARM.address, web3.utils.toWei('1000000'), {from: owner})
     console.log("Transfer BUSD to the reward vault.")
     // await tether.transfer(accounts[1], web3.utils.toWei('100000'), {from: owner})

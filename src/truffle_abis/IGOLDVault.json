@@ -18,7 +18,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\ninterface IGOLDVault {\r\n\r\n    function updatePendingRewards() external;\r\n}",
-  "sourcePath": "C:\\Users\\chana\\desktop\\aurum\\aurumdefi\\src\\contracts\\interface\\IGOLDVault.sol",
+  "sourcePath": "C:\\Users\\chana\\desktop\\aurumdefi\\src\\contracts\\interface\\IGOLDVault.sol",
   "ast": {
     "absolutePath": "project:/src/contracts/interface/IGOLDVault.sol",
     "exportedSymbols": {
@@ -169,7 +169,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-03-23T13:12:30.888Z",
+  "updatedAt": "2022-03-23T14:08:06.661Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

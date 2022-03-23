@@ -38,7 +38,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -67,7 +68,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -96,7 +98,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -130,7 +133,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.12+commit.f00d7308\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_baseRate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_maxRate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_trigger\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_peakMax\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"cash\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"borrows\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reserves\",\"type\":\"uint256\"}],\"name\":\"getBorrowRate\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"cash\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"borrows\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reserves\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reserveFactorMantissa\",\"type\":\"uint256\"}],\"name\":\"getSupplyRate\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"isInterestRateModel\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"cash\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"borrows\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reserves\",\"type\":\"uint256\"}],\"name\":\"utility\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/AurumInterestRateModel.sol\":\"AurumInterestRateModel\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/contracts/AurumInterestRateModel.sol\":{\"keccak256\":\"0xaea76fcb16ab20ca443736a5991cd49ad525459f9bb84907000289431f93f797\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6cb6268df79f576c725386d57dd41e3a4df3fd2ecbd13deb80782c84b3d256f5\",\"dweb:/ipfs/Qmb9Lz8jCjAHSGWf3ZLjpnE2fTa78YNMdy9ogvYgb6bMZE\"]},\"project:/src/contracts/interface/ComptrollerInterface.sol\":{\"keccak256\":\"0x755582107e60de9a6d804e0e7b3c18b03528e158f441661fc3c2b4ebe09b94ba\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4462bf308ef692710cdcd3271ad3ff1a0d8f518cafe823d1d74a04f3c02a1998\",\"dweb:/ipfs/QmXb1UtEZzp96WpAUbekQkzR2EuCYuSwWSWgTtu8B8Bzpo\"]}},\"version\":1}",
@@ -3796,7 +3800,7 @@
   "sourceMap": "110:2054:7:-:0;;;365:199;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;460:9;449:8;:20;;;;490:8;480:7;:18;;;;519:8;509:7;:18;;;;548:8;538:7;:18;;;;365:199;;;;110:2054;;88:117:21;197:1;194;187:12;334:77;371:7;400:5;389:16;;334:77;;;:::o;417:122::-;490:24;508:5;490:24;:::i;:::-;483:5;480:35;470:63;;529:1;526;519:12;470:63;417:122;:::o;545:143::-;602:5;633:6;627:13;618:22;;649:33;676:5;649:33;:::i;:::-;545:143;;;;:::o;694:820::-;791:6;799;807;815;864:3;852:9;843:7;839:23;835:33;832:120;;;871:79;;:::i;:::-;832:120;991:1;1016:64;1072:7;1063:6;1052:9;1048:22;1016:64;:::i;:::-;1006:74;;962:128;1129:2;1155:64;1211:7;1202:6;1191:9;1187:22;1155:64;:::i;:::-;1145:74;;1100:129;1268:2;1294:64;1350:7;1341:6;1330:9;1326:22;1294:64;:::i;:::-;1284:74;;1239:129;1407:2;1433:64;1489:7;1480:6;1469:9;1465:22;1433:64;:::i;:::-;1423:74;;1378:129;694:820;;;;;;;:::o;110:2054:7:-;;;;;;;",
   "deployedSourceMap": "110:2054:7:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;921:566;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;169:89;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;1499:662;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;570:343;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;921:566;1007:4;1023:9;1035:4;:12;;;1048:4;1053:7;1061:8;1035:35;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;1023:47;;1081:22;1125:7;;1118:4;:14;1114:287;;;1264:7;;1257:4;:14;;;;:::i;:::-;1245:7;;1235;;:17;;;;:::i;:::-;1223:7;;1216:4;:14;;;;:::i;:::-;1215:38;;;;:::i;:::-;:57;;;;:::i;:::-;1204:7;;:69;;;;:::i;:::-;1184:89;;1114:287;;;1374:7;;1367:4;1355:8;;1345:7;;:18;;;;:::i;:::-;1344:27;;;;:::i;:::-;:37;;;;:::i;:::-;1332:8;;:50;;;;:::i;:::-;1312:70;;1114:287;1454:2;1449;1444;1438:3;1418:17;:23;;;;:::i;:::-;:28;;;;:::i;:::-;:33;;;;:::i;:::-;:38;;;;:::i;:::-;1411:45;;;;921:566;;;;;:::o;169:89::-;222:4;246;239:11;;169:89;:::o;1499:662::-;1613:4;1629:15;1647:4;:18;;;1666:4;1672:7;1681:8;1647:43;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;1629:61;;1773:16;1815:4;1805:7;1792:10;:20;;;;:::i;:::-;:27;;;;:::i;:::-;1773:46;;1837:25;1882:8;1872:7;1865:4;:14;;;;:::i;:::-;:25;;;;:::i;:::-;1837:53;;1908:25;1943:21;1936:4;:28;;;;:::i;:::-;1908:56;;2010:1;1986:20;:25;1983:171;;2072:20;2049;2035:11;:34;;;;:::i;:::-;:57;;;;:::i;:::-;2028:64;;;;;;;;1983:171;2141:1;2134:8;;;;;;1499:662;;;;;;;:::o;570:343::-;650:4;700:1;688:8;678:7;671:4;:14;;;;:::i;:::-;:25;;;;:::i;:::-;:30;667:70;;;724:1;717:8;;;;667:70;827:9;874:8;864:7;857:4;:14;;;;:::i;:::-;:25;;;;:::i;:::-;849:4;839:7;:14;;;;:::i;:::-;:44;;;;:::i;:::-;827:56;;901:4;894:11;;;570:343;;;;;;:::o;88:117:21:-;197:1;194;187:12;334:77;371:7;400:5;389:16;;334:77;;;:::o;417:122::-;490:24;508:5;490:24;:::i;:::-;483:5;480:35;470:63;;529:1;526;519:12;470:63;417:122;:::o;545:139::-;591:5;629:6;616:20;607:29;;645:33;672:5;645:33;:::i;:::-;545:139;;;;:::o;690:619::-;767:6;775;783;832:2;820:9;811:7;807:23;803:32;800:119;;;838:79;;:::i;:::-;800:119;958:1;983:53;1028:7;1019:6;1008:9;1004:22;983:53;:::i;:::-;973:63;;929:117;1085:2;1111:53;1156:7;1147:6;1136:9;1132:22;1111:53;:::i;:::-;1101:63;;1056:118;1213:2;1239:53;1284:7;1275:6;1264:9;1260:22;1239:53;:::i;:::-;1229:63;;1184:118;690:619;;;;;:::o;1315:118::-;1402:24;1420:5;1402:24;:::i;:::-;1397:3;1390:37;1315:118;;:::o;1439:222::-;1532:4;1570:2;1559:9;1555:18;1547:26;;1583:71;1651:1;1640:9;1636:17;1627:6;1583:71;:::i;:::-;1439:222;;;;:::o;1667:90::-;1701:7;1744:5;1737:13;1730:21;1719:32;;1667:90;;;:::o;1763:109::-;1844:21;1859:5;1844:21;:::i;:::-;1839:3;1832:34;1763:109;;:::o;1878:210::-;1965:4;2003:2;1992:9;1988:18;1980:26;;2016:65;2078:1;2067:9;2063:17;2054:6;2016:65;:::i;:::-;1878:210;;;;:::o;2094:765::-;2180:6;2188;2196;2204;2253:3;2241:9;2232:7;2228:23;2224:33;2221:120;;;2260:79;;:::i;:::-;2221:120;2380:1;2405:53;2450:7;2441:6;2430:9;2426:22;2405:53;:::i;:::-;2395:63;;2351:117;2507:2;2533:53;2578:7;2569:6;2558:9;2554:22;2533:53;:::i;:::-;2523:63;;2478:118;2635:2;2661:53;2706:7;2697:6;2686:9;2682:22;2661:53;:::i;:::-;2651:63;;2606:118;2763:2;2789:53;2834:7;2825:6;2814:9;2810:22;2789:53;:::i;:::-;2779:63;;2734:118;2094:765;;;;;;;:::o;2865:442::-;3014:4;3052:2;3041:9;3037:18;3029:26;;3065:71;3133:1;3122:9;3118:17;3109:6;3065:71;:::i;:::-;3146:72;3214:2;3203:9;3199:18;3190:6;3146:72;:::i;:::-;3228;3296:2;3285:9;3281:18;3272:6;3228:72;:::i;:::-;2865:442;;;;;;:::o;3313:143::-;3370:5;3401:6;3395:13;3386:22;;3417:33;3444:5;3417:33;:::i;:::-;3313:143;;;;:::o;3462:351::-;3532:6;3581:2;3569:9;3560:7;3556:23;3552:32;3549:119;;;3587:79;;:::i;:::-;3549:119;3707:1;3732:64;3788:7;3779:6;3768:9;3764:22;3732:64;:::i;:::-;3722:74;;3678:128;3462:351;;;;:::o;3819:180::-;3867:77;3864:1;3857:88;3964:4;3961:1;3954:15;3988:4;3985:1;3978:15;4005:191;4045:4;4065:20;4083:1;4065:20;:::i;:::-;4060:25;;4099:20;4117:1;4099:20;:::i;:::-;4094:25;;4138:1;4135;4132:8;4129:34;;;4143:18;;:::i;:::-;4129:34;4188:1;4185;4181:9;4173:17;;4005:191;;;;:::o;4202:348::-;4242:7;4265:20;4283:1;4265:20;:::i;:::-;4260:25;;4299:20;4317:1;4299:20;:::i;:::-;4294:25;;4487:1;4419:66;4415:74;4412:1;4409:81;4404:1;4397:9;4390:17;4386:105;4383:131;;;4494:18;;:::i;:::-;4383:131;4542:1;4539;4535:9;4524:20;;4202:348;;;;:::o;4556:180::-;4604:77;4601:1;4594:88;4701:4;4698:1;4691:15;4725:4;4722:1;4715:15;4742:185;4782:1;4799:20;4817:1;4799:20;:::i;:::-;4794:25;;4833:20;4851:1;4833:20;:::i;:::-;4828:25;;4872:1;4862:35;;4877:18;;:::i;:::-;4862:35;4919:1;4916;4912:9;4907:14;;4742:185;;;;:::o;4933:305::-;4973:3;4992:20;5010:1;4992:20;:::i;:::-;4987:25;;5026:20;5044:1;5026:20;:::i;:::-;5021:25;;5180:1;5112:66;5108:74;5105:1;5102:81;5099:107;;;5186:18;;:::i;:::-;5099:107;5230:1;5227;5223:9;5216:16;;4933:305;;;;:::o",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\nimport './interface/ComptrollerInterface.sol';\r\n\r\ncontract AurumInterestRateModel is InterestRateModel{\r\n    function isInterestRateModel() external pure returns(bool) {\r\n        return true;\r\n    }\r\n    uint baseRate;\r\n    uint plateauRange;\r\n    uint maxRate;\r\n    uint trigger;\r\n    uint peakMax;\r\n    constructor (uint _baseRate, uint _maxRate, uint _trigger, uint _peakMax){\r\n        baseRate = _baseRate;\r\n        maxRate = _maxRate;\r\n        trigger = _trigger;\r\n        peakMax = _peakMax;\r\n    }\r\n    function utility(uint cash, uint borrows, uint reserves) external pure returns (uint) {\r\n        if (cash + borrows - reserves == 0){\r\n            return 0;\r\n        }\r\n        //total investor deposit = remaining cash - reserves + borrowed amount\r\n        uint util = borrows * 1e18 / (cash + borrows - reserves);\r\n        return util;\r\n    }\r\n\r\n    function getBorrowRate(uint cash, uint borrows, uint reserves) external view returns (uint){\r\n        uint util = this.utility(cash,borrows,reserves);\r\n        uint borrowRatePerYear;\r\n        if (util > trigger) {\r\n            //Rate beyond maxRate\r\n            borrowRatePerYear = maxRate + ((util - trigger) * (peakMax - maxRate) / (1e18 - trigger)); //e18\r\n        } else {\r\n            borrowRatePerYear = baseRate + ((maxRate - baseRate) * util / trigger);  //e18\r\n        }\r\n        return borrowRatePerYear / 365 / 60 / 60 / 24; //borrowRatePerSeconds\r\n    }\r\n    \r\n    function getSupplyRate(uint cash, uint borrows, uint reserves, uint reserveFactorMantissa) external view returns (uint){\r\n        uint borrowRate = this.getBorrowRate(cash, borrows, reserves);\r\n        //supplyRate = profit / total investor deposit * feeMultiplier\r\n        uint totalProfit = borrowRate * borrows / 1e18; // e18\r\n        uint totalInvestorDeposit = cash + borrows - reserves;  //e18\r\n        uint reducedFeeMultiplier = 1e18 - reserveFactorMantissa; //e18\r\n\r\n        if(totalInvestorDeposit != 0) {\r\n            return totalProfit * reducedFeeMultiplier / totalInvestorDeposit;\r\n        }\r\n        else {\r\n            return 0;\r\n        }\r\n    }\r\n}",
-  "sourcePath": "C:\\Users\\chana\\desktop\\aurum\\aurumdefi\\src\\contracts\\AurumInterestRateModel.sol",
+  "sourcePath": "C:\\Users\\chana\\desktop\\aurumdefi\\src\\contracts\\AurumInterestRateModel.sol",
   "ast": {
     "absolutePath": "project:/src/contracts/AurumInterestRateModel.sol",
     "exportedSymbols": {
@@ -9623,18 +9627,19 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x2fbD81D4ef7cd71596776fDcd1EAAc39a8EA8B89",
-      "transactionHash": "0xaee78fa622412d76ec7e41daf64e0cc410b6af55c64cca5127ccdbfb66d5ed4f"
+      "address": "0xB4f863D45874a1cB855750261f9AbdCc03f97B20",
+      "transactionHash": "0x8470b74710858a52a83cb1b989f06b1393763b2f6aad14e4728bd83850b551ce"
     },
     "55556": {
       "events": {},
       "links": {},
-      "address": "0xbB8c6F3ec9BD23aD4605Fbf4D20700c55df450Dc",
-      "transactionHash": "0xe81768df4f5acc8243a20c54c428fb1355199742e63411c7bc0bf404f5f4f3b7"
+      "address": "0x36E84edd0e572AADA7E6757f60d440180d485b5C",
+      "transactionHash": "0x52256d5b9f0e9927426c476ef294c2fb391a2dfc82cccfdc7219df8bb00d0164"
     }
   },
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-03-23T13:12:30.051Z",
+  "updatedAt": "2022-03-23T14:09:31.137Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},
