@@ -726,8 +726,6 @@ contract ComptrollerStorage {
 
 
 
-    mapping(address => mapping(address => uint)) public aurumSupplierIndex;     //supply index for each market for each supplier as of the last time they accrued ARM
-    mapping(address => mapping(address => uint)) public aurumBorrowerIndex;     //borrow index for each market for each borrower as of the last time they accrued ARM
 
     mapping(address => uint) public armAccrued;             //ARM accrued but not yet transferred to each user
     function getArmAccrued(address user) external view returns (uint) {return armAccrued[user];}
@@ -781,7 +779,7 @@ contract ComptrollerStorage {
 
     struct TheMarketState {
         /// @notice The market's last updated aurumBorrowIndex or aurumSupplyIndex
-        // index variable is in Double (1e36) state
+        // index variable is in Double (1e36)  stored the last update index
         uint index;
 
         /// @notice The block number the index was last updated at
@@ -794,6 +792,9 @@ contract ComptrollerStorage {
     mapping(address => TheMarketState) public armSupplyState;     //market supply state for each market
     mapping(address => TheMarketState) public armBorrowState;     //market borrow state for each market
 
+    //Individual index variables  will update once individual check allowed function (will lastly call distributeSupplier / distributeBorrower function) to the current market's index.
+    mapping(address => mapping(address => uint)) public aurumSupplierIndex;     //supply index of each market for each supplier as of the last time they accrued ARM
+    mapping(address => mapping(address => uint)) public aurumBorrowerIndex;     //borrow index of each market for each borrower as of the last time they accrued ARM
 
     /// @notice The portion of ARM that each contributor receives per block
     mapping(address => uint) public aurumContributorSpeeds;
@@ -948,7 +949,7 @@ contract ComptrollerStorage {
             // addingValue is e36
             uint addingValue;
             if (supplyTokens > 0){
-                addingValue = armAcc * 1e36 / supplyTokens;  // calculate index and stored in Double make more precise number
+                addingValue = armAcc * 1e36 / supplyTokens;  // calculate index and stored in Double 
             } else {
                 addingValue = 0;
             }
@@ -976,7 +977,7 @@ contract ComptrollerStorage {
 
             uint addingValue;
             if (borrowAmount > 0){
-                addingValue = armAcc * 1e36 / borrowAmount;  // calculate index and stored in Double make more precise number
+                addingValue = armAcc * 1e36 / borrowAmount;  // calculate index and stored in Double
             } else {
                 addingValue = 0;
             }

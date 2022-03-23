@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import './interestRateModel.sol';
-
 interface ComptrollerInterface {
     function isComptroller() external pure returns(bool);
     function isProtocolPaused() external view returns(bool);
@@ -101,5 +99,13 @@ interface AurumControllerInterface {
     function repayGOLD(uint repayGOLDAmount) external returns(uint);
     function liquidateGOLD(address borrower, uint repayAmount, LendTokenInterface lendTokenCollateral) external returns(uint);
     function getMintableGOLD(address minter) external view returns (uint);
+
+}
+interface InterestRateModel {
+
+    function isInterestRateModel() external view returns(bool);
+    function getBorrowRate(uint cash, uint borrows, uint reserves) external view returns (uint);
+    
+    function getSupplyRate(uint cash, uint borrows, uint reserves, uint reserveFactorMantissa) external view returns (uint);
 
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import './interface/InterestRateModel.sol';
+import './interface/ComptrollerInterface.sol';
 
 contract AurumInterestRateModel is InterestRateModel{
     function isInterestRateModel() external pure returns(bool) {

@@ -18,20 +18,20 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\ninterface IGOLDVault {\r\n\r\n    function updatePendingRewards() external;\r\n}",
-  "sourcePath": "C:\\Users\\chana\\desktop\\aurumdefi\\src\\contracts\\interface\\IGOLDVault.sol",
+  "sourcePath": "C:\\Users\\chana\\desktop\\aurum\\aurumdefi\\src\\contracts\\interface\\IGOLDVault.sol",
   "ast": {
     "absolutePath": "project:/src/contracts/interface/IGOLDVault.sol",
     "exportedSymbols": {
       "IGOLDVault": [
-        14494
+        14481
       ]
     },
-    "id": 14495,
+    "id": 14482,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 14490,
+        "id": 14477,
         "literals": [
           "solidity",
           "^",
@@ -48,9 +48,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 14494,
+        "id": 14481,
         "linearizedBaseContracts": [
-          14494
+          14481
         ],
         "name": "IGOLDVault",
         "nameLocation": "70:10:19",
@@ -58,7 +58,7 @@
         "nodes": [
           {
             "functionSelector": "faa1809e",
-            "id": 14493,
+            "id": 14480,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -66,25 +66,25 @@
             "nameLocation": "99:20:19",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 14491,
+              "id": 14478,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "119:2:19"
             },
             "returnParameters": {
-              "id": 14492,
+              "id": 14479,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "130:0:19"
             },
-            "scope": 14494,
+            "scope": 14481,
             "src": "90:41:19",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 14495,
+        "scope": 14482,
         "src": "60:74:19",
         "usedErrors": []
       }
@@ -95,15 +95,15 @@
     "absolutePath": "project:/src/contracts/interface/IGOLDVault.sol",
     "exportedSymbols": {
       "IGOLDVault": [
-        14494
+        14481
       ]
     },
-    "id": 14495,
+    "id": 14482,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 14490,
+        "id": 14477,
         "literals": [
           "solidity",
           "^",
@@ -120,9 +120,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 14494,
+        "id": 14481,
         "linearizedBaseContracts": [
-          14494
+          14481
         ],
         "name": "IGOLDVault",
         "nameLocation": "70:10:19",
@@ -130,7 +130,7 @@
         "nodes": [
           {
             "functionSelector": "faa1809e",
-            "id": 14493,
+            "id": 14480,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -138,25 +138,25 @@
             "nameLocation": "99:20:19",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 14491,
+              "id": 14478,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "119:2:19"
             },
             "returnParameters": {
-              "id": 14492,
+              "id": 14479,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "130:0:19"
             },
-            "scope": 14494,
+            "scope": 14481,
             "src": "90:41:19",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 14495,
+        "scope": 14482,
         "src": "60:74:19",
         "usedErrors": []
       }
@@ -169,7 +169,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-03-21T13:09:09.841Z",
+  "updatedAt": "2022-03-23T13:12:30.888Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

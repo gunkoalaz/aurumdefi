@@ -15,8 +15,6 @@ const AurumPriceOracle = artifacts.require('AurumPriceOracle')
 
 module.exports = async function (deployer, network, accounts) {
     const owner = accounts[0]
-    const user1 = accounts[1]
-    const user2 = accounts[2]
     const devAddress = '0x1AF04eD8835eaE2ed5e6c481ef192a7895DC8116'
     await deployer.deploy(Tether)
     const tether = await Tether.deployed()
