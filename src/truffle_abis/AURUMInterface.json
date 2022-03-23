@@ -1,0 +1,119 @@
+{
+  "contractName": "AURUMInterface",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.12+commit.f00d7308\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/interface/AURUMInterface.sol\":\"AURUMInterface\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/contracts/interface/AURUMInterface.sol\":{\"keccak256\":\"0x230018b894b600e74295ebcc24c28b5324210ec9b6f70ddb84a526ac65f7f1ef\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://49bd57b03a19f2207870f6d7150bf239c011e8fafcbb694ef248b4d69089977c\",\"dweb:/ipfs/Qme2LruSugZSC4huYqvXkyr1BPn7TYuD9eKQtaNhJLYsVH\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212208f6ff2098152a05047e13c17d45657f7735808ce18e7fe1112d9da46ebb78bb664736f6c634300080c0033",
+  "deployedBytecode": "0x6080604052600080fdfea26469706673582212208f6ff2098152a05047e13c17d45657f7735808ce18e7fe1112d9da46ebb78bb664736f6c634300080c0033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "60:34:16:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "60:34:16:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\ncontract AURUMInterface {\r\n    \r\n}",
+  "sourcePath": "C:\\Users\\chana\\desktop\\aurumdefi\\src\\contracts\\interface\\AURUMInterface.sol",
+  "ast": {
+    "absolutePath": "project:/src/contracts/interface/AURUMInterface.sol",
+    "exportedSymbols": {
+      "AURUMInterface": [
+        14149
+      ]
+    },
+    "id": 14150,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 14148,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:16"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "AURUMInterface",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 14149,
+        "linearizedBaseContracts": [
+          14149
+        ],
+        "name": "AURUMInterface",
+        "nameLocation": "69:14:16",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 14150,
+        "src": "60:34:16",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:61:16"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/src/contracts/interface/AURUMInterface.sol",
+    "exportedSymbols": {
+      "AURUMInterface": [
+        14149
+      ]
+    },
+    "id": 14150,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 14148,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:16"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "AURUMInterface",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 14149,
+        "linearizedBaseContracts": [
+          14149
+        ],
+        "name": "AURUMInterface",
+        "nameLocation": "69:14:16",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 14150,
+        "src": "60:34:16",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:61:16"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.12+commit.f00d7308.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.6",
+  "updatedAt": "2022-03-20T19:51:44.706Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

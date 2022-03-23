@@ -1,0 +1,47 @@
+.header{
+    z-index: 2;
+    position: relative;
+    display: inline-block;
+    margin: 0px;
+    width: 100vw;
+    max-width: 100%;
+    height: 5vw;
+    font-size: 1vw;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+.hd-box{
+    height: 5vw;
+    padding: 10px;
+    padding-left: 3vw;
+    background-color: rgb(190, 120, 70);
+    display: flex;
+    align-items: center;
+    row-gap: 0px;
+}
+.logo{
+    width: 40%;
+    font-size: 2.5vw;
+    font-weight: bold;
+    float: left;
+}
+.logo a{
+    text-decoration: none;
+    color:rgb(87, 20, 0);
+}
+@keyframes hoverlogo {
+    0% {color:rgb(87, 20, 0);}
+    100% {color:gold;}
+}
+.logo a:hover{
+    animation-name: hoverlogo;
+    animation-duration: 0.5s;
+    color:gold;
+}
+.hd-space{
+    width:40%;
+}
+.web3connect{
+
+    text-align: center;
+    width: 20%;
+}

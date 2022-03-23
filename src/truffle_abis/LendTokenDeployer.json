@@ -1,0 +1,537 @@
+{
+  "contractName": "LendTokenDeployer",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "lendToken",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "lendTokenStorage",
+          "type": "address"
+        }
+      ],
+      "name": "DeployLendToken",
+      "type": "event"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.12+commit.f00d7308\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"lendToken\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"lendTokenStorage\",\"type\":\"address\"}],\"name\":\"DeployLendToken\",\"type\":\"event\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/LendTokenDeployer.sol\":\"LendTokenDeployer\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/contracts/LendToken.sol\":{\"keccak256\":\"0x7f7f47ed0e1891c12139d30dee470f9b1fe979ab7abea5e327cb2c01bdabd0e1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://05f6d385327527883ad991e8bf078fbf9b5194b6730271de2cde7bc40e3e58e0\",\"dweb:/ipfs/QmakFqpvuDQ3chEk223x7N2QoS37QY7XT42ERYFHrGhEMq\"]},\"project:/src/contracts/LendTokenDeployer.sol\":{\"keccak256\":\"0x53a8bf5ced3ca27e2ee0db1426f62c220b82429502e46f3e14fe143bc3f990ae\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://24789cfdc63fa369da1b9b31ddb2bc1419651175c471e41d0841ca397c729c54\",\"dweb:/ipfs/QmSkzr7NC56pd6yTvCkYbUbfgxh5zuAFkkxtbSoKVGGqTc\"]},\"project:/src/contracts/interface/ComptrollerInterface.sol\":{\"keccak256\":\"0x491641d8793a39d11826b66c064a80ecb80d48c7b6c3ca90756e2a8bcc877c0a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cb28b9a38d2fd53577e9b6ca0c7ec35daef1a22484c2fd95066e87d432eacd0c\",\"dweb:/ipfs/QmeevbUwoemdBETpU135SkWFFt4to7gxM3n5TiPbKfLZQB\"]},\"project:/src/contracts/interface/IBEP20.sol\":{\"keccak256\":\"0x1616ee67d5dbe5ea4deae1d870c15a5a541c45c15bd7d54d41c72399b4e1a93c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b9c320c37d88d5efbc114da5a47f75e83ee3eec8eb26594096dae061d3ae75f2\",\"dweb:/ipfs/QmTKdq7h8hRdHsEnY856z1CA4uzReMT46guJVzjSYBahEd\"]},\"project:/src/contracts/interface/interestRateModel.sol\":{\"keccak256\":\"0x5762e2bfaa0770f5211bd5fde415cb487bb558c940df9d7dbc421487edb2dcb6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9316c77afcf683b6fd1b2a05626c3aae0becc8859902b6c5201ac72cb38316ea\",\"dweb:/ipfs/QmS1Wo3MU5C5FunhNkSr6esh9jADfQJTYd3bquw3VFwymT\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220a7d579567ecc85c539c484a0eedd2b5209f6c494089908256821f33d6114c14764736f6c634300080c0033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220a7d579567ecc85c539c484a0eedd2b5209f6c494089908256821f33d6114c14764736f6c634300080c0033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "87:3072:10:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "87:3072:10:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\nimport './LendToken.sol';\r\ncontract LendTokenDeployer {\r\n    uint contractIndex;\r\n    address comptrollerAddress;\r\n    address admin;\r\n\r\n    event DeployLendToken(address lendToken, address lendTokenStorage);\r\n\r\n    // This function will deploy new LendToken and LendTokenStorage contract\r\n    // Then add them to the comptroller market\r\n    // uint contractIndex;\r\n    // function _lendTokenFactory(\r\n    //     string memory _name, \r\n    //     string memory _symbol, \r\n    //     uint8 _decimals,\r\n    //     address _underlying,\r\n    //     address _interestRateModel) external{\r\n\r\n    //     require(msg.sender == admin, \"Only admin\");\r\n    //     // Deploy the LendTokenStorage first to get the storage address\r\n    //     // Then deploy the lendToken\r\n    //     // get those 2 new contracts address\r\n    //     // set the LendTokenStorage to bind to the deployed lendToken\r\n    //     bytes memory storageBytes = getStorageByteCode(_underlying, _interestRateModel);\r\n\r\n    //     LendTokenStorage lendStorageContract = new LendTokenStorage {\r\n    //         salt: bytes32(contractIndex)\r\n    //     }(_underlying, _interestRateModel, comptrollerAddress, admin);\r\n\r\n    //     address lendStorageContractAddress = getDeployedAddress(storageBytes, contractIndex);\r\n    //     //Passing lendStorage address to deploy LendToken\r\n    //     bytes memory lendBytes = getLendTokenByteCode(_name, _symbol, _decimals, lendStorageContractAddress);\r\n\r\n    //     LendToken lendTokenContract = new LendToken {\r\n    //         salt: bytes32(contractIndex)\r\n    //     }(_name,_symbol,_decimals, admin, lendStorageContractAddress);\r\n\r\n    //     address lendTokenContractAddress = getDeployedAddress(lendBytes, contractIndex);\r\n        \r\n    //     emit DeployLendToken(address(lendTokenContract), address(lendStorageContract));\r\n    //     // End deploying process\r\n\r\n    //     //Set storage to bind to deployed lendToken\r\n    //     lendStorageContract._setSuperviseToken(lendTokenContractAddress);\r\n\r\n    // }\r\n    // function getStorageByteCode (address _underlying, address _interestRateModel) internal view returns(bytes memory) {\r\n    //     bytes memory lendStorage = type(LendTokenStorage).creationCode;\r\n    //     return (\r\n    //         abi.encodePacked(lendStorage, abi.encode(_underlying, _interestRateModel, comptrollerAddress, admin))\r\n    //     );\r\n    // }    \r\n    // function getLendTokenByteCode (string memory _name, string memory _symbol, uint8 _decimals, address _lendStorage) internal view returns(bytes memory) {\r\n    //     bytes memory lendToken = type(LendToken).creationCode;\r\n    //     return (\r\n    //         abi.encodePacked(lendToken, abi.encode(_name, _symbol, _decimals, admin, _lendStorage))\r\n    //     );\r\n    // }\r\n    // function getDeployedAddress(bytes memory bytecode, uint _salt) internal view returns(address) {\r\n    //     bytes32 hash = keccak256(\r\n    //         abi.encodePacked(\r\n    //             bytes1(0xff), address(this), _salt, keccak256(bytecode)\r\n    //         )\r\n    //     );\r\n    //     return address(uint160(uint(hash)));\r\n    // }\r\n}",
+  "sourcePath": "C:\\Users\\chana\\desktop\\aurumdefi\\src\\contracts\\LendTokenDeployer.sol",
+  "ast": {
+    "absolutePath": "project:/src/contracts/LendTokenDeployer.sol",
+    "exportedSymbols": {
+      "AurumControllerInterface": [
+        14557
+      ],
+      "ComptrollerInterface": [
+        14274
+      ],
+      "IBEP20": [
+        14658
+      ],
+      "IBEP20NonStandardInterface": [
+        14723
+      ],
+      "IComptroller": [
+        14294
+      ],
+      "IGOLDVault": [
+        14278
+      ],
+      "InterestRateModel": [
+        14793
+      ],
+      "LendToken": [
+        12422
+      ],
+      "LendTokenDeployer": [
+        12438
+      ],
+      "LendTokenInterface": [
+        14493
+      ],
+      "PriceOracle": [
+        14519
+      ]
+    },
+    "id": 12439,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 12424,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:10"
+      },
+      {
+        "absolutePath": "project:/src/contracts/LendToken.sol",
+        "file": "./LendToken.sol",
+        "id": 12425,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 12439,
+        "sourceUnit": 12423,
+        "src": "60:25:10",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "LendTokenDeployer",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 12438,
+        "linearizedBaseContracts": [
+          12438
+        ],
+        "name": "LendTokenDeployer",
+        "nameLocation": "96:17:10",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 12427,
+            "mutability": "mutable",
+            "name": "contractIndex",
+            "nameLocation": "126:13:10",
+            "nodeType": "VariableDeclaration",
+            "scope": 12438,
+            "src": "121:18:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 12426,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "121:4:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 12429,
+            "mutability": "mutable",
+            "name": "comptrollerAddress",
+            "nameLocation": "154:18:10",
+            "nodeType": "VariableDeclaration",
+            "scope": 12438,
+            "src": "146:26:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 12428,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "146:7:10",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 12431,
+            "mutability": "mutable",
+            "name": "admin",
+            "nameLocation": "187:5:10",
+            "nodeType": "VariableDeclaration",
+            "scope": 12438,
+            "src": "179:13:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 12430,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "179:7:10",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "anonymous": false,
+            "id": 12437,
+            "name": "DeployLendToken",
+            "nameLocation": "207:15:10",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 12436,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 12433,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "lendToken",
+                  "nameLocation": "231:9:10",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 12437,
+                  "src": "223:17:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 12432,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "223:7:10",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 12435,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "lendTokenStorage",
+                  "nameLocation": "250:16:10",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 12437,
+                  "src": "242:24:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 12434,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "242:7:10",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "222:45:10"
+            },
+            "src": "201:67:10"
+          }
+        ],
+        "scope": 12439,
+        "src": "87:3072:10",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:3126:10"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/src/contracts/LendTokenDeployer.sol",
+    "exportedSymbols": {
+      "AurumControllerInterface": [
+        14557
+      ],
+      "ComptrollerInterface": [
+        14274
+      ],
+      "IBEP20": [
+        14658
+      ],
+      "IBEP20NonStandardInterface": [
+        14723
+      ],
+      "IComptroller": [
+        14294
+      ],
+      "IGOLDVault": [
+        14278
+      ],
+      "InterestRateModel": [
+        14793
+      ],
+      "LendToken": [
+        12422
+      ],
+      "LendTokenDeployer": [
+        12438
+      ],
+      "LendTokenInterface": [
+        14493
+      ],
+      "PriceOracle": [
+        14519
+      ]
+    },
+    "id": 12439,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 12424,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:10"
+      },
+      {
+        "absolutePath": "project:/src/contracts/LendToken.sol",
+        "file": "./LendToken.sol",
+        "id": 12425,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 12439,
+        "sourceUnit": 12423,
+        "src": "60:25:10",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "LendTokenDeployer",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 12438,
+        "linearizedBaseContracts": [
+          12438
+        ],
+        "name": "LendTokenDeployer",
+        "nameLocation": "96:17:10",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 12427,
+            "mutability": "mutable",
+            "name": "contractIndex",
+            "nameLocation": "126:13:10",
+            "nodeType": "VariableDeclaration",
+            "scope": 12438,
+            "src": "121:18:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 12426,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "121:4:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 12429,
+            "mutability": "mutable",
+            "name": "comptrollerAddress",
+            "nameLocation": "154:18:10",
+            "nodeType": "VariableDeclaration",
+            "scope": 12438,
+            "src": "146:26:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 12428,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "146:7:10",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 12431,
+            "mutability": "mutable",
+            "name": "admin",
+            "nameLocation": "187:5:10",
+            "nodeType": "VariableDeclaration",
+            "scope": 12438,
+            "src": "179:13:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 12430,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "179:7:10",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "anonymous": false,
+            "id": 12437,
+            "name": "DeployLendToken",
+            "nameLocation": "207:15:10",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 12436,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 12433,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "lendToken",
+                  "nameLocation": "231:9:10",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 12437,
+                  "src": "223:17:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 12432,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "223:7:10",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 12435,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "lendTokenStorage",
+                  "nameLocation": "250:16:10",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 12437,
+                  "src": "242:24:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 12434,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "242:7:10",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "222:45:10"
+            },
+            "src": "201:67:10"
+          }
+        ],
+        "scope": 12439,
+        "src": "87:3072:10",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:3126:10"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.12+commit.f00d7308.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.6",
+  "updatedAt": "2022-03-21T06:35:52.083Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

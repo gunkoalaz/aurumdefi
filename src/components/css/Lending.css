@@ -1,0 +1,286 @@
+
+.lending{
+    display:block;
+    margin: 0px;
+    animation-name: fadeup;
+    animation-duration: 0.5s;
+}
+.lending-header{
+    text-align: left;
+    color: bisque;
+}
+.lending-header h2{
+    font-size: 2vw;
+}
+.user-info-box{
+    display: flex;
+    width: 100%;
+    height: 7vw;
+    align-items: center;
+    background-color: rgb(80, 40, 40);
+    border: 0.2vw solid rgb(20, 20, 20);
+    border-radius: 2vw;
+    overflow: hidden;
+}
+.user-info-detail{
+    align-items: center;
+    width: 100%;
+    margin: auto;
+}
+.user-info-detail h3{
+    font-size: 1.5vw;
+}
+.user-info-detail p{
+    font-size: 2vw;
+    text-shadow: 0.1vw 0.1vw black;
+}
+.user-info-supply{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+    background-color: rgb(77, 177, 77);
+    height: 100%;
+    width: 100%;
+}
+.user-info-borrow{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+    background-color: rgb(214, 110, 110);
+    height: 100%;
+    width: 100%;
+}
+.user-info-credits{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+    background-color: rgb(156, 154, 23);
+    height: 100%;
+    width: 100%;
+}
+@keyframes danger{
+    0% {background-color: rgb(156, 154, 23);}
+    50% {background-color: rgb(194, 21, 9);}
+    100% {background-color: rgb(156, 154, 23);}
+}
+.user-info-credits-danger{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+    background-color: rgb(156, 154, 23);
+    height: 100%;
+    width: 100%;
+    animation-name: danger;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+.menu{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+@keyframes menuactive{
+    0% {top:1.5vw; 
+        background-color:rgb(139, 91, 36);
+        height: 2vw;
+        font-size: 1.2vw;
+    }
+    60% {top: 1vw; 
+        background-color: rgb(255, 123, 0);
+        height: 3vw;
+        font-size: 1.7vw;
+    }
+    100% {top: 1vw; 
+        background-color: rgb(255, 123, 0);
+        height: 3vw;
+        font-size: 1.7vw;
+    }
+}
+.menu-item-active{
+    animation-name: menuactive;
+    animation-duration: 0.4s;
+    width: 100%;
+    margin: auto;
+    height: 3vw;
+    border: 0.2vw solid black;
+    border-bottom: 0vw solid black;
+    border-top-left-radius: 2vw;
+    border-top-right-radius: 2vw;
+    font-size: 1.7vw;
+    font-weight: bold;
+    background-color: rgb(255, 123, 0);
+    color: gold;
+    text-shadow: 0.1vw 0.1vw rgb(20, 20, 20);
+    position: relative;
+    top:1vw;
+}
+@keyframes menuinactive{
+    0% {top: 1vw; 
+        background-color: rgb(255, 123, 0);
+        height: 3vw;
+        font-size: 1.7vw;
+    }
+    40% {top: 1vw; 
+        background-color: rgb(255, 123, 0);
+        height: 3vw;
+        font-size: 1.7vw;
+    }
+    100% {top:1.5vw; 
+        background-color:rgb(139, 91, 36);
+        height: 2vw;
+        font-size: 1.2vw;
+    }
+}
+.menu-item-inactive{
+    animation-name: menuinactive;
+    animation-duration: 0.4s;
+    width: 100%;
+    margin: auto;
+    height: 2vw;
+    border: 0.2vw solid black;
+    border-bottom: 0vw solid black;
+    border-top-left-radius: 2vw;
+    border-top-right-radius: 2vw;
+    font-size: 1.2vw;
+    font-weight: bold;
+    background-color:rgb(114, 68, 24);
+    position: relative;
+    top: 1.5vw;
+}
+.menu-item-inactive:hover {
+    background-color:rgb(139, 91, 36);
+}
+.lending-body{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.lending-box{
+    position: relative;
+    top: 1vw;
+    padding: 0px;
+    width: 100%;
+    margin: auto;
+    border: 0.2vw solid rgb(20, 20, 20);
+    border-top: 0px solid black;
+    box-shadow: 0.1vw 0.2vw rgb(0, 0, 0);
+    border-bottom-left-radius: 1vw;
+    border-bottom-right-radius: 1vw;
+    background-color:rgb(114, 68, 24);
+    opacity: 1;
+}
+.lending-asset-box{
+    display: flex;
+    opacity: 1;
+    align-items: center;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 5px;
+    margin-right: 10px;
+    max-width:100%;
+    border: 2px solid rgb(30, 30, 30);
+    background-color:rgb(160, 100, 50);
+    height: 250px;
+}
+.Token{
+    display: block;
+    width: 10%;
+    margin: 10px;
+}
+.lending-asset-box-info{
+    display:flex;
+    align-items: center;
+    border-left: 1px solid black;
+    height: 3vw;
+    width: 100%;
+    margin: 20px;
+    padding-left: 25px;
+}
+.lending-asset-box-info h3{
+    text-align: left;
+    font-size: 1rem;
+}
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.logoimg{
+    width: 5vw;
+}
+
+.table{
+    width: 95%;
+    margin: auto;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    color: beige;
+    text-shadow: 0.1vw 0vw rgb(56, 56, 56);
+    border-style: none;
+    text-align: center;
+    vertical-align: middle;
+    border-top: 0px solid black;
+    table-layout: fixed;
+}
+.table th, .table td {
+    padding: 1vw;
+    vertical-align: middle;
+    border-top: 0px solid #dee2e6;
+}
+.table h3{
+    font-size: 1.2vw;
+    font-weight: bold;
+    text-align: left;
+    padding: 1vw;
+}
+.table-head {
+    font-size: 1.5vw;
+    border-top: 0px solid black;
+}
+
+.table-body {
+    font-size: 1.2vw;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.table-hover{
+    background-color: transparent;
+}
+
+.asset-name{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.asset-name img{
+    object-fit: cover;
+    display: block;
+    height: max-content;
+    width: 3vw;
+    margin: auto;
+}
+.asset-name h3{
+    width: 60%;
+    margin:auto;
+    font-size: 1.7vw;
+    text-shadow: 0.1vw 0.1vw black;
+}
+
+.asset-number {
+    vertical-align: middle;
+    margin: auto;
+    width: 100%;
+}
+.asset-number h5 {
+    margin:auto;
+    font-size: 1.3vw;
+}
+

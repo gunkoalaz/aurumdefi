@@ -1,0 +1,78 @@
+.liq-header h3{
+    font-size: 2vw;
+    color: beige;
+    font-weight: bold;
+}
+.liq-header p{
+    font-size: 1vw;
+    color: white;
+}
+
+.liq-info {
+    margin: auto;
+    display: flex;
+}
+.liq-info h3{
+    font-size: 2vw;
+    color: burlywood;
+}
+.liq-info p{
+    font-size: 2.5vw;
+    color: aliceblue;
+}
+.liq-info-closefactor{
+    margin: auto;
+    padding: 1vw;
+    border: 0.2vw solid crimson;
+    background-color: rgb(82, 1, 1);
+    border-radius: 2vw;
+}
+.liq-info-liquidincentive{
+    margin: auto;
+    padding: 1vw;
+    border: 0.2vw solid rgb(104, 235, 133);
+    background-color: rgb(5, 61, 10);
+    border-radius: 2vw;
+}
+
+.liq-box{
+    margin: 2vw;
+    width: auto;
+    border: 0.2vw solid white;
+    background-color: rgb(97, 97, 97);
+    border-radius: 2vw;
+}
+.liq-box h3{
+    font-size: 2vw;
+    color: azure;
+}
+.liq-box p{
+    font-size: 1.2vw;
+    color: azure;
+}
+
+.liq-user-box{
+    margin: 1vw;
+    width: auto;
+    border: 0.2vw solid rgb(126, 126, 126);
+    background-color: rgb(177, 70, 37);
+    display: flex;
+}
+
+.liq-user-user{
+    margin:auto;
+    padding: 0.5vw;
+    
+}
+.liq-user-borrow{
+    margin: auto;
+    padding: 0.5vw;
+}
+.liq-user-collateral{
+    margin: auto;
+    padding: 0.5vw;
+}
+.liq-user-button{
+    margin: auto;
+    padding: 0.5vw;
+}

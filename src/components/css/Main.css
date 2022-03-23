@@ -1,0 +1,92 @@
+
+.mainbox{
+    z-index: 1;
+    position: absolute;
+    top: 7vw;
+    left: 1vw;
+    right: 1vw;
+    margin: 0px;
+    text-align: center;
+    font-size: 1vw;
+}
+
+@media screen and (min-width: 1000px){ /*Hide Navbar*/
+    .mainbox{
+        left: 11vw;
+    }
+}
+
+.mainbox h1{
+    color: bisque;
+}
+.mainbox p{
+    color: whitesmoke;
+}
+
+.button{
+    background-color: rgb(125, 133, 250);
+    font-weight: bold;
+    font-size: 1.2vw;
+    width: 7vw;
+    border: 0.1vw solid black;
+    border-radius: 5vw;
+    box-shadow:0.1vw 0.2vw rgb(43, 43, 43);
+    margin: 1vw;
+}
+@keyframes buttonhover {
+    0% {
+        background-color: rgb(125, 133, 250);
+        }
+    100% {
+        background-color: rgb(231, 195, 52);
+    }
+}
+.button:hover{
+    animation-name: buttonhover;
+    animation-duration: 0.5s;
+    background-color: rgb(231, 195, 52);
+}
+.button-inactive{
+    background-color: rgb(169, 169, 197);
+    font-weight: bold;
+    font-size: 1.2vw;
+    width: 7vw;
+    color: gray;
+    border: 0.1vw solid black;
+    border-radius: 5vw;
+    box-shadow:0.1vw 0.2vw rgb(43, 43, 43);
+    margin: 1vw;
+}
+.input{
+    outline: none;
+    color: aliceblue;
+    text-shadow: 0.1vw 0.1vw rgb(54, 54, 54);
+    border: 0px;
+    background: transparent;
+    border-bottom: 0.1vw solid black;
+    overflow: hidden;
+    text-align: right;
+    width: 100%;
+    margin:auto;
+    padding-right: 1vw;
+    margin-bottom: 1vw;
+    font-size: 2vw;
+}
+
+.maxbutton{
+    cursor: pointer;
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+}
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.info{
+    color:white;
+    text-align: left;
+}

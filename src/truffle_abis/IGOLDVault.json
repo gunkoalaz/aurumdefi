@@ -1,0 +1,183 @@
+{
+  "contractName": "IGOLDVault",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "updatePendingRewards",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.12+commit.f00d7308\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"updatePendingRewards\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/interface/IGOLDVault.sol\":\"IGOLDVault\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/contracts/interface/IGOLDVault.sol\":{\"keccak256\":\"0xefaa2f9e3aee8870e326663ee458508b9021676b3a777ebeed5fb0d3d4cbfdb2\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3946f11b86db980c1a71aad2bd9ac80d2cae64444a01a5bc71550406fefe4467\",\"dweb:/ipfs/QmUtsvdmedr483b6xPoDfMNeixDtYi2zeb6efY6xjjRV5n\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\ninterface IGOLDVault {\r\n\r\n    function updatePendingRewards() external;\r\n}",
+  "sourcePath": "C:\\Users\\chana\\desktop\\aurumdefi\\src\\contracts\\interface\\IGOLDVault.sol",
+  "ast": {
+    "absolutePath": "project:/src/contracts/interface/IGOLDVault.sol",
+    "exportedSymbols": {
+      "IGOLDVault": [
+        14494
+      ]
+    },
+    "id": 14495,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 14490,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:19"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IGOLDVault",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 14494,
+        "linearizedBaseContracts": [
+          14494
+        ],
+        "name": "IGOLDVault",
+        "nameLocation": "70:10:19",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "faa1809e",
+            "id": 14493,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updatePendingRewards",
+            "nameLocation": "99:20:19",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 14491,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "119:2:19"
+            },
+            "returnParameters": {
+              "id": 14492,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "130:0:19"
+            },
+            "scope": 14494,
+            "src": "90:41:19",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 14495,
+        "src": "60:74:19",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:101:19"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/src/contracts/interface/IGOLDVault.sol",
+    "exportedSymbols": {
+      "IGOLDVault": [
+        14494
+      ]
+    },
+    "id": 14495,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 14490,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:19"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IGOLDVault",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 14494,
+        "linearizedBaseContracts": [
+          14494
+        ],
+        "name": "IGOLDVault",
+        "nameLocation": "70:10:19",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "faa1809e",
+            "id": 14493,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updatePendingRewards",
+            "nameLocation": "99:20:19",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 14491,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "119:2:19"
+            },
+            "returnParameters": {
+              "id": 14492,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "130:0:19"
+            },
+            "scope": 14494,
+            "src": "90:41:19",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 14495,
+        "src": "60:74:19",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:101:19"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.12+commit.f00d7308.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.6",
+  "updatedAt": "2022-03-21T13:09:09.841Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

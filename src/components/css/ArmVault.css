@@ -1,0 +1,87 @@
+.armvault{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+    max-width: 100%;
+    font-size: 1vw;
+    animation-name: fadeup;
+    animation-duration: 0.5s;
+}
+.armvault-header{
+    width: 100%;
+}
+.armvault-header h1{
+    font-size: 2.2vw;
+}
+
+
+.vault{
+    border: 0.12vw solid black;
+    box-shadow: 0.5vw 0.2vw rgb(36, 36, 36);
+    width: 80%;
+    border-radius: 3vw;
+    background-color:rgb(182, 132, 26);
+    overflow: hidden;
+}
+.vault-body{
+    width: 100%;
+    padding: 1vw;
+    display: flex;
+}
+.vault-body h1{
+    color: #404040;
+    font-size: 1.1vw;
+}
+.vault-body p{
+    color: #101010;
+    font-size: 1.4vw;
+}
+
+.vault-head{
+    padding: 0.5vw;
+    background-color: gold;
+}
+.vault-head h3{
+    font-size: 2vw;
+}
+.vault-info{
+    height: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+.vault-stake{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+.vault-stake h5{
+    width: 30%;
+    font-size: 1.1vw;
+}
+.vault-stake p{
+    text-align:right;
+    width: 70%;
+    font-size: 1.8vw;
+    margin-right: 5vw;
+}
+.vault-stake-component{
+    margin: 0px;
+    padding: 1vw;
+    border-left: 0.1vw solid rgb(139, 113, 46);
+}
+.vault-stake-detail{
+    display: flex;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+}
+.flexRt {
+    display: flex;
+    flex-direction: row;
+}
+.vault-button {
+    width: 20%;
+}
