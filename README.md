@@ -4,6 +4,8 @@ AurumDeFi project is the lending platform originate in REI chain
 this project is soft fork from Venus protocol
 The code is modified and rearrange. Smart contract is compiled with Solidity version ^0.8.0
 
+the solidity source code is in src/contracts
+
 Comptroller  is seperated to 3 part
 1. Comptroller
 2. ComptrollerStorage :: stored the state variables
