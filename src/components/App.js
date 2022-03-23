@@ -24,7 +24,7 @@ import AurumPriceOracle from '../truffle_abis/AurumPriceOracle.json'
 import LendToken from '../truffle_abis/LendToken.json'
 import LendREI from '../truffle_abis/LendREI.json'
 import AURUM from '../truffle_abis/AURUM.json'
-import BEP20 from '../truffle_abis/IBEP20.json'
+import ERC20 from '../truffle_abis/ERC20.json'
 
 // const e18 = 1000000000000000000
 const MAX_UINT = "115792089237316195423570985008687907853269984665640564039457584007913129639935"
@@ -288,7 +288,7 @@ class App extends Component {
             let underlyingAllowance
             if(symbol !== 'lendREI') {
                 underlyingAddress = await lendToken.methods.underlying().call()
-                underlying = new web3.eth.Contract(BEP20.abi, underlyingAddress)
+                underlying = new web3.eth.Contract(ERC20.abi, underlyingAddress)
                 underlyingSymbol = await underlying.methods.symbol().call()
                 underlyingBalance = await underlying.methods.balanceOf(this.state.account).call()
                 underlyingAllowance = await underlying.methods.allowance(this.state.account, lendToken._address).call()
@@ -414,7 +414,7 @@ class App extends Component {
 
                         } else {
                             underlyingAddress = await lendToken.methods.underlying().call()
-                            underlying = new web3.eth.Contract(BEP20.abi, underlyingAddress)
+                            underlying = new web3.eth.Contract(ERC20.abi, underlyingAddress)
                             underlyingSymbol = await underlying.methods.symbol().call()
 
                         }
@@ -563,7 +563,7 @@ class App extends Component {
                         <Route path='/aurum' element={<AurumMinter mainstate={this.state} updateWeb3={this.updateWeb3} />} />
                         <Route path='/armvault' element={<ArmVault mainstate={this.state} updateWeb3={this.updateWeb3}/>} />
                         <Route path='/liquidate' element={<Liquidate mainstate={this.state} updateWeb3={this.updateWeb3} loadLiquidateList={this.loadLiquidateList}/>} />
-                        <Route path='/admin' element={<AdminInterface mainstate={this.state} updateWeb3={this.updateWeb3} loadLiquidateList={this.loadLiquidateList}/>} />
+                        <Route path='/admin' element={<AdminInterface mainstate={this.state}/>} />
                     </Routes>
                 </BrowserRouter>
             </div>
