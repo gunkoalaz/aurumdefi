@@ -140,7 +140,7 @@ contract AurumController is AurumControllerInterface {
         uint actualBurnAmount;
         uint goldBalanceBorrower = ComptrollerInterface(address(comptroller)).getMintedGOLDs(borrower);
 
-        if(goldBalanceBorrower > repayAmount) {
+        if(goldBalanceBorrower > repayAmount) { // Check the debt, if repay more than debt convert value to the actual debt value
             actualBurnAmount = repayAmount;
         } else {
             actualBurnAmount = goldBalanceBorrower;

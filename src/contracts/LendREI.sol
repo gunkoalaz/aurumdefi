@@ -710,7 +710,11 @@ contract LendREI{
         /* this part is modified from venus vToken contract,  */
         // prevent over repay by change repayAmount to maximum repay (total borrowed amount)
         if (repayAmount >= localvarsAccountBorrows) {
-            localvarsRepayAmount = localvarsAccountBorrows;
+            // Could 'not allowed' to over repay in LendREI because the use of payable function
+            // if this happen the transaction will revert in 'doTransferIn' function
+                // localvarsRepayAmount = localvarsAccountBorrows;
+            // We revert here to prevent over gas cost
+            revert('Over repay');
         } else {
             localvarsRepayAmount = repayAmount;
         }

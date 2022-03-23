@@ -110,17 +110,6 @@ contract ARM is IERC20 {
     emit Transfer(sender, recipient, amount);
   }
 
-  /**
-   * @dev Destroys `amount` tokens from `account`, reducing the
-   * total supply.
-   *
-   * Emits a {Transfer} event with `to` set to the zero address.
-   *
-   * Requirements
-   *
-   * - `account` cannot be the zero address.
-   * - `account` must have at least `amount` tokens.
-   */
   function _burn(address account, uint256 amount) internal {
     require(account != address(0), "BEP20: burn from the zero address");
 
@@ -129,19 +118,6 @@ contract ARM is IERC20 {
     emit Transfer(account, address(0), amount);
   }
 
-  /**
-   * @dev Sets `amount` as the allowance of `spender` over the `owner`s tokens.
-   *
-   * This is internal function is equivalent to `approve`, and can be used to
-   * e.g. set automatic allowances for certain subsystems, etc.
-   *
-   * Emits an {Approval} event.
-   *
-   * Requirements:
-   *
-   * - `owner` cannot be the zero address.
-   * - `spender` cannot be the zero address.
-   */
   function _approve(address owner, address spender, uint256 amount) internal {
     require(owner != address(0), "BEP20: approve from the zero address");
     require(spender != address(0), "BEP20: approve to the zero address");
@@ -150,12 +126,6 @@ contract ARM is IERC20 {
     emit Approval(owner, spender, amount);
   }
 
-  /**
-   * @dev Destroys `amount` tokens from `account`.`amount` is then deducted
-   * from the caller's allowance.
-   *
-   * See {_burn} and {_approve}.
-   */
   function _burnFrom(address account, uint256 amount) internal {
     _burn(account, amount);
     _approve(account, msg.sender, _allowances[account][msg.sender] - amount);

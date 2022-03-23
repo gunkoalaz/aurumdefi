@@ -200,7 +200,7 @@ contract LendToken is LendTokenInterface{
      * @dev This will overwrite the approval amount for `spender`
      *  and is subject to issues noted [here](https://eips.ethereum.org/EIPS/eip-20#approve)
      * @param spender The address of the account which may transfer tokens
-     * @param amount The number of tokens that are approved (-1 means infinite)
+     * @param amount The number of tokens that are approved
      */
     function approve(address spender, uint256 amount) external{
         address src = msg.sender;
@@ -212,7 +212,7 @@ contract LendToken is LendTokenInterface{
      * @notice Get the current allowance from `owner` for `spender`
      * @param owner The address of the account which owns the tokens to be spent
      * @param spender The address of the account which may transfer tokens
-     * @return The number of tokens allowed to be spent (-1 means infinite)
+     * @return The number of tokens allowed to be spent
      */
     function allowance(address owner, address spender) external view returns (uint256) {
         return transferAllowances[owner][spender];
@@ -300,7 +300,7 @@ contract LendToken is LendTokenInterface{
              * If there are no tokens minted:
              *  exchangeRate = initialExchangeRate
              */
-            return (initialExchangeRateMantissa);
+            return (initialExchangeRateMantissa);   //default is 1e18  ( 1 LendToken to 1 underlyingToken ) 
         } else {
             /*
              * Otherwise:
