@@ -1,5 +1,6 @@
 import React from "react"
 import './css/Header.css'
+import logo from '../logo.png'
 
 const Header = (props) => {
     let mainstate = props.mainstate
@@ -22,7 +23,10 @@ const Header = (props) => {
         <div className="header">
             <div className="hd-box">
                 <div className="logo">
-                    <a href='./'>Aurum DeFi</a>
+                    <a href='./'>
+                        <img src={logo} alt='aurum defi' style={{width: '4vw'}}/>
+                        <span className="m-3">Aurum DeFi</span>
+                    </a>
                 </div>
                 <div className="hd-space">
 
