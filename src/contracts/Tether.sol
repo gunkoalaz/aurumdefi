@@ -4,6 +4,10 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./library/SafeMath.sol";
 
+//
+// This is the test token . . not deploy in main net
+//
+
 contract Tether is IERC20 {
   using SafeMath for uint256;
 
