@@ -80,6 +80,23 @@ class Admin extends Component {
                 compStorage.methods._setMintGoldPause(false).send({from: accounts}).on('transactionHash', (hash) => {})
             }
         }
+        // LendToken function
+
+        const _setAdmin = () => {
+
+        }
+        const _reduceReserves = () => {
+
+        }
+        const _setReserveFactor = () => {
+
+        }
+        const _setInterestRateModel = () => {
+
+        }
+        const _setComptroller = () => {
+
+        }
 
         return (
             <div className='info'>
@@ -329,6 +346,81 @@ class Admin extends Component {
                                 onChange={this.handleInputChange}
                             />
                             <button className="btn btn-primary" onClick={_setMintGoldPause}>Submit</button>
+                        </div>
+                    </li>
+                </ul>
+                <h1>LendToken function</h1>
+                <ul>
+                    <label className="my-1 mr-2" htmlFor="selectedLendToken">Preference</label>
+                    <select className="custom-select my-1 mr-sm-2" name="selectedLendToken" onChange={this.handleInputChange}>
+                        <option>Choose...</option>
+                        {this.props.mainstate.markets.map( (element) => 
+                            <option key={element.index} value={element.contract}>{element.symbol}</option>
+                        )}
+                    </select>
+                    <li>
+                        <h5>_setAdmin</h5>
+                        <div className="form-group flex">
+                            <label htmlFor="_setAdmin">address</label>
+                            <input 
+                                type="text" 
+                                name="_setAdmin" 
+                                placeholder="0x.." 
+                                onChange={this.handleInputChange}
+                            />
+                            <button className="btn btn-primary" onClick={_setAdmin}>Submit</button>
+                        </div>
+                    </li>
+                    <li>
+                        <h5>_reduceReserves</h5>
+                        <div className="form-group flex">
+                            <label htmlFor="_reduceReserves">Number</label>
+                            <input 
+                                type="text" 
+                                name="_reduceReserves" 
+                                placeholder="value e18" 
+                                onChange={this.handleInputChange}
+                            />
+                            <button className="btn btn-primary" onClick={_reduceReserves}>Submit</button>
+                        </div>
+                    </li>
+                    <li>
+                        <h5>_setReserveFactor</h5>
+                        <div className="form-group flex">
+                            <label htmlFor="_setReserveFactor">Number</label>
+                            <input 
+                                type="text" 
+                                name="_setReserveFactor" 
+                                placeholder="value e18" 
+                                onChange={this.handleInputChange}
+                            />
+                            <button className="btn btn-primary" onClick={_setReserveFactor}>Submit</button>
+                        </div>
+                    </li>
+                    <li>
+                        <h5>_setInterestRateModel</h5>
+                        <div className="form-group flex">
+                            <label htmlFor="_setInterestRateModel">Address</label>
+                            <input 
+                                type="text" 
+                                name="_setInterestRateModel" 
+                                placeholder="0x...." 
+                                onChange={this.handleInputChange}
+                            />
+                            <button className="btn btn-primary" onClick={_setInterestRateModel}>Submit</button>
+                        </div>
+                    </li>
+                    <li>
+                        <h5>_setComptroller</h5>
+                        <div className="form-group flex">
+                            <label htmlFor="_setComptroller">Address</label>
+                            <input 
+                                type="text" 
+                                name="_setComptroller" 
+                                placeholder="0x...." 
+                                onChange={this.handleInputChange}
+                            />
+                            <button className="btn btn-primary" onClick={_setComptroller}>Submit</button>
                         </div>
                     </li>
                 </ul>

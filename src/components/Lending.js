@@ -88,6 +88,13 @@ const MainLending = (props) => {
     if(userRemainingCredits.isLessThan(0)){
         userRemainingCredits = 0
     }
+
+    function manualClaimReward() {
+        props.mainstate.comptrollerState.contract.methods.claimARMAllMarket(props.mainstate.account).send({from: props.mainstate.account}).on('transactionHash', (hash) => {
+            props.updateWeb3();
+        })
+    }
+
     // const test = () => {
     //     let borrower = '0x818D7848dC308520b931e7ad9DC93A7C18dfe557'.toString()
     //     // superState.markets[0].contract.methods.liquidateBorrow(borrower, superState.markets[1].contract._address).send({from: superState.account, value: '200000000000000000000'}).on('transactionHash', (hash) => {
@@ -103,9 +110,21 @@ const MainLending = (props) => {
     return(
         <div className='lending'>
             <div className='lending-header'>
-                <h2>Lending</h2>
-                <p>Aurum DeFi lending is open market to lend and borrow digital assets. The AURUM token can be minted by using digital asset collateral.</p>
-                <p>AURUM is a synthetic token which pegged with the price of real gold</p>
+                <div style={{width: '70%'}}>
+                    <h2>Lending</h2>
+                    <p>Aurum DeFi lending is open market to lend and borrow digital assets.</p> 
+                    <p>The AURUM token can be minted by using digital asset collateral.</p>
+                    <p>AURUM is a synthetic token which pegged with the price of real gold</p>
+                </div>
+                <div className='claim-reward-box'>
+                    <div>
+                        <h3>Your Reward</h3>
+                    </div>
+                    <div className='reward-value'>
+                        <p>{BigNumber(props.mainstate.comptrollerState.getArmAccrued).div(e18).toFormat(2)}</p>
+                        <button className='button' onClick={manualClaimReward}>Claim</button>
+                    </div>
+                </div>
             </div>
             <div className='user-info-box'>
                 <div className='user-info-supply'>

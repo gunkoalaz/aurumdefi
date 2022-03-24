@@ -209,6 +209,7 @@ class App extends Component {
             let aurumAllowance = await aurum.methods.allowance(this.state.account, aurumController._address).call()
             let liquidationIncentive = await compStorage.methods.liquidationIncentiveMantissa().call()
             let closeFactor = await compStorage.methods.closeFactorMantissa().call()
+            let getArmAccrued = await compStorage.methods.getArmAccrued(this.state.account).call()
 
             let comptrollerState = {
                 contract: comptroller,
@@ -221,6 +222,7 @@ class App extends Component {
                 goldBalance: goldBalance.toString(),
                 aurumAllowance: aurumAllowance.toString(),
                 getAssetsIn: getAssetsIn,
+                getArmAccrued: getArmAccrued,
                 liquidationIncentive: liquidationIncentive,
                 closeFactor: closeFactor,
             }

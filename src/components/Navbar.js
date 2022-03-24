@@ -1,6 +1,7 @@
 import React from "react"
 import './css/Navbar.css'
 import { Link } from "react-router-dom"
+import armlogo from "../armlogo.png"
 
 const e18 = 1000000000000000000
 // const MAX_UINT = "115792089237316195423570985008687907853269984665640564039457584007913129639935"
@@ -24,10 +25,14 @@ const Navbar = (props) => {
             </div>
             <div className="lt-space"></div>
             <div className="bottom">
-                <div>
-                    <p>${armPrice}</p>
-                    <div>BUY</div>
-
+                <div className="nav-footer-box">
+                    <div className="flex">
+                        <img src={armlogo} alt='armtoken' width={"20%"} height={'20%'} className={"m-1"}/>
+                        <p>${armPrice}</p>
+                    </div>
+                    <div className="flex">
+                        <button  onClick={(e) => {e.preventDefault(); window.location.href='http://google.com';}} className="button-buy">Buy ARM</button>
+                    </div>
                 </div>
             </div>
         </div>

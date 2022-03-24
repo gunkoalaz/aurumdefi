@@ -39,7 +39,7 @@
     margin: 2vw;
     width: auto;
     border: 0.2vw solid white;
-    background-color: rgb(97, 97, 97);
+    background-color: rgba(97, 97, 97, 0.452);
     border-radius: 2vw;
 }
 .liq-box h3{
@@ -55,7 +55,7 @@
     margin: 1vw;
     width: auto;
     border: 0.2vw solid rgb(126, 126, 126);
-    background-color: rgb(177, 70, 37);
+    background-color: rgba(68, 26, 13, 0.815);
     display: flex;
 }
 
@@ -67,10 +67,12 @@
 .liq-user-borrow{
     margin: auto;
     padding: 0.5vw;
+    color: rgb(255, 119, 119);
 }
 .liq-user-collateral{
     margin: auto;
     padding: 0.5vw;
+    color: rgb(159, 255, 199);
 }
 .liq-user-button{
     margin: auto;

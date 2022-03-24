@@ -7,7 +7,7 @@ const Header = (props) => {
     let connectButton
     let shortAddress
     if (mainstate.account !== '0x0') {
-        shortAddress = mainstate.account.substr(0,4)+".."+mainstate.account.substr(39,4)
+        shortAddress = mainstate.account.substr(0,5)+".."+mainstate.account.substr(38,4)
         connectButton = 
             <div>
                 <button className="button" onClick={props.disconnectMetamask}>{shortAddress}</button>

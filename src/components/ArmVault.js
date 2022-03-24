@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import './css/Main.css'
 import './css/ArmVault.css'
+import armlogo from '../armlogo.png'
 import Loading from './Loading.js'
 import Web3 from 'web3'
 
@@ -181,18 +182,17 @@ const MainArmVault = (props) => {
         claimRewardButton = <button className='button' onClick={claimReward}>Claim</button>
     }
 
-    const testFunction = () => {
-        //Set reward spendingDuration to 1 hr
-        stakingArmContract.methods.setRewardDurationSpending('1').send({from: props.mainstate.account}).on('transactionHash', (hash) => {
-            props.update()
-        })
-    }
+    // const testFunction = () => {
+    //     //Set reward spendingDuration to 1 hr
+    //     stakingArmContract.methods.setRewardDurationSpending('1').send({from: props.mainstate.account}).on('transactionHash', (hash) => {
+    //         props.update()
+    //     })
+    // }
 
 
     //Main ArmVault
     return(
         <div className='armvault'>
-            <button onClick={testFunction}>Test Function</button>
             <div className='armvault-header'>
                 <h1>Arm Vault</h1>
                 <p>ArmVault let you stake ARM to be the stake holder of the project</p>
@@ -202,6 +202,7 @@ const MainArmVault = (props) => {
                 <div className='vault-head'>
                     <h3>ARM vault</h3>
                 </div>
+                <img src={armlogo} className="logopic" alt="armtokens"></img>
                 <div className='vault-body'>
                     <div className='vault-info'>
                         <div>

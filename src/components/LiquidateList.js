@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import LendToken from '../truffle_abis/LendToken.json'
+import LendREI from '../truffle_abis/LendREI.json'
 import AurumController from '../truffle_abis/AurumController.json'
 
 const BigNumber = require('bignumber.js');
@@ -49,7 +50,8 @@ const LiquidateList = (props) => {
                 const selectedBorrowSymbol = await lendToken.methods.symbol().call()
                 
                 if(selectedBorrowSymbol === 'lendREI'){
-                    lendToken.methods.liquidateBorrow(props.account, selectedCollateral).send({from: props.mainstate.account, value: amount, gas: 2000000}).on('transactionHash', (hash) => {
+                    const lendREI = new web3.eth.Contract(LendREI.abi, selectedBorrow)
+                    lendREI.methods.liquidateBorrow(props.account, selectedCollateral).send({from: props.mainstate.account, value: amount, gas: 2000000}).on('transactionHash', (hash) => {
                         props.update()
                     })
                 } else { 
@@ -110,11 +112,14 @@ const LiquidateList = (props) => {
             }
         }
         if(borrowMaxAmount.div(liquidationIncentive).times(e18).isGreaterThan(collateralMaxAmount)){
-            borrowMaxAmount = collateralMaxAmount
+            payAmount = collateralMaxAmount.div(liquidationIncentive).toFixed(6) - 0.000001
+            getAmount = collateralMaxAmount.div(collateralExchangeRate).div(collateralPrice).times(borrowPrice) // revert
+            getAmount = getAmount.toFixed(6)
+        } else {
+            payAmount = borrowMaxAmount.div(e18).toFixed(6) - 0.000001
+            getAmount = BigNumber(payAmount).times(liquidationIncentive).div(e18).times(borrowPrice).div(collateralPrice).times(e18).div(collateralExchangeRate)
+            getAmount = getAmount.toFixed(6)
         }
-        payAmount = borrowMaxAmount.div(e18).toFixed(6) - 0.000001
-        getAmount = BigNumber(payAmount).times(liquidationIncentive).div(e18).times(borrowPrice).div(collateralPrice).times(e18).div(collateralExchangeRate)
-        getAmount = getAmount.toFixed(6)
     }
 
     return (

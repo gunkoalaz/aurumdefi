@@ -3,7 +3,6 @@
     position:absolute;
     top: 5vw;
     width: 10vw;
-    height: full;
     z-index: 3;
 }
 .navbar{
@@ -48,4 +47,31 @@
     .lt-tab{
         display: none;
     }
+}
+
+.bottom{
+    position: absolute;
+    width: 100%;
+    margin-top: 5vw;
+}
+
+.nav-footer-box{
+    margin-left: 1vw;
+    padding: 1vw;
+    border-radius: 2vw;
+    opacity: 0.8;
+    font-size: 1.2vw;
+    background-color: orange;
+}
+
+.nav-footer-box p{
+    justify-self: right;
+    margin: auto;
+}
+.button-buy {
+    margin: auto;
+    margin-top: 1vw;
+    border: 0.2vw solid #c3e9ff;
+    border-radius: 1vw;
+    background-color: gold;
 }

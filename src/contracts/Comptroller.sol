@@ -370,6 +370,7 @@ contract Comptroller is ComptrollerInterface {
         emit NewComptrollerCalculation (oldCompCalculate, newCompCalculate);
     }
 
+    // Claim ARM function
 
     function claimARMAllMarket(address holder) external {
         return claimARM(holder, compStorage.getAllMarkets());

@@ -8,6 +8,12 @@
     animation-name: fadeup;
     animation-duration: 0.5s;
 }
+.logopic {
+    position: relative;
+    width: 7vw;
+    top: -5vw;
+    left: -30vw;
+}
 .armvault-header{
     width: 100%;
 }
@@ -17,12 +23,12 @@
 
 
 .vault{
+    position:static;
     border: 0.12vw solid black;
     box-shadow: 0.5vw 0.2vw rgb(36, 36, 36);
     width: 80%;
     border-radius: 3vw;
-    background-color:rgb(182, 132, 26);
-    overflow: hidden;
+    background-color:rgb(182, 132, 26 , 0.9);
 }
 .vault-body{
     width: 100%;
@@ -41,6 +47,8 @@
 .vault-head{
     padding: 0.5vw;
     background-color: gold;
+    border-top-left-radius: 3vw;
+    border-top-right-radius: 3vw;
 }
 .vault-head h3{
     font-size: 2vw;

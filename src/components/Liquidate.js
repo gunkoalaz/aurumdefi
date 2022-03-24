@@ -42,7 +42,6 @@ const MainLiquidate = (props) => {
                 <p>Liquidator will receive the liquidating bounty depends on the position size and borrower collateral tokens</p>
                 <p>'Close Factor' is the maximum percentage of 'Borrowed asset' can be liquidated</p>
                 <p>'Liquidation Bounty' is the benefit that liquidator will receive depends on how big is the closed position</p>
-                <button onClick={props.loadLiquidateList}>Load Liquidate</button>
             </div>
             <div className={'liq-info'}>
                 <div className={'liq-info-closefactor'}>
@@ -62,6 +61,7 @@ const MainLiquidate = (props) => {
                     </p>
                 </div>
             </div>
+                <button className={'button'}onClick={props.loadLiquidateList}>Load list</button>
             <div className={'liq-box'}>
                 <div>
                     {content}
