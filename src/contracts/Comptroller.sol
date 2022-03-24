@@ -27,10 +27,9 @@ contract Comptroller is ComptrollerInterface {
     //
     address admin;
     address pendingAdmin;
-    address comptrollerStorageAddress;                      //Refer to ComptrollerStorage contract
-    ComptrollerStorage compStorage;
-    ComptrollerCalculation compCalculate;
-    AurumControllerInterface aurumController;
+    ComptrollerStorage public compStorage;
+    ComptrollerCalculation public compCalculate;
+    AurumControllerInterface public aurumController;
 
     address public treasuryGuardian;        //Guardian of the treasury (not the galaxy :P)
     address public treasuryAddress;         //Address
