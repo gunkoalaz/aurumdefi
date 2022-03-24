@@ -1,9 +1,5 @@
 import React, {Component} from 'react'
 import Loading from './Loading.js'
-import Web3 from 'web3'
-import Comptroller from '../truffle_abis/Comptroller.json'
-import CompStorage from '../truffle_abis/ComptrollerStorage.json'
-import CompCalculate from '../truffle_abis/ComptrollerCalculation.json'
 
 class Admin extends Component {
     constructor(props){
@@ -19,9 +15,7 @@ class Admin extends Component {
         this.setState({[name]: value})
     }
     render() {
-        const web3 = window.web3
         const accounts = this.props.mainstate.account
-        const networkId = this.props.mainstate.networkId
         const comptroller = this.props.mainstate.comptrollerState.contract
         const compStorage = this.props.mainstate.comptrollerState.storage
 
