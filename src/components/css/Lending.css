@@ -307,4 +307,26 @@
     margin:auto;
     font-size: 1.3vw;
 }
+.asset-number p {
+    font-size: 1vw;
+    color: rgb(151, 151, 151);
+}
 
+.asset-number-negative h5{
+    margin:auto;
+    font-size: 1.3vw;
+    color: red;
+}
+.asset-number-negative p {
+    font-size: 1vw;
+    color: rgb(151, 151, 151);
+}
+.asset-number-positive h5{
+    margin:auto;
+    font-size: 1.3vw;
+    color: rgb(21, 255, 0);
+}
+.asset-number-positive p {
+    font-size: 1vw;
+    color: rgb(151, 151, 151);
+}

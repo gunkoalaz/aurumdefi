@@ -18,11 +18,12 @@
 
 .mainbox h1{
     color: bisque;
+    margin: auto;
 }
 .mainbox p{
+    margin: auto;
     color: whitesmoke;
 }
-
 .button{
     background-color: rgb(125, 133, 250);
     font-weight: bold;

@@ -210,6 +210,7 @@ class App extends Component {
             let liquidationIncentive = await compStorage.methods.liquidationIncentiveMantissa().call()
             let closeFactor = await compStorage.methods.closeFactorMantissa().call()
             let getArmAccrued = await compStorage.methods.getArmAccrued(this.state.account).call()
+            let totalMintedAURUM = await aurum.methods.totalSupply().call()
 
             let comptrollerState = {
                 contract: comptroller,
@@ -225,6 +226,7 @@ class App extends Component {
                 getArmAccrued: getArmAccrued,
                 liquidationIncentive: liquidationIncentive,
                 closeFactor: closeFactor,
+                totalMintedAURUM: totalMintedAURUM,
             }
             this.setState({comptrollerState})
 
@@ -280,6 +282,7 @@ class App extends Component {
             let borrowBalanceStored = await lendToken.methods.borrowBalanceStored(this.state.account).call()
             let membership = await compStorage.methods.checkMembership(this.state.account, lendToken._address).call()
             let allowance = await lendToken.methods.allowance(this.state.account, lendToken._address).call()
+            let aurumSpeeds = await compStorage.methods.getAurumSpeeds(lendToken._address).call()
 
 
             //Underlying parameters
@@ -340,6 +343,8 @@ class App extends Component {
                 totalReserves: totalReserves.toString(),
                 cash: getCash.toString(),
                 borrowCaps: borrowCaps.toString(),
+
+                aurumSpeeds: aurumSpeeds.toString(),
             }
             markets.push(marketsInfo)
         }

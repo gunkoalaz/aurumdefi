@@ -159,7 +159,7 @@ const MainLending = (props) => {
                         <thead className='table-head'>
                             <tr>
                                 <th> Assets </th>
-                                <th> {page==='supply' ? 'APR'                   : 'Interest'} </th>
+                                <th> APR </th>
                                 <th> {page==='supply' ? 'Your Deposit'          : 'Pool cash'} </th>
                                 <th> {page==='supply' ? 'Your wallet balance'   : 'Your Debt'} </th>
                                 <th> {page==='supply' ? 'Collateral'            : 'Wallet Balance'} </th>

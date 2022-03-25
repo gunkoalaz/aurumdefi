@@ -464,11 +464,22 @@ const AssetList = (props) => {
     let deltaTime = props.mainstate.time - props.markets.accrualTimestamp
 
     // APR and interest COMPLETE, NO BUG calculation
-    let apr = props.markets.supplyRatePerSeconds / e18 * secToYear  * 100
-    apr = apr.toFixed(2)
+    let apr = BigNumber(props.markets.supplyRatePerSeconds).div(e18).times(secToYear).times(100)
+    let totalSupply = BigNumber(props.markets.cash).plus(props.markets.totalBorrows).minus(props.markets.totalReserves)
+    let supplyRewardAPR = BigNumber(props.markets.aurumSpeeds).times(secToYear).div(totalSupply).div(props.markets.underlyingPrice).times(props.mainstate.price.armPrice).times(100)
+    let totalSupplyAPR = supplyRewardAPR.plus(apr)
 
-    let interest = props.markets.borrowRatePerSeconds / e18 * secToYear  * 100
-    interest = interest.toFixed(2)
+    let interest = BigNumber(props.markets.borrowRatePerSeconds).div(e18).times(secToYear).times(100)
+    let borrowRewardAPR = BigNumber(props.markets.aurumSpeeds).times(secToYear).div(props.markets.totalBorrows).div(props.markets.underlyingPrice).times(props.mainstate.price.armPrice).times(100)
+    let totalBorrowAPR = borrowRewardAPR.minus(interest)
+
+    // apr = apr.toFormat(2)
+    // supplyRewardAPR = supplyRewardAPR.toFormat(2)
+    // totalSupplyAPR = totalSupplyAPR.toFormat(2)
+
+    // interest = interest.toFormat(2)
+    // borrowRewardAPR = borrowRewardAPR.toFormat(2)
+    // totalBorrowAPR = totalBorrowAPR.toFormat(2)
 
 
     // Should be calculate to Wei by parseInt (remove all integer)
@@ -551,8 +562,9 @@ const AssetList = (props) => {
                         <img src={logo} alt='tokens' className='logoimg' />
                         <h3>{props.markets.underlyingSymbol}</h3>    
                     </td>
-                    <td className='asset-number'>
-                        <h5>{props.page === 'supply' ? apr : interest} %</h5>
+                    <td className={props.page === 'borrow' && totalBorrowAPR.isLessThan(0) ? 'asset-number-negative' : 'asset-number-positive'}>
+                        <h5>{props.page === 'supply' ? totalSupplyAPR.toFormat(2) : totalBorrowAPR.toFormat(2)} %</h5>
+                        <p>{props.page === 'supply' ? '('+apr.toFormat(2)+'+'+ supplyRewardAPR.toFormat(2)+')' : '('+borrowRewardAPR.toFormat(2)+'-'+interest.toFormat(2)+')'}</p>
                     </td>
                     <td className='asset-number'>
                         <h5>{props.page === 'supply' ? updateDeposit : showAvailableBorrow}</h5>
