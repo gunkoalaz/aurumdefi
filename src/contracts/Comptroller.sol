@@ -739,7 +739,6 @@ contract ComptrollerStorage {
     //
     //  ARM distribution variables
     //
-    uint public aurumRate;                              //distributing rate ARM per block.
     mapping(address => uint) public aurumSpeeds;        //The portion of aurumRate that each market currently receives
     function getAurumSpeeds(address lendToken) external view returns(uint) { return aurumSpeeds[lendToken];}
 
