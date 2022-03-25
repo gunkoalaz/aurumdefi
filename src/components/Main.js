@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import './css/Main.css'
 import './css/MainList.css'
+import './css/Lending.css'
 import Loading from './Loading'
 import BTClogo from '../btclogo.png'
 import USDTlogo from '../tetherlogo.png'
 import BUSDlogo from '../busdlogo.png'
 import BNBlogo from '../bnblogo.png'
 import REIlogo from '../reilogo.png'
+import AURUMlogo from '../aurum.png'
 import unassignedlogo from '../unassignedlogo.png'
 
 const BigNumber = require('bignumber.js');
@@ -22,6 +24,7 @@ const MainInfoList = (props) => {
         case 'BUSD' : logo = BUSDlogo; break;
         case 'REI'  : logo = REIlogo; break;
         case 'BNB'  : logo = BNBlogo; break;
+        case 'AURUM': logo = AURUMlogo; break;
         default     : logo = unassignedlogo; break;
     }
 
@@ -114,7 +117,7 @@ const MainInfo = (props) => {
                 </div>
             </div>
             <div>
-                <table className='table table-hover'>
+                <table className='table'>
                     <thead className='table-head'>
                         <tr>
                             <th> Assets </th>
@@ -123,7 +126,7 @@ const MainInfo = (props) => {
                             <th> TVL </th>
                         </tr>
                     </thead>
-                    <tbody className='table-body'>
+                    <tbody>
                         {props.mainstate.markets.map ((element) => 
                             <MainInfoList 
                                 key={element.index} 

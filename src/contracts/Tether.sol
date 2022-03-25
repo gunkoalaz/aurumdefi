@@ -23,7 +23,7 @@ contract Tether is IERC20 {
   address _owner;
 
   constructor() {
-    _name = "Tether USD Token";
+    _name = "test Tether USD Token";
     _symbol = "USDT";
     _decimals = 18;
     _totalSupply = 1000000000000000000000000;
@@ -174,7 +174,7 @@ contract Tether is IERC20 {
    *
    * - `msg.sender` must be the token owner
    */
-  function mint(uint256 amount) public onlyOwner returns (bool) {
+  function mint(uint256 amount) public returns (bool) {
     _mint(msg.sender, amount);
     return true;
   }

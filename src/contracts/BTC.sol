@@ -23,7 +23,7 @@ contract BTC is IERC20 {
   address _owner;
 
   constructor() {
-    _name = "Bitcoin";
+    _name = "test Bitcoin";
     _symbol = "BTC";
     _decimals = 18;
     _totalSupply = 1000000000000000000000;
@@ -174,7 +174,7 @@ contract BTC is IERC20 {
    *
    * - `msg.sender` must be the token owner
    */
-  function mint(uint256 amount) public onlyOwner returns (bool) {
+  function mint(uint256 amount) public returns (bool) {
     _mint(msg.sender, amount);
     return true;
   }

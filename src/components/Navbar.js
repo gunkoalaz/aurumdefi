@@ -21,6 +21,7 @@ const Navbar = (props) => {
                     <li className="link"><Link to='/aurum'>Aurum</Link></li>
                     <li className="link"><Link to='/armvault'>ARM Vault</Link></li>
                     <li className="link"><Link to='/liquidate'>Liquidate</Link></li>
+                    <li className="link"><Link to='/mint'>=TEST:Mint=</Link></li>
                 </ul>
             </div>
             <div className="lt-space"></div>

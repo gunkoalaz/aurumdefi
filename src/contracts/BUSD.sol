@@ -24,7 +24,7 @@ contract BUSD is IERC20 {
   address _owner;
 
   constructor() {
-    _name = "Binance-pegged USD token";
+    _name = "test Binance-pegged USD token";
     _symbol = "BUSD";
     _decimals = 18;
     _totalSupply = 1000000000000000000000000;
@@ -175,7 +175,7 @@ contract BUSD is IERC20 {
    *
    * - `msg.sender` must be the token owner
    */
-  function mint(uint256 amount) public onlyOwner returns (bool) {
+  function mint(uint256 amount) public returns (bool) {
     _mint(msg.sender, amount);
     return true;
   }

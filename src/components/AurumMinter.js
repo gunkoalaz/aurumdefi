@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import { useState } from "react"
 import './css/AurumMinter.css'
+import AURUMlogo from '../aurum.png'
 import Loading from './Loading.js'
 import Web3 from "web3"
 
@@ -265,10 +266,10 @@ const AurumMinterMain = (props) => {
 
             <div className='minting-box'>
                 <div className='mint-topic'>
-                    <h2>
-                        AURUM Information
-                    </h2>
-                    <p>Aurum is synthetic asset which algorithmic pegged with real 'Gold' price in unit of USD/ troy ounce. Minter should have deposited assets to get 'Credits' for minting Aurum. </p>
+                    <h1>
+                        AURUM <img src={AURUMlogo} alt='aurum' height='100vw' />
+                    </h1>
+                    <p>AURUM is synthetic asset which algorithmic pegged with real 'Gold' price in unit of USD/ troy ounce. Minter should have deposited assets to get 'Credits' for minting Aurum. </p>
                     <p style={{color: 'red'}}>Warning :: The collateral asset can be liquidated if the user position is in liquidatable position </p>
 
                 </div>

@@ -11,6 +11,7 @@ import AurumMinter from './AurumMinter.js'
 import ArmVault from './ArmVault.js'
 import Liquidate from './Liquidate.js'
 import AdminInterface from './AdminInterface.js'
+import MintTestTokens from './MintTestTokens.js'
 
 //Blockchain components
 import Web3 from 'web3';
@@ -571,6 +572,7 @@ class App extends Component {
                         <Route path='/armvault' element={<ArmVault mainstate={this.state} updateWeb3={this.updateWeb3}/>} />
                         <Route path='/liquidate' element={<Liquidate mainstate={this.state} updateWeb3={this.updateWeb3} loadLiquidateList={this.loadLiquidateList}/>} />
                         <Route path='/admin' element={<AdminInterface mainstate={this.state}/>} />
+                        <Route path='/mint' element={<MintTestTokens mainstate={this.state}/>} />
                     </Routes>
                 </BrowserRouter>
             </div>
