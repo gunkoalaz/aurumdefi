@@ -1,27 +1,31 @@
 .main-info-top{
-    margin: 2vw;
-    margin-bottom: 0.4vw;
+    margin: 1vh;
 }
-
+@media screen and (min-width: 1000px){ /*Hide Navbar*/
+    .main-info-bottom{
+        display: flex;
+    }
+    .main-items{
+        display: flex;
+    }
+}
 .main-info-bottom{
-    margin: 2vw;
-    margin-top: 0vw;
-    display: flex;
+    margin: 1vh;
+    margin-top: 0vh;
 }
 .main-items{
-    margin: 0.2vw;
-    margin-top: 0vw;
-    width: 100%;
+    margin: auto;
+    margin-top: 1vh;
     padding: 2vw;
     background-color: rgb(190, 120, 70, 0.8);
     /* border: 0.2vw solid rgb(218, 137, 16); */
     border-radius: 2vw;
 }
 .main-items h3{
-    font-size: 2.5vw;
+    font-size: 4vh;
 }
 .main-items p{
-    font-size: 2.2vw;
+    font-size: 4vh;
 }
 
 .tvl {

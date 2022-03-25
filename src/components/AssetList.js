@@ -566,10 +566,10 @@ const AssetList = (props) => {
                         <h5>{props.page === 'supply' ? totalSupplyAPR.toFormat(2) : totalBorrowAPR.toFormat(2)} %</h5>
                         <p>{props.page === 'supply' ? '('+apr.toFormat(2)+'+'+ supplyRewardAPR.toFormat(2)+')' : '('+borrowRewardAPR.toFormat(2)+'-'+interest.toFormat(2)+')'}</p>
                     </td>
-                    <td className='asset-number'>
+                    <td className='asset-number mobile'>
                         <h5>{props.page === 'supply' ? updateDeposit : showAvailableBorrow}</h5>
                     </td>
-                    <td className='asset-number'>
+                    <td className='asset-number mobile'>
                         <h5>{props.page === 'supply' ? displayBalance : updateDebt}</h5>
                     </td>
                     <td>

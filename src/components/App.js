@@ -554,9 +554,9 @@ class App extends Component {
         // })
         
         return(
-            <div style={{position:'relative', padding:'0px', flexDirection:'row'}}>
-                <div className='particle' style={{position:'fixed'}}>
-                    {<ParticleSettings/> }
+            <div style={{height: '100vh'}}>
+                <div style={{position: 'fixed'}}>
+                    <ParticleSettings/>
                 </div>
                 <BrowserRouter>
                     <Navbar price={this.state.price}/>

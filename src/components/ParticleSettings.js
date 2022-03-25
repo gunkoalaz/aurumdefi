@@ -6,7 +6,8 @@ render(){
     return (
         <div>
             <Particles
-                height='100vw' width='100vw'
+                height='100vh'
+                width='100vw'
                 id='tsparticles'
                 options={{
                     background: {

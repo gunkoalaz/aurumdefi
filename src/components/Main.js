@@ -66,10 +66,10 @@ const MainInfo = (props) => {
         totalCash[i] = allMarkets[i].cash
         price[i] = allMarkets[i].underlyingPrice
         
-        console.log('Borrows '+totalBorrows[i])
-        console.log('Reserve '+totalReserves[i])
-        console.log('Cash    '+totalCash[i])
-        console.log('Price   '+price[i])
+        // console.log('Borrows '+totalBorrows[i])
+        // console.log('Reserve '+totalReserves[i])
+        // console.log('Cash    '+totalCash[i])
+        // console.log('Price   '+price[i])
         addTVL[i] = BigNumber(totalCash[i]).plus(totalBorrows[i]).minus(totalReserves[i]).times(price[i]).div(e18).div(e18)
 
         tvl = tvl.plus(addTVL[i])
@@ -168,7 +168,7 @@ class Main extends Component {
         return (
             <div>
                 <div className='mainbox'>
-                    <h1>Welcome to AurumDeFi</h1>
+                    <h1 style={{fontSize: '4vh'}}>Welcome to AurumDeFi</h1>
                     {content}
                 </div>
             </div>

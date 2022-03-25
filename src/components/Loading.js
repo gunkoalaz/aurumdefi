@@ -7,7 +7,7 @@ const Loading = () => {
             <div>
                 <br></br>
                 <h1>Loading data..</h1>
-                <div className="spinner-border text-warning m-5" style={{width: '10vw', height: '10vw'}} role="status">
+                <div className="spinner-border text-warning m-5" style={{width: '10vh', height: '10vh'}} role="status">
                     <span className="sr-only m-5">Loading...</span>
                 </div>
                 <p>please login with metamask.</p>

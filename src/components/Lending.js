@@ -112,9 +112,9 @@ const MainLending = (props) => {
             <div className='lending-header'>
                 <div style={{width: '70%'}}>
                     <h2>Lending</h2>
-                    <p>Aurum DeFi lending is open market to lend and borrow digital assets.</p> 
+                    {/* <p>Aurum DeFi lending is open market to lend and borrow digital assets.</p> 
                     <p>The AURUM token can be minted by using digital asset collateral.</p>
-                    <p>AURUM is a synthetic token which pegged with the price of real gold</p>
+                    <p>AURUM is a synthetic token which pegged with the price of real gold</p> */}
                 </div>
                 <div className='claim-reward-box'>
                     <div>
@@ -160,8 +160,8 @@ const MainLending = (props) => {
                             <tr>
                                 <th> Assets </th>
                                 <th> APR </th>
-                                <th> {page==='supply' ? 'Your Deposit'          : 'Pool cash'} </th>
-                                <th> {page==='supply' ? 'Your wallet balance'   : 'Your Debt'} </th>
+                                <th className='mobile'> {page==='supply' ? 'Your Deposit'          : 'Pool cash'} </th>
+                                <th className='mobile'> {page==='supply' ? 'Your wallet balance'   : 'Your Debt'} </th>
                                 <th> {page==='supply' ? 'Collateral'            : 'Wallet Balance'} </th>
                             </tr>
                         </thead>

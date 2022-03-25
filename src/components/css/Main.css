@@ -2,12 +2,12 @@
 .mainbox{
     z-index: 1;
     position: absolute;
-    top: 7vw;
+    top: 10vh;
     left: 1vw;
     right: 1vw;
     margin: 0px;
     text-align: center;
-    font-size: 1vw;
+    font-size: 2vh;
 }
 
 @media screen and (min-width: 1000px){ /*Hide Navbar*/
@@ -27,12 +27,11 @@
 .button{
     background-color: rgb(125, 133, 250);
     font-weight: bold;
-    font-size: 1.1vw;
-    width: 7vw;
+    font-size: 2vh;
+    width: 15vh;
     border: 0.1vw solid black;
     border-radius: 5vw;
     box-shadow:0.1vw 0.2vw rgb(43, 43, 43);
-    margin: 1vw;
 }
 @keyframes buttonhover {
     0% {
@@ -50,8 +49,8 @@
 .button-inactive{
     background-color: rgb(169, 169, 197);
     font-weight: bold;
-    font-size: 1.1vw;
-    width: 7vw;
+    font-size: 2vh;
+    width: 15vh;
     color: gray;
     border: 0.1vw solid black;
     border-radius: 5vw;
@@ -71,7 +70,7 @@
     margin:auto;
     padding-right: 1vw;
     margin-bottom: 1vw;
-    font-size: 2vw;
+    font-size: 2.2vh;
 }
 
 .maxbutton{

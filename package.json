@@ -18,7 +18,7 @@
     "identicon.js": "^2.3.3",
     "nodejs": "^0.0.0",
     "react": "^16.14.0",
-    "react-bootstrap": "^1.6.4",
+    "react-bootstrap": "^2.2.0",
     "react-dom": "16.8.4",
     "react-particles-js": "^3.5.3",
     "react-router-dom": "^6.2.2",

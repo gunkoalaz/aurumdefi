@@ -92,6 +92,7 @@ contract AurumTreasury {
             if(compareStrings(allMarkets[i].symbol(), "lendRei")) {
                 // LendREI token  underlying = REI
                 balance = payable(address(this)).balance;
+                
             } else {
                 ERC20 underlying = ERC20(allMarkets[i].underlying());
                 balance = underlying.balanceOf(address(this));
