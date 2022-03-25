@@ -184,13 +184,13 @@ class Admin extends Component {
                     <li>
                         <h5>_setAurumSpeed</h5>
                         <div className="form-group flex">
-                            <label htmlFor="_setAurumSpeed2">Address</label>
-                            <input 
-                                type="text" 
-                                name="_setAurumSpeed1" 
-                                placeholder="0x.. LendToken" 
-                                onChange={this.handleInputChange}
-                            />
+                            <label className="my-1 mr-2" htmlFor="_setAurumSpeed1">LendToken</label>
+                            <select className="custom-select my-1 mr-sm-2" name="_setAurumSpeed1" onChange={this.handleInputChange}>
+                                <option>Choose...</option>
+                                {this.props.mainstate.markets.map( (element) => 
+                                    <option key={element.index} value={element.contract._address}>{element.symbol}</option>
+                                )}
+                            </select>
                             <label htmlFor="_setAurumSpeed2">Number</label>
                             <input 
                                 type="text" 
@@ -233,13 +233,13 @@ class Admin extends Component {
                     <li>
                         <h5>_setCollateralFactor</h5>  <p>Set each LendToken which can be used as collateral credits</p>
                         <div className="form-group flex">
-                            <label htmlFor="_setCollateralFactor1">Address</label>
-                            <input 
-                                type="text" 
-                                name="_setCollateralFactor1" 
-                                placeholder="0x.. LendTokenAddress" 
-                                onChange={this.handleInputChange}
-                            />
+                            <label className="my-1 mr-2" htmlFor="_setCollateralFactor1">LendToken</label>
+                            <select className="custom-select my-1 mr-sm-2" name="_setCollateralFactor1" onChange={this.handleInputChange}>
+                                <option>Choose...</option>
+                                {this.props.mainstate.markets.map( (element) => 
+                                    <option key={element.index} value={element.contract._address}>{element.symbol}</option>
+                                )}
+                            </select>
                             <label htmlFor="_setCollateralFactor2">Number</label>
                             <input 
                                 type="text" 
@@ -279,13 +279,13 @@ class Admin extends Component {
                     <li>
                         <h5>_setMarketBorrowCaps</h5>
                         <div className="form-group flex">
-                            <label htmlFor="_setMarketBorrowCaps1">Address</label>
-                            <input 
-                                type="text" 
-                                name="_setMarketBorrowCaps1" 
-                                placeholder="0x..LendToken Address" 
-                                onChange={this.handleInputChange}
-                            />
+                            <label className="my-1 mr-2" htmlFor="_setMarketBorrowCaps1">LendToken</label>
+                            <select className="custom-select my-1 mr-sm-2" name="_setMarketBorrowCaps1" onChange={this.handleInputChange}>
+                                <option>Choose...</option>
+                                {this.props.mainstate.markets.map( (element) => 
+                                    <option key={element.index} value={element.contract._address}>{element.symbol}</option>
+                                )}
+                            </select>
                             <label htmlFor="_setMarketBorrowCaps2">Number</label>
                             <input 
                                 type="text" 
@@ -351,7 +351,7 @@ class Admin extends Component {
                 </ul>
                 <h1>LendToken function</h1>
                 <ul>
-                    <label className="my-1 mr-2" htmlFor="selectedLendToken">Preference</label>
+                    <label className="my-1 mr-2" htmlFor="selectedLendToken">LendToken</label>
                     <select className="custom-select my-1 mr-sm-2" name="selectedLendToken" onChange={this.handleInputChange}>
                         <option>Choose...</option>
                         {this.props.mainstate.markets.map( (element) => 

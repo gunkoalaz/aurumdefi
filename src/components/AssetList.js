@@ -6,8 +6,8 @@ import USDTlogo from '../tetherlogo.png'
 import BUSDlogo from '../busdlogo.png'
 import BNBlogo from '../bnblogo.png'
 import REIlogo from '../reilogo.png'
-
 import unassignedlogo from '../unassignedlogo.png'
+
 import './css/Popup.css'
 import Web3 from 'web3'
 const BigNumber = require('bignumber.js');
