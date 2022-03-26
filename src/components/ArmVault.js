@@ -198,29 +198,26 @@ const MainArmVault = (props) => {
                 <p>ArmVault let you stake ARM to be the stake holder of the project</p>
                 <p>Benefit included governance voting, yield aggregate</p>
             </div>
+            <div className='logopic-container'>
+                <img src={armlogo} className="logopic" alt="armtokens"></img>
+            </div>
             <div className='vault'>
                 <div className='vault-head'>
                     <h3>ARM vault</h3>
                 </div>
-                <img src={armlogo} className="logopic" alt="armtokens"></img>
                 <div className='vault-body'>
                     <div className='vault-info'>
-                        <div>
-                            <h1>Vault ARM staked</h1>
-                            <p>{getTotalStakedARM}</p>
-                        </div>
-                        <div>
-                            <h1>Available reward</h1>
-                            <p>{updateTotalAvailableReward} BUSD</p>
-                        </div>
-                        <div>
-                            <h1>Staking APR</h1>
-                            <p>{APR}%</p>
-                        </div>
-                        <div>
-                            <h1>Reward distribution index</h1>
-                            <p>{rewardDistributionIndex} Days</p>
-                        </div>
+                        <h1>Vault ARM staked</h1>
+                        <p>{getTotalStakedARM}</p>
+
+                        <h1>Available reward</h1>
+                        <p>{updateTotalAvailableReward} BUSD</p>
+
+                        <h1>Staking APR</h1>
+                        <p>{APR}%</p>
+                        
+                        <h1>Reward distribution index</h1>
+                        <p>{rewardDistributionIndex} Days</p>
                     </div>
                     <div className='vault-stake'>
                         <div className='vault-stake-component'>
