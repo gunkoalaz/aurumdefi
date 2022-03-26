@@ -44,7 +44,7 @@ const MainLiquidate = (props) => {
                 <p>'Liquidation Bounty' is the benefit that liquidator will receive depends on how big is the closed position</p>
             </div>
             <div className={'liq-info'}>
-                <div className={'liq-info-closefactor'}>
+                <div className={'liq-info-closefactor full'}>
                     <h3>
                         Close Factor
                     </h3>
@@ -52,7 +52,7 @@ const MainLiquidate = (props) => {
                         {BigNumber(props.mainstate.comptrollerState.closeFactor).div(e18).times(100).toFormat(2)} %
                     </p>
                 </div>
-                <div className={'liq-info-liquidincentive'}>
+                <div className={'liq-info-liquidincentive full'}>
                     <h3>
                         Liquidation Bounty
                     </h3>

@@ -12,7 +12,7 @@
 
 @media screen and (min-width: 1000px){ /*Hide Navbar*/
     .mainbox{
-        left: 11vw;
+        left: 21vh;
     }
 }
 

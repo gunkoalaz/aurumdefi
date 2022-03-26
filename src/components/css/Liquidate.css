@@ -1,23 +1,24 @@
 .liq-header h3{
-    font-size: 2vw;
+    font-size: 4vh;
     color: beige;
     font-weight: bold;
 }
 .liq-header p{
-    font-size: 1vw;
+    font-size: 2.2vh;
     color: white;
 }
 
 .liq-info {
     margin: auto;
-    display: flex;
+    display: block;
+    margin-top: 2vh;
 }
 .liq-info h3{
-    font-size: 2vw;
+    font-size: 3vh;
     color: burlywood;
 }
 .liq-info p{
-    font-size: 2.5vw;
+    font-size: 2.5vh;
     color: aliceblue;
 }
 .liq-info-closefactor{
@@ -41,27 +42,28 @@
     border: 0.2vw solid white;
     background-color: rgba(97, 97, 97, 0.452);
     border-radius: 2vw;
+    min-height: 30vh;
 }
 .liq-box h3{
-    font-size: 2vw;
+    font-size: 2vh;
     color: azure;
 }
 .liq-box p{
-    font-size: 1.2vw;
+    font-size: 2vh;
     color: azure;
 }
 
 .liq-user-box{
-    margin: 1vw;
+    margin: 1vh;
     width: auto;
     border: 0.2vw solid rgb(126, 126, 126);
     background-color: rgba(68, 26, 13, 0.815);
-    display: flex;
+    display: block;
 }
 
 .liq-user-user{
     margin:auto;
-    padding: 0.5vw;
+    padding: 1vh;
     
 }
 .liq-user-borrow{
@@ -77,4 +79,22 @@
 .liq-user-button{
     margin: auto;
     padding: 0.5vw;
+}
+
+.full {
+    margin: 1vh;
+    width: auto;
+}
+
+
+@media screen and (min-width: 1000px){ /*Hide Navbar*/
+    .liq-info{
+        display: flex;
+    }
+    .full {
+        width: 100%;
+    }
+    .liq-user-box{
+        display: flex;
+    }
 }

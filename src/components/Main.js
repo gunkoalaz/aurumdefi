@@ -44,7 +44,7 @@ const MainInfoList = (props) => {
             <td className='asset-number'>
                 <h5>$ {price}</h5>
             </td>
-            <td>
+            <td className='mobile'>
                 <h5>$ {tvl}</h5>
             </td>
         </tr>
@@ -123,7 +123,7 @@ const MainInfo = (props) => {
                             <th> Assets </th>
                             <th> Distribute ARM / day </th>
                             <th> PriceOracle </th>
-                            <th> TVL </th>
+                            <th className='mobile'> TVL </th>
                         </tr>
                     </thead>
                     <tbody>
