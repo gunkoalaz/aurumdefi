@@ -3,23 +3,18 @@
     100%    {opacity: 1;}
 }
 .popup-box{
-    width: 80vw;
-    left: 10%;
-    right: 10%;
+    width: 90vw;
     background-color: rgb(102, 141, 103);
     border-radius: 5vw;
-    font-size: 10vw;
     padding: 2vw;
-    border: 0.3vw dashed rgb(92, 92, 92);
+    border: 0.3vh dashed rgb(92, 92, 92);
     opacity: 1;
-    font-size: 2vw;
+    font-size: 2.5vh;
     animation-name: fadeup;
     animation-duration: 0.5s;
 }
 .popup-borrow-box{
-    width: 80vw;
-    left: 10%;
-    right: 10%;
+    width: 90vw;
     background-color: rgb(199, 120, 107);
     border-radius: 5vw;
     font-size: 10vw;
@@ -42,10 +37,10 @@
     cursor: pointer;
     position: absolute;
     display: block;
-    line-height: 2vw;
-    right: -1vw;
-    top: -1vw;
-    font-size: 2vw;
+    line-height: 2vh;
+    right: -2vw;
+    top: -1vh;
+    font-size: 2vh;
     opacity: 0.4;
     background: #ffffff;
     border-radius: 5vw;
@@ -59,8 +54,11 @@
     animation-duration: 0.5s;
     background: rgba(0,0,0,.5);
 }
+.popup-head h1 {
+    font-size: 4vh;
+}
 .popup-head p {
-    font-size: 1.3vw;
+    font-size: 2vh;
 }
 .popup-head-symbol{
     display: flex;
@@ -68,13 +66,12 @@
 }
 
 .popup-body {
-    display: flex;
-    flex-direction: row;
+    display: block;
 }
 .popup-body-box {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 100%;
     padding: 1vw;
     margin: auto;
     border: 0.1vw solid black ;
@@ -85,12 +82,29 @@
     text-align: left;
     width: 100%;
 }
+.popup-body-box-detail h3{
+    font-size: 2vh;
+    width: 100%;
+}
 .popup-body-box-detail p{
     text-align: right;
+    font-size: 2vh;
     width: 100%;
 }
 .popup-footer {
     margin-top: 2vw;
     justify-content:center;
     text-align: center;
+}
+
+@media screen and (min-width: 1000px){ /*Mobile view*/
+    .popup-box{
+        width: 80vw;
+    }
+    .popup-body{
+        display: flex;
+    }
+    .mint-action {
+        display: flex;
+    }
 }

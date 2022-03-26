@@ -26,6 +26,7 @@
 }
 .button{
     background-color: rgb(125, 133, 250);
+    margin: 1vh;
     font-weight: bold;
     font-size: 2vh;
     width: 15vh;
@@ -48,6 +49,7 @@
 }
 .button-inactive{
     background-color: rgb(169, 169, 197);
+    margin: 1vh;
     font-weight: bold;
     font-size: 2vh;
     width: 15vh;
@@ -55,7 +57,6 @@
     border: 0.1vw solid black;
     border-radius: 5vw;
     box-shadow:0.1vw 0.2vw rgb(43, 43, 43);
-    margin: 1vw;
 }
 .input{
     outline: none;
@@ -63,11 +64,11 @@
     text-shadow: 0.1vw 0.1vw rgb(54, 54, 54);
     border: 0px;
     background: transparent;
-    border-bottom: 0.1vw solid black;
+    border-bottom: 0.2vh solid rgb(187, 187, 187);
     overflow: hidden;
     text-align: right;
     width: 100%;
-    margin:auto;
+    margin: 2vh;
     padding-right: 1vw;
     margin-bottom: 1vw;
     font-size: 2.2vh;

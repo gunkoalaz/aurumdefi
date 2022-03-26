@@ -238,7 +238,7 @@
 
 
 .logoimg{
-    width: 5vh;
+    height: 5vh;
 }
 
 .table{
@@ -332,9 +332,6 @@
     color: rgb(151, 151, 151);
 }
 
-.mobile {
-
-}
 
 @media screen and (min-width: 1000px){ /*Hide Navbar*/
     .user-info-box{

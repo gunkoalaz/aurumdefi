@@ -308,6 +308,7 @@ const AurumMinterMain = (props) => {
                                 type='text' 
                                 className='input' 
                                 value={valueBorrow}
+                                placeholder='0'
                                 max={maxMint}
                                 onChange={stakeAmountChange}
                             />
@@ -330,6 +331,7 @@ const AurumMinterMain = (props) => {
                                 type='text' 
                                 className='input' 
                                 value={valueRepay}
+                                placeholder='0'
                                 max={goldBalance}
                                 onChange={unstakeAmountChange}/>
                             {repayButton}

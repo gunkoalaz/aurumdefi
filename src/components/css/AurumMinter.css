@@ -23,7 +23,7 @@
 }
 .mint-information{
     font-size: 2rem;
-    display: flex;
+    display: block;
     flex-direction: row;
 }
 .mint-information-price{
@@ -84,7 +84,7 @@
     color: rgb(234, 236, 65,0.8);
 }
 .mint-action{
-    display: flex;
+    display: block;
     flex-direction: row;
     align-items: center;
 }
@@ -93,10 +93,12 @@
     color: aliceblue;
 }
 .mint-action-box{
-    width: 50%;
+    width: 100%;
+    background-color: rgba(248, 212, 135, 0.616);
     display: flex;
     flex-direction: column;
     vertical-align: middle;
+    border: 0.2vh solid white;
 }
 
 .mint-action-info{
@@ -105,4 +107,13 @@
 .flex{
     display: flex;
     flex-direction: row;
+}
+
+@media screen and (min-width: 1000px){ /*Mobile view*/
+    .mint-information{
+        display:flex;
+    }
+    .mint-action {
+        display: flex;
+    }
 }
