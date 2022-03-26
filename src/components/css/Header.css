@@ -91,19 +91,39 @@
     position: relative;
     animation-name: showing;
     animation-duration: 0.5s;
-    background-color: rgb(180, 105, 20);
+    background-color: rgb(199, 125, 40);
     padding: 2vw;
 }
 
 .menulist {
     text-decoration: none;
+    list-style: square;
+    margin: 1vh;
+    border-left: 0.5vh solid black;
+    border-bottom: 0.2vh solid black;
+    border-top: 0.1vh solid rgba(0, 0, 0, 0.281);
+    border-right: 0.1vh solid rgba(0,0,0,0.2);
+    background-color: rgb(255, 212, 94);
+    border-radius: 5vw;
+    padding: 1vh;
+    width: auto;
 }
-.menulist a {
-    font-size: 3.5vh;
+
+@keyframes fading {
+    0% {background-color: rgb(255, 212, 94);}
+    100% {background-color: rgba(211, 170, 121, 0.747);}
+}
+.menulist:hover {
+    animation: fading;
+    animation-duration: 0.2s;
+    background-color: rgba(211, 170, 121, 0.747);
+}
+.topnavbar a {
+    font-size: 2.5vh;
     color: black;
 }
-.menulist a:hover {
-    color: black;
-    font-size: 3.5vh;
+.topnavbar a:hover {
+    color: rgb(102, 56, 56);
+    font-size: 2.5vh;
     text-decoration: none;
 }

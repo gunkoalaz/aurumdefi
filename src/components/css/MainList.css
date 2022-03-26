@@ -1,14 +1,7 @@
 .main-info-top{
     margin: 1vh;
 }
-@media screen and (min-width: 1000px){ /*Hide Navbar*/
-    .main-info-bottom{
-        display: flex;
-    }
-    .main-items{
-        display: flex;
-    }
-}
+
 .main-info-bottom{
     margin: 1vh;
     margin-top: 0vh;
@@ -16,6 +9,7 @@
 .main-items{
     margin: auto;
     margin-top: 1vh;
+    width: 100%;
     padding: 2vw;
     background-color: rgb(190, 120, 70, 0.8);
     /* border: 0.2vw solid rgb(218, 137, 16); */
@@ -36,4 +30,12 @@
 }
 .tvl h1{
     text-align: left;
+}
+@media screen and (min-width: 1000px){ /*Hide Navbar*/
+    .main-info-bottom{
+        display: flex;
+    }
+    .main-items{
+        margin: 1vw;
+    }
 }

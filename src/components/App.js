@@ -468,13 +468,16 @@ class App extends Component {
     async loadWeb3() {
         if(window.ethereum){
             window.web3 = new Web3(window.ethereum)
+            return true
             // const accounts = await window.ethereum.send('eth_requestAccounts');
             // console.log(accounts)
         } else if(window.web3){
                 window.web3 = new Web3(window.web3.currentProvider)
+                return true
             }
             else {
                 window.alert('No ethereum browser detected.')
+                return false
             }
     }
     async loadBlockchainData() {
@@ -514,16 +517,17 @@ class App extends Component {
     }
 
     connectAurumDeFi = async () =>{
-        const LoadWeb3 = this.loadWeb3()
-        Promise.all([LoadWeb3]).then( async () => {
-            await this.loadBlockchainData()
-            if(this.checkNetwork(this.state.networkId)){
-                await this.loadComptroller()
-                await this.updateWeb3(this.setLoadingFinish)
-            } else {
-                await changeNetwork({networkName: 'TestnetRei'})
-            }        
-        })
+        const LoadWeb3 = await this.loadWeb3()
+            if(LoadWeb3 === true) {
+                await this.loadBlockchainData()
+                if(this.checkNetwork(this.state.networkId)){
+                    await this.loadComptroller()
+                    await this.updateWeb3(this.setLoadingFinish)
+                } else {
+                    await changeNetwork({networkName: 'TestnetRei'})
+                }        
+                
+            }
     }
 
     disconnectAurumDeFi = async () =>{
@@ -537,15 +541,17 @@ class App extends Component {
 
     
     render() {
-        window.ethereum.on('accountsChanged', async (accounts) => {
-            if(this.state.loading === false){
-                this.setState({account: accounts[0], loading: true})
-                const comptroller = this.loadComptroller()
-                const armVault = this.loadArmVault()
-                const markets = this.loadMarketsInfo()
-                Promise.all([comptroller, armVault, markets]).then( () => this.setState({loading:false})   )
-            }
+        if(window.ethereum) {
+            window.ethereum.on('accountsChanged', async (accounts) => {
+                if(this.state.loading === false){
+                    this.setState({account: accounts[0], loading: true})
+                    const comptroller = this.loadComptroller()
+                    const armVault = this.loadArmVault()
+                    const markets = this.loadMarketsInfo()
+                    Promise.all([comptroller, armVault, markets]).then( () => this.setState({loading:false})   )
+                }
         })
+        }
         // window.ethereum.on('networkChanged', async (networkId) => {
         //     await this.loadWeb3()
         //     await this.loadBlockchainData()

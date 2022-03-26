@@ -26,10 +26,10 @@
 }
 .button{
     background-color: rgb(125, 133, 250);
-    margin: 1vh;
+    margin: 0.5vh;
     font-weight: bold;
     font-size: 2vh;
-    width: 15vh;
+    width: 13vh;
     border: 0.1vw solid black;
     border-radius: 5vw;
     box-shadow:0.1vw 0.2vw rgb(43, 43, 43);
@@ -49,10 +49,10 @@
 }
 .button-inactive{
     background-color: rgb(169, 169, 197);
-    margin: 1vh;
+    margin: 0.5vh;
     font-weight: bold;
     font-size: 2vh;
-    width: 15vh;
+    width: 13vh;
     color: gray;
     border: 0.1vw solid black;
     border-radius: 5vw;

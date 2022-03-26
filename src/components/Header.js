@@ -46,13 +46,13 @@ const Header = (props) => {
                 </div>
             </div>
             <div className={toggleState === true ? "menuToggleShow" : "menuToggleHide"}>
-                <ul>
-                    <li className="menulist"><a href="/">Info</a></li>
-                    <li className="menulist"><a href="/lending">Lending</a></li>
-                    <li className="menulist"><a href="/aurum">Aurum</a></li>
-                    <li className="menulist"><a href="/armvault">ARM vault</a></li>
-                    <li className="menulist"><a href="/liquidate">Liquidate</a></li>
-                    <li className="menulist"><a href="/mint">MINT test tokens</a></li>
+                <ul className="topnavbar">
+                    <a href="/"><li className="menulist">Info</li></a>
+                    <a href="/lending"><li className="menulist">Lending</li></a>
+                    <a href="/aurum"><li className="menulist">Aurum</li></a>
+                    <a href="/armvault"><li className="menulist">ARM vault</li></a>
+                    <a href="/liquidate"><li className="menulist">Liquidate</li></a>
+                    <a href="/mint"><li className="menulist">MINT test tokens</li></a>
                 </ul>
             </div>
         </div>
