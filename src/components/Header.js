@@ -17,7 +17,7 @@ const Header = (props) => {
             <button className="button" onClick={props.connectMetamask}>Connect</button>
     }
     const [toggleState, setToggle] = useState(false)
-    const toggle = (x) => {
+    const toggle = () => {
         if(toggleState === true){
             setToggle(false)
         } else {

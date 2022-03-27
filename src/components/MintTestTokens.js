@@ -48,7 +48,7 @@ class MintMain extends Component {
                 <ul>
                     <li>
                         <h5>Interface .... no need to beautify ^^</h5>
-                        <div className="form-group flex">
+                        <div className="form-group">
                             <label className="my-1 mr-2" htmlFor="input1">LendToken</label>
                             <select className="custom-select my-1 mr-sm-2" name="input1" onChange={this.handleInputChange}>
                                 <option>Choose...</option>

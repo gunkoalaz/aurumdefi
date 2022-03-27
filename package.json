@@ -6,6 +6,7 @@
   "dependencies": {
     "@metamask/detect-provider": "^1.2.0",
     "@openzeppelin/contracts": "^4.5.0",
+    "@poanet/solidity-flattener": "^3.0.7",
     "@truffle/contract": "^4.5.1",
     "@truffle/hdwallet-provider": "^1.4.0",
     "@types/node": "^16.3.1",
@@ -24,7 +25,7 @@
     "react-scripts": "^2.1.8",
     "react-tsparticles": "^1.4.0",
     "reactjs-popup": "^2.0.5",
-    "solc": "^0.8.6",
+    "solc": "^0.4.0",
     "styled-components": "^5.3.3",
     "truffle": "^5.5.5",
     "truffle-contract-size": "^2.0.1",
