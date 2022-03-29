@@ -11,6 +11,8 @@ contract AurumTreasury {
     Comptroller public comptroller;
     address public uniswapV2Router;  //SET the DEX to use SwapExactTokensForTokens function
 
+    address private wREI;
+
     address public admin;
     // address[] allMarkets;   //All the markets use function get allMarkets instead
 
@@ -19,8 +21,11 @@ contract AurumTreasury {
 
     bool locked;
 
-    constructor(address comptroller_) {
+    constructor(address comptroller_, address uniswapV2Router_, address wREI_) {
         admin = msg.sender;
+
+        wREI = wREI_;
+        uniswapV2Router = uniswapV2Router_;
         redistributionRatio = 0.5e18;   // default 50%
         vaultRatio = 0.5e18;            // default 50%
         comptroller = Comptroller(comptroller_); // can get the verified markets by using comptroller getAllMarkets
@@ -40,6 +45,7 @@ contract AurumTreasury {
 
     event SetDistributionRatio(uint oldDistributionRatio, uint newDistributionRatio);
     event SetDecentralizedExchange(address oldDEXAddress, address newDEXAddress);
+    event SetWrappedREIAddress(address oldWrappedREI, address newWrappedREI);
 
     function getAllMarkets() internal view returns (LendTokenInterface[] memory){
         return comptroller.compStorage().getAllMarkets();
@@ -62,15 +68,32 @@ contract AurumTreasury {
 
     function swapTokens(ERC20 tokenA, ERC20 tokenB, uint amountIn) internal{
         IUniswapV2Router uniswapRouter = IUniswapV2Router(uniswapV2Router);
-        PriceOracle oracle = PriceOracle(comptroller.getComptrollerOracleAddress());
-        // A * priceA  = B * priceB
-        // Using price oracle to prevent sandwich attack
-        uint priceA = oracle.assetPrices(address(tokenA));
-        uint priceB = oracle.assetPrices(address(tokenB));
+
+
+        //path parameters for UNISWAP v.2
+        address[] memory path;
+        path = new address[](3);
+        path[0] = address(tokenA);
+        path[1] = wREI; //medium of exchange in UNISWAP (WETH)
+        path[2] = address(tokenB);
+
+        //Approve tokenA to Router
+        tokenA.approve(address(uniswapRouter), amountIn);
+
+        //Calculate amount Out
+        uint amountOutMin;
+
+        uniswapRouter.swapExactTokensForTokens(
+            amountIn,
+            amountOutMin,
+            path,
+            address(this),
+            block.timestamp
+        );
     }
 
-    function swapETHtoTokens(ERC20 token, uint amountIn) internal {
-
+    function wrapREI(uint amountIn) internal {
+        payable(wREI).transfer(amountIn);
     }
     //This function will compare string a and b, return TRUE if both are the same.
     function compareStrings(string memory a, string memory b) internal pure returns (bool) {
@@ -112,5 +135,12 @@ contract AurumTreasury {
         uniswapV2Router = newDEXAddress;
 
         emit SetDecentralizedExchange(oldDEXAddress, newDEXAddress);
+    }
+
+    function _setWrappedREIAddress(address newWREI) external onlyAdmin{
+        address oldWREI = wREI;
+        wREI = newWREI;
+
+        emit SetWrappedREIAddress(oldWREI, newWREI);
     }
 }

@@ -1,14 +1,14 @@
 {
   "main.css": "/static/css/main.25c0fd51.chunk.css",
-  "main.js": "/static/js/main.4a70bd78.chunk.js",
-  "main.js.map": "/static/js/main.4a70bd78.chunk.js.map",
+  "main.js": "/static/js/main.2f290e54.chunk.js",
+  "main.js.map": "/static/js/main.2f290e54.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
   "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
   "static/css/2.0c5e5c3d.chunk.css": "/static/css/2.0c5e5c3d.chunk.css",
   "static/js/2.cce90472.chunk.js": "/static/js/2.cce90472.chunk.js",
   "static/js/2.cce90472.chunk.js.map": "/static/js/2.cce90472.chunk.js.map",
   "index.html": "/index.html",
-  "precache-manifest.fe099a9c07ffed80e95f32bee4685125.js": "/precache-manifest.fe099a9c07ffed80e95f32bee4685125.js",
+  "precache-manifest.02afef21aef94f91528ce97278ade500.js": "/precache-manifest.02afef21aef94f91528ce97278ade500.js",
   "service-worker.js": "/service-worker.js",
   "static/css/2.0c5e5c3d.chunk.css.map": "/static/css/2.0c5e5c3d.chunk.css.map",
   "static/css/main.25c0fd51.chunk.css.map": "/static/css/main.25c0fd51.chunk.css.map",
@@ -16,6 +16,7 @@
   "static/media/aurum.png": "/static/media/aurum.2f52be5c.png",
   "static/media/btclogo.png": "/static/media/btclogo.fe9bc614.png",
   "static/media/busdlogo.png": "/static/media/busdlogo.93967c7a.png",
+  "static/media/logo.png": "/static/media/logo.5c378f02.png",
   "static/media/reilogo.png": "/static/media/reilogo.a013f594.png",
   "static/media/tetherlogo.png": "/static/media/tetherlogo.a440d4b5.png"
 }

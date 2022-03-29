@@ -36,6 +36,9 @@ interface ComptrollerInterface {
         uint repayAmount) external view returns (uint);
 }
 
+interface ComptrollerStorageInterface {
+    function getAllMarkets() external view returns(LendTokenInterface[] memory);
+}
 interface IComptroller {
     function liquidationIncentiveMantissa() external view returns (uint);
     /*** Treasury Data ***/
