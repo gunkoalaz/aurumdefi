@@ -30,7 +30,7 @@ const Header = (props) => {
             <div className="hd-box">
                 <div className="logo">
                     <a href='./'>
-                        <img src={logo} alt='aurum defi' style={{height: '7vh'}}/>
+                        <img src={logo} alt='aurum defi' style={{height: '6vh'}}/>
                         <span className="m-2">Aurum DeFi</span>
                     </a>
                 </div>

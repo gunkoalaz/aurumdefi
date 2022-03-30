@@ -21,7 +21,12 @@
     padding: 2vw;
     float: right;
     text-align: left;
-    background-color: rgba(0, 100, 0, 0.9);
+    background: linear-gradient(
+        to bottom,
+        rgb(133, 182, 126) 0%,
+        rgb(61, 160, 36) 20%,
+        rgb(8, 90, 0) 100%
+    );
     border: 0.2vw solid rgb(27, 27, 27);
     border-radius: 2vw;
 }
@@ -66,7 +71,12 @@
     flex-direction: column;
     align-items: center;
     margin: 0px;
-    background-color: rgb(77, 177, 77, 0.9);
+    background: linear-gradient(
+        to bottom,
+        rgb(193, 250, 86) 0%,
+        rgb(66, 226, 26) 30%,
+        rgb(16, 94, 9) 100%
+    );
     height: 100%;
     width: 100%;
 }
@@ -75,7 +85,12 @@
     flex-direction: column;
     align-items: center;
     margin: 0px;
-    background-color: rgb(214, 110, 110, 0.9);
+    background: linear-gradient(
+        to bottom,
+        rgb(255, 181, 181) 0%,
+        rgb(255, 95, 95) 30%,
+        rgb(146, 38, 38) 100%
+    );
     height: 100%;
     width: 100%;
 }
@@ -84,7 +99,12 @@
     flex-direction: column;
     align-items: center;
     margin: 0px;
-    background-color: rgb(156, 154, 23, 0.9);
+    background: linear-gradient(
+        to bottom,
+        rgb(250, 239, 86) 0%,
+        rgb(223, 226, 26) 30%,
+        rgb(94, 88, 9) 100%
+    );
     height: 100%;
     width: 100%;
 }
@@ -105,6 +125,9 @@
     animation-duration: 2s;
     animation-iteration-count: infinite;
 }
+.user-info-credits-danger h3{
+    color: azure;
+}
 .menu{
     display: flex;
     flex-direction: row;
@@ -112,12 +135,12 @@
 }
 @keyframes menuactive{
     0% {top:1.5vh; 
-        background-color:rgb(139, 91, 36, 0.9);
+        background-color:rgb(160, 100, 1,0.8);
         height: 3vh;
         font-size: 2.2vh;
     }
     60% {top: 1vh; 
-        background-color: rgb(255, 123, 0.9);
+        background-color: rgb(255, 123, 0, 0.9);
         height: 4vh;
         font-size: 2.7vh;
     }
@@ -139,7 +162,7 @@
     border-top-right-radius: 2vh;
     font-size: 2.7vh;
     font-weight: bold;
-    background-color: rgb(255, 123, 0, 0.9);
+    background-color: rgba(255, 123, 0, 0.9);
     color: gold;
     text-shadow: 0.1vh 0.1vh rgb(20, 20, 20);
     position: relative;
@@ -157,7 +180,7 @@
         font-size: 2.7vh;
     }
     100% {top:1.5vh; 
-        background-color:rgb(139, 91, 36,0.9);
+        background-color:rgb(160, 100, 1,0.8);
         height: 3vh;
         font-size: 2.2vh;
     }
@@ -174,12 +197,12 @@
     border-top-right-radius: 2vh;
     font-size: 2.2vh;
     font-weight: bold;
-    background-color:rgb(114, 68, 24,0.9);
+    background-color:rgb(160, 100, 1,0.8);
     position: relative;
     top: 1.5vh;
 }
 .menu-item-inactive:hover {
-    background-color:rgb(139, 91, 36,0.9);
+    background-color:rgba(182, 121, 51, 0.8);
 }
 .lending-body{
     display: flex;
@@ -198,7 +221,12 @@
     box-shadow: 0.1vh 0.2vh rgb(0, 0, 0);
     border-bottom-left-radius: 1vh;
     border-bottom-right-radius: 1vh;
-    background-color:rgb(114, 68, 24,0.9);
+    background: linear-gradient(
+        to bottom,
+        rgb(160, 100, 1,0.8) 0%,
+        rgb(112, 64, 9,0.8) 30%,
+        rgb(94, 47, 9,0.8) 100%
+    );
 }
 .lending-asset-box{
     display: flex;

@@ -14,8 +14,15 @@
     font-size: 2.5vh;
 }
 .navbar li{
-    opacity: 0.7;
-    background-color: orange;
+    opacity: 1;
+    background: linear-gradient(
+        to bottom,
+        rgb(250, 206, 86) 0%,
+        rgb(226, 139, 26) 90%,
+        rgb(94, 64, 9) 100%
+    );
+    box-shadow: 0.2vh 0.4vh rgb(117, 90, 2);
+    border-bottom: 0.1vh solid black;
     border-radius: 3vw;
     margin-left: 1vh;
     margin-top: 0.5vw;
@@ -67,17 +74,37 @@
     border-radius: 2vw;
     opacity: 0.8;
     font-size: 1.2vw;
-    background-color: orange;
+    box-shadow: 0.2vh 0.4vh rgb(117, 90, 2);
+    border-bottom: 0.1vh solid black;
+    background: linear-gradient(
+        to bottom,
+        rgb(250, 206, 86) 0%,
+        rgb(226, 139, 26) 30%,
+        rgb(94, 64, 9) 100%
+    );
 }
 
 .nav-footer-box p{
     justify-self: right;
     margin: auto;
+    color: aliceblue;
+    text-shadow: 0.2vh 0.2vh black;
 }
 .button-buy {
     margin: auto;
     margin-top: 1vw;
+    font-size: 2.5vh;
     border: 0.2vw solid #c3e9ff;
     border-radius: 1vw;
     background-color: gold;
+}
+
+.iconlink {
+    text-decoration: none;
+    font-size: 1.5vw;
+    margin: auto;
+    color: black;
+}
+.iconlink:hover {
+    color: gold;
 }

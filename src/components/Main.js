@@ -168,7 +168,7 @@ class Main extends Component {
         return (
             <div>
                 <div className='mainbox'>
-                    <h1 style={{fontSize: '4vh'}}>Welcome to AurumDeFi</h1>
+                    <h1>Welcome to AurumDeFi</h1>
                     {content}
                 </div>
             </div>

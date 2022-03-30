@@ -9,10 +9,15 @@
 }
 .hd-box{
     margin: auto;
-    height: 7vh;
+    height: 8vh;
     padding: 10px;
     padding-left: 3vw;
-    background-color: rgb(190, 120, 70);
+    background: linear-gradient(
+        to bottom,
+        rgb(66,66,66) 0%,
+        rgb(22,22,22) 20%,
+        rgb(0,0,0) 100%
+    );
     display: flex;
     align-items: center;
     row-gap: 0px;
@@ -24,18 +29,20 @@
     font-weight: bold;
     float: left;
 }
+
 .logo a{
     text-decoration: none;
-    color:rgb(87, 20, 0);
+    color: gold;
 }
+
 @keyframes hoverlogo {
-    0% {color:rgb(87, 20, 0);}
-    100% {color:gold;}
+    0% {color:gold;}
+    100% {color:rgb(219, 106, 41);}
 }
 .logo a:hover{
     animation-name: hoverlogo;
     animation-duration: 0.5s;
-    color:gold;
+    color:rgb(219, 106, 41);
 }
 .hd-space{
     margin: auto;
@@ -91,7 +98,12 @@
     position: relative;
     animation-name: showing;
     animation-duration: 0.5s;
-    background-color: rgb(199, 125, 40);
+    background: linear-gradient(
+        to bottom,
+        rgb(160, 100, 1,0.95) 0%,
+        rgb(112, 64, 9,0.95) 30%,
+        rgb(94, 47, 9,0.95) 100%
+    );
     padding: 2vw;
 }
 
@@ -103,7 +115,12 @@
     border-bottom: 0.2vh solid black;
     border-top: 0.1vh solid rgba(0, 0, 0, 0.281);
     border-right: 0.1vh solid rgba(0,0,0,0.2);
-    background-color: rgb(255, 212, 94);
+    background: linear-gradient(
+        to bottom,
+        rgba(241, 198, 129, 0.95) 0%,
+        rgba(248, 184, 110, 0.95) 30%,
+        rgba(223, 137, 66, 0.95) 100%
+    );
     border-radius: 5vw;
     padding: 1vh;
     width: auto;

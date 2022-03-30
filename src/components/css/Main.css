@@ -17,15 +17,21 @@
 }
 
 .mainbox h1{
-    color: bisque;
-    margin: auto;
+    color: gold;
+    margin-bottom: 4vh;
 }
 .mainbox p{
     margin: auto;
     color: whitesmoke;
+    text-shadow: 0.2vh 0.2vh black;
 }
 .button{
-    background-color: rgb(125, 133, 250);
+    background: linear-gradient(
+        to bottom,
+        rgb(255, 251, 195) 0%,
+        rgb(255, 187, 110) 30%,
+        rgb(109, 87, 54) 100%
+    );
     margin: 0.5vh;
     font-weight: bold;
     font-size: 2vh;
@@ -34,21 +40,22 @@
     border-radius: 5vw;
     box-shadow:0.1vw 0.2vw rgb(43, 43, 43);
 }
-@keyframes buttonhover {
-    0% {
-        background-color: rgb(125, 133, 250);
-        }
-    100% {
-        background-color: rgb(231, 195, 52);
-    }
-}
+
 .button:hover{
-    animation-name: buttonhover;
-    animation-duration: 0.5s;
-    background-color: rgb(231, 195, 52);
+    background: linear-gradient(
+        to bottom,
+        rgb(255, 251, 195) 0%,
+        rgb(255, 245, 110) 30%,
+        rgb(184, 173, 30) 100%
+    );
 }
-.button-inactive{
-    background-color: rgb(169, 169, 197);
+.button-inactive{    
+    background: linear-gradient(
+        to bottom,
+        rgb(255, 251, 195) 0%,
+        rgb(255, 187, 110) 30%,
+        rgb(109, 87, 54) 100%
+    );
     margin: 0.5vh;
     font-weight: bold;
     font-size: 2vh;

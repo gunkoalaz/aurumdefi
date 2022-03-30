@@ -248,13 +248,18 @@ class App extends Component {
         const aurumPriceOracleLoader = AurumPriceOracle.networks[networkId]
         const aurumPriceOracle = new web3.eth.Contract(AurumPriceOracle.abi, aurumPriceOracleLoader.address)
         if(aurumPriceOracleLoader) {
-            let armPrice = await aurumPriceOracle.methods.assetPrices(arm._address).call()
-            let goldPrice = await aurumPriceOracle.methods.getGoldPrice().call()
-            let price = {
-                armPrice: armPrice.toString(),
-                goldPrice: goldPrice.toString(),
+            try {
+
+                let armPrice = await aurumPriceOracle.methods.assetPrices(arm._address).call()
+                let goldPrice = await aurumPriceOracle.methods.getGoldPrice().call()
+                let price = {
+                    armPrice: armPrice.toString(),
+                    goldPrice: goldPrice.toString(),
+                }
+                this.setState({price})
+            } catch {
+                console.log('Failed load price')
             }
-            this.setState({price})
         } else {
             window.alert('Error! no Price oracle contract found.')
         }
@@ -263,91 +268,95 @@ class App extends Component {
         let getAllMarkets = await compStorage.methods.getAllMarkets().call()
 
         for(i=0; i< getAllMarkets.length; i++) {
-            let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
-            let name = await lendToken.methods.name().call()
-            let symbol = await lendToken.methods.symbol().call()
-            let decimals = await lendToken.methods.decimals().call()
-            let borrowRatePerSeconds = await lendToken.methods.borrowRatePerSeconds().call()
-            let supplyRatePerSeconds = await lendToken.methods.supplyRatePerSeconds().call()
-            let reserveFactorMantissa = await lendToken.methods.reserveFactorMantissa().call()
-            let accrualTimestamp = await lendToken.methods.accrualTimestamp().call()
-            let totalBorrows = await lendToken.methods.totalBorrows().call()
-            let totalReserves = await lendToken.methods.totalReserves().call()
-            let getCash = await lendToken.methods.getCash().call()
-            let exchangeRateStored = await lendToken.methods.exchangeRateStored().call()
-            let collateralFactorMantissa = await compStorage.methods.getMarketCollateralFactorMantissa(lendToken._address).call()
-            let getUnderlyingPrice = await aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call()
-            let borrowCaps = await compStorage.methods.getBorrowCaps(lendToken._address).call()
-            let borrowAddress = await lendToken.methods.getBorrowAddress().call()
-            let balanceOf = await lendToken.methods.balanceOf(this.state.account).call()
-            let borrowBalanceStored = await lendToken.methods.borrowBalanceStored(this.state.account).call()
-            let membership = await compStorage.methods.checkMembership(this.state.account, lendToken._address).call()
-            let allowance = await lendToken.methods.allowance(this.state.account, lendToken._address).call()
-            let aurumSpeeds = await compStorage.methods.getAurumSpeeds(lendToken._address).call()
-
-
-            //Underlying parameters
-            let underlyingAddress 
-            let underlying 
-            let underlyingBalance
-            let underlyingSymbol
-            let underlyingAllowance
-            if(symbol !== 'lendREI') {
-                underlyingAddress = await lendToken.methods.underlying().call()
-                underlying = new web3.eth.Contract(ERC20.abi, underlyingAddress)
-                underlyingSymbol = await underlying.methods.symbol().call()
-                underlyingBalance = await underlying.methods.balanceOf(this.state.account).call()
-                underlyingAllowance = await underlying.methods.allowance(this.state.account, lendToken._address).call()
-            } else {
-                lendToken = new web3.eth.Contract(LendREI.abi, getAllMarkets[i])
-                underlyingAddress = ''
-                underlying = ''
-                underlyingSymbol = 'REI'
-                underlyingBalance = await web3.eth.getBalance(this.state.account)
-                underlyingAllowance = MAX_UINT.toString()
+            try {
+                let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
+                let name = await lendToken.methods.name().call()
+                let symbol = await lendToken.methods.symbol().call()
+                let decimals = await lendToken.methods.decimals().call()
+                let borrowRatePerSeconds = await lendToken.methods.borrowRatePerSeconds().call()
+                let supplyRatePerSeconds = await lendToken.methods.supplyRatePerSeconds().call()
+                let reserveFactorMantissa = await lendToken.methods.reserveFactorMantissa().call()
+                let accrualTimestamp = await lendToken.methods.accrualTimestamp().call()
+                let totalBorrows = await lendToken.methods.totalBorrows().call()
+                let totalReserves = await lendToken.methods.totalReserves().call()
+                let getCash = await lendToken.methods.getCash().call()
+                let exchangeRateStored = await lendToken.methods.exchangeRateStored().call()
+                let collateralFactorMantissa = await compStorage.methods.getMarketCollateralFactorMantissa(lendToken._address).call()
+                let getUnderlyingPrice = await aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call()
+                let borrowCaps = await compStorage.methods.getBorrowCaps(lendToken._address).call()
+                let borrowAddress = await lendToken.methods.getBorrowAddress().call()
+                let balanceOf = await lendToken.methods.balanceOf(this.state.account).call()
+                let borrowBalanceStored = await lendToken.methods.borrowBalanceStored(this.state.account).call()
+                let membership = await compStorage.methods.checkMembership(this.state.account, lendToken._address).call()
+                let allowance = await lendToken.methods.allowance(this.state.account, lendToken._address).call()
+                let aurumSpeeds = await compStorage.methods.getAurumSpeeds(lendToken._address).call()
+    
+    
+                //Underlying parameters
+                let underlyingAddress 
+                let underlying 
+                let underlyingBalance
+                let underlyingSymbol
+                let underlyingAllowance
+                if(symbol !== 'lendREI') {
+                    underlyingAddress = await lendToken.methods.underlying().call()
+                    underlying = new web3.eth.Contract(ERC20.abi, underlyingAddress)
+                    underlyingSymbol = await underlying.methods.symbol().call()
+                    underlyingBalance = await underlying.methods.balanceOf(this.state.account).call()
+                    underlyingAllowance = await underlying.methods.allowance(this.state.account, lendToken._address).call()
+                } else {
+                    lendToken = new web3.eth.Contract(LendREI.abi, getAllMarkets[i])
+                    underlyingAddress = ''
+                    underlying = ''
+                    underlyingSymbol = 'REI'
+                    underlyingBalance = await web3.eth.getBalance(this.state.account)
+                    underlyingAllowance = MAX_UINT.toString()
+                }
+    
+                let marketsInfo = {
+                    index: parseInt(i),
+                    contract: lendToken,
+                    underlyingContract: underlying,
+                    
+                    borrowAddress: borrowAddress,
+                    
+                    name: name.toString(), 
+                    symbol: symbol.toString(), 
+                    underlyingSymbol: underlyingSymbol.toString(),
+                    decimals: decimals.toString(), 
+    
+                    //Personal info
+                    membership: membership,
+                    balanceOf: balanceOf.toString(),
+                    allowance: allowance.toString(),
+                    underlyingAllowance: underlyingAllowance.toString(),
+                    underlyingBalance: underlyingBalance.toString(),
+                    borrowBalanceStored: borrowBalanceStored.toString(),
+    
+    
+    
+    
+                    //Market calculating variables
+                    borrowRatePerSeconds: borrowRatePerSeconds.toString(),
+                    supplyRatePerSeconds: supplyRatePerSeconds.toString(),
+                    reserveFactorMantissa: reserveFactorMantissa.toString(),
+                    collateralFactorMantissa: collateralFactorMantissa.toString(),
+                    accrualTimestamp: accrualTimestamp.toString(),
+                    exchangeRateStored: exchangeRateStored.toString(),
+                    underlyingPrice: getUnderlyingPrice.toString(),
+                    
+                    //Market variables
+                    totalBorrows: totalBorrows.toString(),
+                    totalReserves: totalReserves.toString(),
+                    cash: getCash.toString(),
+                    borrowCaps: borrowCaps.toString(),
+    
+                    aurumSpeeds: aurumSpeeds.toString(),
+                }
+                markets.push(marketsInfo)
+            } catch {
+                console.log('Failed load markets data');
             }
-
-            let marketsInfo = {
-                index: parseInt(i),
-                contract: lendToken,
-                underlyingContract: underlying,
-                
-                borrowAddress: borrowAddress,
-                
-                name: name.toString(), 
-                symbol: symbol.toString(), 
-                underlyingSymbol: underlyingSymbol.toString(),
-                decimals: decimals.toString(), 
-
-                //Personal info
-                membership: membership,
-                balanceOf: balanceOf.toString(),
-                allowance: allowance.toString(),
-                underlyingAllowance: underlyingAllowance.toString(),
-                underlyingBalance: underlyingBalance.toString(),
-                borrowBalanceStored: borrowBalanceStored.toString(),
-
-
-
-
-                //Market calculating variables
-                borrowRatePerSeconds: borrowRatePerSeconds.toString(),
-                supplyRatePerSeconds: supplyRatePerSeconds.toString(),
-                reserveFactorMantissa: reserveFactorMantissa.toString(),
-                collateralFactorMantissa: collateralFactorMantissa.toString(),
-                accrualTimestamp: accrualTimestamp.toString(),
-                exchangeRateStored: exchangeRateStored.toString(),
-                underlyingPrice: getUnderlyingPrice.toString(),
-                
-                //Market variables
-                totalBorrows: totalBorrows.toString(),
-                totalReserves: totalReserves.toString(),
-                cash: getCash.toString(),
-                borrowCaps: borrowCaps.toString(),
-
-                aurumSpeeds: aurumSpeeds.toString(),
-            }
-            markets.push(marketsInfo)
         }
         this.setState({markets})
         this.setState({loadedMarket: true})

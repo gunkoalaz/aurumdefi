@@ -2,6 +2,7 @@ import React from "react"
 import './css/Navbar.css'
 import { Link } from "react-router-dom"
 import armlogo from "../armlogo.png"
+import {Github, Book, Telegram} from "react-bootstrap-icons"
 
 const e18 = 1000000000000000000
 // const MAX_UINT = "115792089237316195423570985008687907853269984665640564039457584007913129639935"
@@ -32,7 +33,12 @@ const Navbar = (props) => {
                         <p>${armPrice}</p>
                     </div>
                     <div className="flex">
-                        <button  onClick={(e) => {e.preventDefault(); window.location.href='http://google.com';}} className="button-buy">Buy ARM</button>
+                        <button  onClick={(e) => {e.preventDefault(); window.location.href='http://google.com';}} className="button">Buy ARM</button>
+                    </div>
+                    <div className="flex">
+                        <a href="https://github.com/gunkoalaz/aurumdefi" target={"_blank"} className="iconlink"><Github /></a>
+                        <a href="https://github.com/gunkoalaz/aurumdefi" target={"_blank"} className="iconlink"><Book /></a>
+                        <a href="https://github.com/gunkoalaz/aurumdefi" target={"_blank"} className="iconlink"><Telegram /></a>
                     </div>
                 </div>
             </div>

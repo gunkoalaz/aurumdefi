@@ -11,8 +11,14 @@
     margin-top: 1vh;
     width: 100%;
     padding: 2vw;
-    background-color: rgb(190, 120, 70, 0.8);
-    /* border: 0.2vw solid rgb(218, 137, 16); */
+    background: linear-gradient(
+        to right,
+        rgb(250, 206, 86) 0%,
+        rgb(226, 139, 26) 30%,
+        rgb(94, 64, 9) 100%
+    );
+    border: 0.2vw solid rgb(218, 137, 16);
+    box-shadow: 0.5vh 0.7vh black;
     border-radius: 2vw;
 }
 .main-items h3{

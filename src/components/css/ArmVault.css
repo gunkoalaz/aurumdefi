@@ -12,8 +12,8 @@
 }
 .logopic {
     position: relative;
-    width: 5vh;
-    top: 3.5vh;
+    width: 9vh;
+    top: 3.2vh;
     left: -30vw;
 }
 .armvault-header{
@@ -31,30 +31,35 @@
     margin-top: 3vh;
     width: 100%;
     border-radius: 3vw;
-    background-color:rgb(182, 132, 26 , 0.9);
+    background: linear-gradient(
+        to bottom,
+        rgba(114, 76, 33, 0.95) 0%,
+        rgba(124, 97, 24, 0.95) 70%,
+        rgba(133, 84, 20, 0.95) 100%
+    );
 }
 .vault-body{
     width: 100%;
     padding: 2vh;
     display: block;
 }
-.vault-body h1{
-    color: #404040;
-    font-size: 2.1vh;
-}
 .vault-body p{
-    color: #101010;
-    font-size: 2.6vh;
+    color: #ffffff;
+    font-size: 3vh;
 }
 
 .vault-head{
-    padding: 0.5vh;
-    background-color: gold;
+    padding: 1vh;
+    background: radial-gradient(
+        rgba(248, 245, 51, 0.95) 0%,
+        rgba(212, 188, 49, 0.95) 60%,
+        rgba(199, 173, 29, 0.95) 100%
+    );
     border-top-left-radius: 3vw;
     border-top-right-radius: 3vw;
 }
 .vault-head h3{
-    font-size: 3vh;
+    font-size: 5vh;
 }
 .vault-info{
     height: 100%;
@@ -64,9 +69,10 @@
     width: 100%;
 }
 .vault-info h1{
-    font-size: 2.7vh;
+    color: rgb(229, 204, 145);
+    font-size: 2.5vh;
     margin: auto;
-    margin-top: 1.5vh;
+    margin-top: 2vh;
 }
 .vault-stake{
     display: block;
@@ -76,7 +82,8 @@
 .vault-stake h5{
     margin: auto;
     width: 100%;
-    font-size: 2vh;
+    color: rgb(212, 198, 135);
+    font-size: 2.5vh;
 }
 .vault-stake p{
     width: 100%;
