@@ -685,6 +685,10 @@ contract ComptrollerStorage {
     event DistributedBorrowerARM(LendTokenInterface indexed lendToken, address indexed borrower, uint aurumDelta, uint aurumBorrowIndex);
     event NewGOLDMintRate(uint oldGOLDMintRate, uint newGOLDMintRate);
     event ActionProtocolPaused(bool state);
+    event ActionTransferPaused(bool state);
+    event ActionSeizePaused(bool state);
+    event ActionMintPaused(address lendToken, bool state);
+    event ActionBorrowPaused(address lendToken, bool state);
     event NewBorrowCap(LendTokenInterface indexed lendToken, uint newBorrowCap);
     event NewPriceOracle(PriceOracle oldPriceOracle, PriceOracle newPriceOracle);
     event MintGOLDPause(bool state);
@@ -713,8 +717,6 @@ contract ComptrollerStorage {
      *  Liquidation / seizing / transfer can only be paused globally, not by market.
      */
     bool public protocolPaused;
-    bool public _mintGuardianPaused;
-    bool public _borrowGuardianPaused;
     bool public transferGuardianPaused;
     bool public seizeGuardianPaused;
     mapping(address => bool) public mintGuardianPaused;
@@ -1156,16 +1158,37 @@ contract ComptrollerStorage {
      */
     function _setProtocolPaused(bool state) external {
         require(msg.sender == admin, "Only admin");
-        require(msg.sender == admin || state == true, "only admin can unpause");
         protocolPaused = state;
         emit ActionProtocolPaused(state);
     }
+    function _setTransferPaused(bool state) external {
+        require(msg.sender == admin, "Only admin");
+        transferGuardianPaused = state;
+        emit ActionTransferPaused(state);
+    }
+    function _setSeizePaused(bool state) external {
+        require(msg.sender == admin, "Only admin");
+        seizeGuardianPaused = state;
+        emit ActionSeizePaused(state);
+    }
 
+    function _setMintPaused(address lendToken, bool state) external {
+        require(msg.sender == admin, "Only admin");
+        mintGuardianPaused[lendToken] = state;
+        emit ActionMintPaused(lendToken, state);
+    }
+    function _setBorrowPaused(address lendToken, bool state) external {
+        require(msg.sender == admin, "Only admin");
+        borrowGuardianPaused[lendToken] = state;
+        emit ActionBorrowPaused(lendToken, state);
+    }
     function _setMintGoldPause(bool state) external {
         require(msg.sender == admin, "Only admin");
         mintGOLDGuardianPaused = state;
         emit MintGOLDPause(state);
     }
+
+
 
     function _setGOLDMintRate(uint16 newGOLDMintRate) external{
         require(msg.sender == admin, "Only admin");
