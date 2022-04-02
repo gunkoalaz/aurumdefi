@@ -2,12 +2,15 @@
 pragma solidity ^0.8.0;
 
 import './interface/ComptrollerInterface.sol';
+import "./interface/ISlidingWindow.sol";
 
 contract AurumOracleCentralized is PriceOracle {
     //Using TWAP model, using index for looping and re-write the price storage
 
     address admin; // Admin can initiate price and set manager (reducing risk of privatekey leak)   Admin private key store in Hardware wallet.
     address manager; // Manager can update the price (bot address), tihs address has some risk of private key leak.
+    
+    address kuma; //Reference stable coin price.
 
     struct PriceList {
         uint128[24] avgPrice;
@@ -17,6 +20,8 @@ contract AurumOracleCentralized is PriceOracle {
     
     mapping (address => PriceList) asset;
     PriceList goldPrice; // gold price TWAP
+
+    ISlidingWindow public slidingWindow;
 
     // Period range will trigger the alarm when someone got the admin private key and try to manipulate prices
     // 
@@ -28,8 +33,9 @@ contract AurumOracleCentralized is PriceOracle {
     address WREI; // Wrapped REI address
 
 
-    constructor (address WREI_) {
+    constructor (address WREI_, address kuma_) {
         admin = msg.sender;
+        kuma = kuma_;
         WREI = WREI_;  // WREI will prevent crash when query the 'lendREI' token
     }
 
@@ -46,6 +52,7 @@ contract AurumOracleCentralized is PriceOracle {
     event Initialized_Gold(uint128 price, uint128 timestamp);
     event SetNewAdmin(address oldAdmin, address newAdmin);
     event SetNewManager(address oldManager, address newManager);
+    event SetNewSlidingWindow(address oldSlidingWindow, address newSlidingWindow);
 
     // Initialized Asset before updateAssetPrice, make sure that lastPrice not equal to 0, and Timestamp not equal to 0.
     function initializedAsset(address token, uint128 price) external onlyAdmin{
@@ -105,6 +112,41 @@ contract AurumOracleCentralized is PriceOracle {
         //Set new index to the next;
         asset[token].currentIndex = nextIndex;
     }
+
+    // This using sliding window oracle of Uniswap V2 data to update this oracle.
+    function updateAssetPriceFromWindow(address token) external onlyManager{
+        uint8 index = asset[token].currentIndex;
+        uint8 lastIndex;
+        uint8 nextIndex;
+        ISlidingWindow uniswapOracle = ISlidingWindow(slidingWindow);
+        if(index == 0){
+            lastIndex = 23;
+        } else {
+            lastIndex = index-1;
+        }
+
+        if(index == 23){
+            nextIndex = 0;
+        } else {
+            nextIndex = index+1;
+        }
+        // So.. We helping sliding Window update each time we read parameter.
+        uniswapOracle.update(token,kuma);
+
+        // The price we got already time-weight average price.
+        uint newAvgPrice = uniswapOracle.consult(token,1e18,kuma);
+
+        if(newAvgPrice > type(uint128).max){
+            revert("Overflow");
+        }
+        asset[token].avgPrice[index] = uint128(newAvgPrice);
+        asset[token].timestamp[index];
+
+        //Set new index to the next;
+        asset[token].currentIndex = nextIndex;
+    }
+
+
 
     function updateGoldPrice(uint128 price) external onlyManager {
         uint8 index = goldPrice.currentIndex;
@@ -214,5 +256,12 @@ contract AurumOracleCentralized is PriceOracle {
         manager = newManager;
 
         emit SetNewManager(oldManager, newManager);
+    }
+
+    function _setSlidingWindow (address newSlidingWindow) external onlyAdmin {
+        address oldSlidingWindow = address(slidingWindow);
+        slidingWindow = ISlidingWindow(newSlidingWindow);
+
+        emit SetNewSlidingWindow(oldSlidingWindow, newSlidingWindow);
     }
 }

@@ -3,13 +3,18 @@ import './css/Main.css'
 import './css/MainList.css'
 import './css/Lending.css'
 import Loading from './Loading'
-import BTClogo from '../btclogo.png'
-import USDTlogo from '../tetherlogo.png'
-import BUSDlogo from '../busdlogo.png'
-import BNBlogo from '../bnblogo.png'
-import REIlogo from '../reilogo.png'
-import AURUMlogo from '../aurum.png'
-import unassignedlogo from '../unassignedlogo.png'
+
+import BTClogo from '../btclogo.png';
+import USDTlogo from '../tetherlogo.png';
+import BUSDlogo from '../busdlogo.png';
+import BNBlogo from '../bnblogo.png';
+import REIlogo from '../reilogo.png';
+import NEARlogo from '../nearlogo.png';
+import KUMAlogo from '../kumalogo.png';
+import KUBlogo from '../kublogo.png';
+import ETHlogo from '../ethlogo.png';
+import AURUMlogo from '../aurum.png';
+import unassignedlogo from '../unassignedlogo.png';
 
 const BigNumber = require('bignumber.js');
 const e18 = 1000000000000000000
@@ -22,9 +27,26 @@ const MainInfoList = (props) => {
         case 'BTC'  : logo = BTClogo; break;
         case 'USDT' : logo = USDTlogo; break;
         case 'BUSD' : logo = BUSDlogo; break;
+
+        case 'NEAR' :
+        case 'tNEAR': logo = NEARlogo; break;
+        
+        case 'KUMA' : 
+        case 'tKUMA': logo = KUMAlogo; break;
+
         case 'REI'  : logo = REIlogo; break;
-        case 'BNB'  : logo = BNBlogo; break;
+
+        case 'KUB'  :
+        case 'tKUB' : logo = KUBlogo; break;
+
+        case 'BNB'  : 
+        case 'tBNB' : logo = BNBlogo; break;
+
+        case 'ETH'  : 
+        case 'tETH' : logo = ETHlogo; break;
+
         case 'AURUM': logo = AURUMlogo; break;
+
         default     : logo = unassignedlogo; break;
     }
 

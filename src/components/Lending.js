@@ -110,8 +110,8 @@ const MainLending = (props) => {
     return(
         <div className='lending'>
             <div className='lending-header'>
-                <div style={{width: '70%'}}>
-                    <h2>Lending</h2>
+                <div style={{width: '70%', display:'flex'}}>
+                    <h2 style={{textAlign: 'center', margin: 'auto'}}>Lending Market</h2>
                     {/* <p>Aurum DeFi lending is open market to lend and borrow digital assets.</p> 
                     <p>The AURUM token can be minted by using digital asset collateral.</p>
                     <p>AURUM is a synthetic token which pegged with the price of real gold</p> */}

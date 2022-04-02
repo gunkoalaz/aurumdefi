@@ -4,6 +4,7 @@ import './css/Main.css'
 import './css/ArmVault.css'
 import armlogo from '../armlogo.png'
 import Loading from './Loading.js'
+import Constructing from './Constructing.js'
 import Web3 from 'web3'
 
 const e18 = 1000000000000000000
@@ -282,7 +283,8 @@ const ArmVault = (props) => {
         content = <Loading />
     }
     else {
-        content = <MainArmVault mainstate={superState} update={props.updateWeb3}/>
+        content = <Constructing />
+        // content = <MainArmVault mainstate={superState} update={props.updateWeb3}/>
     }
     return (
         <div>

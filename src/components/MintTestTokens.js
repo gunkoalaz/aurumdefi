@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import Loading from './Loading.js'
-import BTC from '../truffle_abis/BTC.json'
-import BUSD from '../truffle_abis/BUSD.json'
-import USDT from '../truffle_abis/Tether.json'
+import tBNB from '../truffle_abis/tBNB.json'
+import tETH from '../truffle_abis/tETH.json'
+import tKUMA from '../truffle_abis/tKUMA.json'
+import tKUB from '../truffle_abis/tKUB.json'
+import tNEAR from '../truffle_abis/tNEAR.json'
 
 class MintMain extends Component {
     constructor(props){
@@ -28,17 +30,23 @@ class MintMain extends Component {
             const accounts = this.props.mainstate.account
             
 
-            const btc = new web3.eth.Contract(BTC.abi, BTC.networks[networkId].address)
-            const busd = new web3.eth.Contract(BUSD.abi, BUSD.networks[networkId].address)
-            const usdt = new web3.eth.Contract(USDT.abi, USDT.networks[networkId].address)
+            const BNB = new web3.eth.Contract(tBNB.abi, tBNB.networks[networkId].address)
+            const ETH = new web3.eth.Contract(tETH.abi, tETH.networks[networkId].address)
+            const KUB = new web3.eth.Contract(tKUB.abi, tKUB.networks[networkId].address)
+            const KUMA = new web3.eth.Contract(tKUMA.abi, tKUMA.networks[networkId].address)
+            const NEAR = new web3.eth.Contract(tNEAR.abi, tNEAR.networks[networkId].address)
 
             let amount = web3.utils.toWei(this.state.input2, 'Ether')
-            if(this.state.input1 === 'BTC'){
-                btc.methods.mint(amount).send({from: accounts}).on('transactionHash', (hash) => {})
-            } else if(this.state.input1 === 'USDT') {
-                usdt.methods.mint(amount).send({from: accounts}).on('transactionHash', (hash) => {})
-            } else if(this.state.input1 === 'BUSD') {
-                busd.methods.mint(amount).send({from: accounts}).on('transactionHash', (hash) => {})
+            if(this.state.input1 === 'tBNB'){
+                BNB.methods.mint(amount).send({from: accounts}).on('transactionHash', (hash) => {})
+            } else if(this.state.input1 === 'tKUB') {
+                KUB.methods.mint(amount).send({from: accounts}).on('transactionHash', (hash) => {})
+            } else if(this.state.input1 === 'tETH') {
+                ETH.methods.mint(amount).send({from: accounts}).on('transactionHash', (hash) => {})
+            } else if(this.state.input1 === 'tKUMA') {
+                KUMA.methods.mint(amount).send({from: accounts}).on('transactionHash', (hash) => {})
+            } else if(this.state.input1 === 'tNEAR') {
+                NEAR.methods.mint(amount).send({from: accounts}).on('transactionHash', (hash) => {})
             }
         }
 
@@ -52,9 +60,11 @@ class MintMain extends Component {
                             <label className="my-1 mr-2" htmlFor="input1">LendToken</label>
                             <select className="custom-select my-1 mr-sm-2" name="input1" onChange={this.handleInputChange}>
                                 <option>Choose...</option>
-                                <option value='BTC'> BTC </option>
-                                <option value='USDT'> USDT </option>
-                                <option value='BUSD'> BUSD </option>
+                                <option value='tBNB'> tBNB </option>
+                                <option value='tETH'> tETH </option>
+                                <option value='tKUB'> tKUB </option>
+                                <option value='tKUMA'> tKUMA </option>
+                                <option value='tNEAR'> tNEAR </option>
                             </select>
                             <label htmlFor="input2">Number</label>
                             <input 

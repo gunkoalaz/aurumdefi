@@ -37,17 +37,17 @@
     cursor: pointer;
     position: absolute;
     display: block;
-    line-height: 2vh;
+    line-height: 3.5vh;
     right: -2vw;
     top: -1vh;
-    font-size: 2vh;
-    opacity: 0.4;
+    font-size: 3vh;
+    opacity: 0.6;
     background: #ffffff;
-    border-radius: 5vw;
+    border-radius: 5vh;
     border: 0.2vw solid #3f3f3f; 
 }
 .closeButton:hover {
-    opacity:0.8;
+    opacity:0.9;
 }
 .popup-overlay {
     animation-name: popupbg;

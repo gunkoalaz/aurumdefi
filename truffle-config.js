@@ -68,6 +68,19 @@ module.exports = {
     // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     // },
     // Useful for private networks
+    
+    reiMainnet: {
+      provider: () => new HDWalletProvider(
+        privateKeys, 
+        'https://rei-rpc.moonrhythm.io/'
+      ),
+      network_id: 55555,
+      networkCheckTimeout: 1000000,
+      skipDryRun: true,
+      gasPrice: 1000000000,
+      gas: 50000000,
+    },
+
     reiTestnet: {
         provider: () => new HDWalletProvider(
           privateKeys, 
