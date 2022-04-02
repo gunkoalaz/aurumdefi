@@ -5,7 +5,9 @@ import './interface/ComptrollerInterface.sol';
 
 contract AurumOracleCentralized is PriceOracle {
     //Using TWAP model, using index for looping and re-write the price storage
-    address admin;
+
+    address admin; // Admin can't be change,  if want to change admin => change the oracle contract instead
+
     struct PriceList {
         uint128[24] avgPrice;
         uint128[24] timestamp;
@@ -14,6 +16,10 @@ contract AurumOracleCentralized is PriceOracle {
     
     mapping (address => PriceList) asset;
     PriceList goldPrice; // gold price TWAP
+
+    // Period range will trigger the alarm when someone got the admin private key and try to manipulate prices
+    // 
+    uint public periodRange = 60*50; // 50 minutes
 
     function isPriceOracle() external pure returns (bool) {return true;}
 
@@ -74,10 +80,11 @@ contract AurumOracleCentralized is PriceOracle {
         } else {
             nextIndex = index+1;
         }
+        //newDeltaTime is the time n - time K  // it must more than period time
         //oldDeltaTime is the time 0 - time K
-        //newDeltaTime is the time n - time K
-        uint oldDeltaTime = asset[token].timestamp[nextIndex]-asset[token].timestamp[lastIndex]; // This need to be initialized prevent underflow
         uint newDeltaTime = block.timestamp - asset[token].timestamp[lastIndex];
+        require(newDeltaTime >= periodRange, "update too early");   //If update oracle bot catch this means the privatekey got hacked OR the bot error.
+        uint oldDeltaTime = asset[token].timestamp[nextIndex]-asset[token].timestamp[lastIndex]; // This need to be initialized prevent underflow
 
         //new AvgPrice is ( price*tk  +  price*tn  ) / tk+tn
         uint newAvgPrice = ((oldDeltaTime*lastPrice) + (newDeltaTime*price)) / (newDeltaTime+oldDeltaTime);
@@ -119,6 +126,22 @@ contract AurumOracleCentralized is PriceOracle {
         if(newAvgPrice > type(uint128).max){
             revert("Overflow");
         }
+
+        //Prevent overvalue / undervalue algorithm, Max change = 10%
+        if(lastPrice > newAvgPrice) {
+            //new price is less than previous price
+            uint dif = lastPrice - newAvgPrice;
+            if(dif > lastPrice/10){
+                newAvgPrice = lastPrice * 9 / 10;
+            }
+        } else {
+            //new price is greater than previous price
+            uint dif = newAvgPrice - lastPrice;
+            if(dif > lastPrice/10){
+                newAvgPrice = lastPrice * 11 / 10;
+            }
+        }
+
         goldPrice.avgPrice[index] = uint128(newAvgPrice);
         goldPrice.timestamp[index];
 
@@ -163,6 +186,8 @@ contract AurumOracleCentralized is PriceOracle {
         } else {
             lastIndex = index-1;
         }
+
+        
         return uint(asset[token].avgPrice[lastIndex]);
     }
     
