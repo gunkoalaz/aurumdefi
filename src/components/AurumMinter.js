@@ -172,11 +172,11 @@ const AurumMinterMain = (props) => {
     let mintedAurum = BigNumber(superState.comptrollerState.getMintedGOLDs)
     let goldPrice = BigNumber(superState.price.goldPrice).div(e18).toFixed(2)
 
-    let goldBalance = BigNumber(props.mainstate.comptrollerState.goldBalance).div(e18).toFixed(6)
+    let goldBalance = BigNumber(props.mainstate.comptrollerState.goldBalance).div(e18).toFixed(6,1)
 
     userTotalBorrow = userTotalBorrow.plus(  mintedAurum.times(goldPrice)  )
 
-    mintedAurum = mintedAurum.div(e18).toFixed(6)
+    mintedAurum = mintedAurum.div(e18).toFixed(6,1)
 
 
     if(isNaN(userTotalBorrow)) {userTotalBorrow = 0}
@@ -192,7 +192,7 @@ const AurumMinterMain = (props) => {
     
     // floatUserTotalBorrow = userTotalBorrow.toFormat(2)
     // floatUserTotalSupply = userTotalSupply.toFormat(2)
-    floatUserRemainingCredits = userRemainingCredits.toFormat(2) //total Credits
+    floatUserRemainingCredits = userRemainingCredits.toFormat(2,1) //total Credits
     
     if(BigNumber(floatUserRemainingCredits).isLessThan(userTotalCredits.times(0.2)) && userTotalCredits.isGreaterThan(0)){
         danger = true;
@@ -203,7 +203,7 @@ const AurumMinterMain = (props) => {
     }
     
     // let totalAurum = 0
-    let maxMint = (aurumCredits / goldPrice).toFixed(6)
+    let maxMint = (aurumCredits / goldPrice).toFixed(6,1)
     // safeMint = safeMint.toFixed(6)
     // let mCaps = goldPrice * totalAurum
 

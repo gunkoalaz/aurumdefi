@@ -44,8 +44,8 @@ const PopupSupply = (props) => {
     const [valueStake, setStake] = useState()
     const [valueUnstake, setUnstake] = useState()
     const floatRegExp = new RegExp('^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$')
-    let balance = props.balance.toFixed(6)
-    let deposit = props.deposit.toFixed(6)
+    let balance = props.balance.toFixed(6,1)
+    let deposit = props.deposit.toFixed(6,1)
 
     //Input manipulator
     const stakeAmountChange = (e) => {
@@ -248,10 +248,10 @@ const PopupBorrow = (props) => {
     const [valueRepay, setRepay] = useState()
     const floatRegExp = new RegExp('^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$')
 
-    let debt = props.debt.toFixed(6)
-    let balance = props.balance.toFixed(6)
-    let maxBorrow = props.maxBorrow.toFixed(6)
-    let safeBorrow = props.safeBorrow.toFixed(6)
+    let debt = props.debt.toFixed(6,1)
+    let balance = props.balance.toFixed(6,1)
+    let maxBorrow = props.maxBorrow.toFixed(6,1)
+    let safeBorrow = props.safeBorrow.toFixed(6,1)
 
     //Input manipulator
     const stakeAmountChange = (e) => {
@@ -489,16 +489,16 @@ const AssetList = (props) => {
     tempDeposit = tempDeposit.div(e18)
     tempDeposit = tempDeposit.times(EXCHANGE_RATE)
     let deposit = (tempDeposit.div(e18).times(props.markets.supplyRatePerSeconds).times(deltaTime).plus(tempDeposit)).div(e18)
-    let updateDeposit = deposit.toFormat(3)
+    let updateDeposit = deposit.toFormat(3, 1)
 
     let debt = new BigNumber(props.markets.borrowBalanceStored)
     debt = debt.div(e18).times(props.markets.borrowRatePerSeconds).times(deltaTime).plus(props.markets.borrowBalanceStored).integerValue()
     debt = debt.div(e18)
-    let updateDebt = debt.toFormat(3)
+    let updateDebt = debt.toFormat(3, 1)
 
     // User balance
     let balance = new BigNumber(props.markets.underlyingBalance).div(e18)
-    let displayBalance = balance.toFormat(3)
+    let displayBalance = balance.toFormat(3, 1)
 
     //Calculate assets available borrow balance
     //use the minumum value of
@@ -517,7 +517,7 @@ const AssetList = (props) => {
         availableBorrow = cashMinusReserve
     }
     //Turn availableBorrow to USD
-    let showAvailableBorrow = availableBorrow.div(e18).toFormat(2)
+    let showAvailableBorrow = availableBorrow.div(e18).toFormat(2, 1)
     availableBorrow = availableBorrow.times(props.markets.underlyingPrice).div(e18).div(e18)
 
     //Calculate maxBorrow
