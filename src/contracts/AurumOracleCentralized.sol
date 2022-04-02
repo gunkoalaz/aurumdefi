@@ -6,7 +6,8 @@ import './interface/ComptrollerInterface.sol';
 contract AurumOracleCentralized is PriceOracle {
     //Using TWAP model, using index for looping and re-write the price storage
 
-    address admin; // Admin can't be change,  if want to change admin => change the oracle contract instead
+    address admin; // Admin can initiate price and set manager (reducing risk of privatekey leak)   Admin private key store in Hardware wallet.
+    address manager; // Manager can update the price (bot address), tihs address has some risk of private key leak.
 
     struct PriceList {
         uint128[24] avgPrice;
@@ -36,9 +37,15 @@ contract AurumOracleCentralized is PriceOracle {
         require(msg.sender == admin, "Only admin");
         _;
     }
+    modifier onlyManager {
+        require(msg.sender == manager, "Only manager");
+        _;
+    }
 
     event Initialized_Asset(address token, uint128 price, uint128 timestamp);
     event Initialized_Gold(uint128 price, uint128 timestamp);
+    event SetNewAdmin(address oldAdmin, address newAdmin);
+    event SetNewManager(address oldManager, address newManager);
 
     // Initialized Asset before updateAssetPrice, make sure that lastPrice not equal to 0, and Timestamp not equal to 0.
     function initializedAsset(address token, uint128 price) external onlyAdmin{
@@ -64,7 +71,7 @@ contract AurumOracleCentralized is PriceOracle {
 
 
     // Update price with the TWAP model.
-    function updateAssetPrice(address token, uint128 price) external onlyAdmin{
+    function updateAssetPrice(address token, uint128 price) external onlyManager{
         uint8 index = asset[token].currentIndex;
         uint8 lastIndex;
         uint8 nextIndex;
@@ -99,7 +106,7 @@ contract AurumOracleCentralized is PriceOracle {
         asset[token].currentIndex = nextIndex;
     }
 
-    function updateGoldPrice(uint128 price) external onlyAdmin {
+    function updateGoldPrice(uint128 price) external onlyManager {
         uint8 index = goldPrice.currentIndex;
         uint8 lastIndex;
         uint8 nextIndex;
@@ -195,4 +202,17 @@ contract AurumOracleCentralized is PriceOracle {
         return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }
 
+    function _setAdmin (address newAdmin) external onlyAdmin {
+        address oldAdmin = admin;
+        admin = newAdmin;
+
+        emit SetNewAdmin (oldAdmin, newAdmin);
+    }
+
+    function _setManager (address newManager) external onlyAdmin {
+        address oldManager = manager;
+        manager = newManager;
+
+        emit SetNewManager(oldManager, newManager);
+    }
 }
