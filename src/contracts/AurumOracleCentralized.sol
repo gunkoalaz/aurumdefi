@@ -98,7 +98,7 @@ contract AurumOracleCentralized is PriceOracle {
         //oldDeltaTime is the time 0 - time K
         uint newDeltaTime = block.timestamp - asset[token].timestamp[lastIndex];
         require(newDeltaTime >= periodRange, "update too early");   //If update oracle bot catch this means the privatekey got hacked OR the bot error.
-        uint oldDeltaTime = asset[token].timestamp[nextIndex]-asset[token].timestamp[lastIndex]; // This need to be initialized prevent underflow
+        uint oldDeltaTime = asset[token].timestamp[lastIndex]-asset[token].timestamp[nextIndex]; // This need to be initialized
 
         //new AvgPrice is ( price*tk  +  price*tn  ) / tk+tn
         uint newAvgPrice = ((oldDeltaTime*lastPrice) + (newDeltaTime*price)) / (newDeltaTime+oldDeltaTime);
@@ -107,7 +107,7 @@ contract AurumOracleCentralized is PriceOracle {
             revert("Overflow");
         }
         asset[token].avgPrice[index] = uint128(newAvgPrice);
-        asset[token].timestamp[index];
+        asset[token].timestamp[index] = uint128(block.timestamp);
 
         //Set new index to the next;
         asset[token].currentIndex = nextIndex;
@@ -140,7 +140,7 @@ contract AurumOracleCentralized is PriceOracle {
             revert("Overflow");
         }
         asset[token].avgPrice[index] = uint128(newAvgPrice);
-        asset[token].timestamp[index];
+        asset[token].timestamp[index] = uint128(block.timestamp);
 
         //Set new index to the next;
         asset[token].currentIndex = nextIndex;
@@ -166,7 +166,7 @@ contract AurumOracleCentralized is PriceOracle {
         }
         //oldDeltaTime is the time 0 - time K
         //newDeltaTime is the time n - time K
-        uint oldDeltaTime = goldPrice.timestamp[nextIndex]-goldPrice.timestamp[lastIndex]; // This need to be initialized prevent underflow
+        uint oldDeltaTime = goldPrice.timestamp[lastIndex]-goldPrice.timestamp[nextIndex]; // This need to be initialized
         uint newDeltaTime = block.timestamp - goldPrice.timestamp[lastIndex];
 
         //new AvgPrice is ( price*tk  +  price*tn  ) / tk+tn
@@ -192,7 +192,7 @@ contract AurumOracleCentralized is PriceOracle {
         }
 
         goldPrice.avgPrice[index] = uint128(newAvgPrice);
-        goldPrice.timestamp[index];
+        goldPrice.timestamp[index] = uint128(block.timestamp);
 
         //Set new index to the next;
         goldPrice.currentIndex = nextIndex;
