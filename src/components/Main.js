@@ -60,14 +60,17 @@ const MainInfoList = (props) => {
                 <img src={logo} alt='tokens' className='logoimg' />
                 <h3>{props.symbol}</h3>    
             </td>
+            <td className='mobile'>
+                <h5>{BigNumber(props.collateralfactor).div(e18).times(100).toFormat(0)}%</h5>
+            </td>
             <td className='asset-number'>
                 <h5>{aurumSpeedsPerDay}</h5>
             </td>
             <td className='asset-number'>
-                <h5>$ {price}</h5>
+                <h5 style={{textAlign: 'right'}}>{price} $</h5>
             </td>
             <td className='mobile'>
-                <h5>$ {tvl}</h5>
+                <h5 style={{textAlign: 'right'}}>{tvl} $</h5>
             </td>
         </tr>
     )
@@ -107,7 +110,7 @@ const MainInfo = (props) => {
                         TVL
                     </h3>
                     <p>
-                        $ {tvl}
+                        {tvl} $
                     </p>
                 </div>
                 
@@ -143,7 +146,8 @@ const MainInfo = (props) => {
                     <thead className='table-head'>
                         <tr>
                             <th> Assets </th>
-                            <th> Distribute ARM / day </th>
+                            <th className='mobile'> Collateral Factor</th>
+                            <th> Reward/day </th>
                             <th> PriceOracle </th>
                             <th className='mobile'> TVL </th>
                         </tr>
@@ -153,6 +157,7 @@ const MainInfo = (props) => {
                             <MainInfoList 
                                 key={element.index} 
                                 symbol={element.underlyingSymbol}
+                                collateralfactor = {element.collateralFactorMantissa}
                                 aurumSpeeds = {element.aurumSpeeds}
                                 price = {element.underlyingPrice}
                                 totalBorrows = {element.totalBorrows}
@@ -163,6 +168,7 @@ const MainInfo = (props) => {
                         <MainInfoList 
                             key='gold' 
                             symbol='AURUM'
+                            collateralfactor = '0'
                             aurumSpeeds = '0'
                             price = {props.mainstate.price.goldPrice}
                             totalBorrows = '0'

@@ -73,9 +73,9 @@ const MainLending = (props) => {
     if(isNaN(userTotalSupply)) {userTotalSupply = 0}
     if(isNaN(userTotalCredits)) {userTotalCredits = 0}
 
-    userTotalBorrow = userTotalBorrow.integerValue().div(e18)
-    userTotalSupply = userTotalSupply.integerValue().div(e18)
-    userTotalCredits = userTotalCredits.integerValue().div(e18)
+    userTotalBorrow = userTotalBorrow.div(e18)
+    userTotalSupply = userTotalSupply.div(e18)
+    userTotalCredits = userTotalCredits.div(e18)
     userRemainingCredits = userTotalCredits.minus(userTotalBorrow)
 
     if(userRemainingCredits.isLessThan(userTotalCredits.times(0.2)) && userTotalCredits.isGreaterThan(0)){

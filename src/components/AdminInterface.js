@@ -67,14 +67,42 @@ class Admin extends Component {
             compStorage.methods._setPriceOracle(this.state._setPriceOracle).send({from: accounts}).on('transactionHash', (hash) => {})
         }
         const _setProtocolPaused = () => {
-            if(this.state._setProtocolPaused === 1) {
+            if(this.state._setProtocolPaused == 1) {
                 compStorage.methods._setProtocolPaused(true).send({from: accounts}).on('transactionHash', (hash) => {})
             } else {
                 compStorage.methods._setProtocolPaused(false).send({from: accounts}).on('transactionHash', (hash) => {})
             }
         }
+        const _setTransferPaused = () => {
+            if(this.state._setTransferPaused == 1) {
+                compStorage.methods._setTransferPaused(true).send({from: accounts}).on('transactionHash', (hash) => {})
+            } else {
+                compStorage.methods._setTransferPaused(false).send({from: accounts}).on('transactionHash', (hash) => {})
+            }
+        }
+        const _setSeizePaused = () => {
+            if(this.state._setSeizePaused == 1) {
+                compStorage.methods._setSeizePaused(true).send({from: accounts}).on('transactionHash', (hash) => {})
+            } else {
+                compStorage.methods._setSeizePaused(false).send({from: accounts}).on('transactionHash', (hash) => {})
+            }
+        }
+        const _setMintPaused = () => {
+            if(this.state._setMintPaused2 == 1) {
+                compStorage.methods._setMintPaused(this.state._setMintPaused1, true).send({from: accounts}).on('transactionHash', (hash) => {})
+            } else {
+                compStorage.methods._setMintPaused(this.state._setMintPaused1, false).send({from: accounts}).on('transactionHash', (hash) => {})
+            }
+        }
+        const _setBorrowPaused = () => {
+            if(this.state._setBorrowPaused2 == 1) {
+                compStorage.methods._setBorrowPaused(this.state._setBorrowPaused1, true).send({from: accounts}).on('transactionHash', (hash) => {})
+            } else {
+                compStorage.methods._setBorrowPaused(this.state._setBorrowPaused1, false).send({from: accounts}).on('transactionHash', (hash) => {})
+            }
+        }
         const _setMintGoldPause = () => {
-            if(this.state._setMintGoldPause === 1) {
+            if(this.state._setMintGoldPause == 1) {
                 compStorage.methods._setMintGoldPause(true).send({from: accounts}).on('transactionHash', (hash) => {})
             } else {
                 compStorage.methods._setMintGoldPause(false).send({from: accounts}).on('transactionHash', (hash) => {})
@@ -333,6 +361,70 @@ class Admin extends Component {
                                 onChange={this.handleInputChange}
                             />
                             <button className="btn btn-primary" onClick={_setProtocolPaused}>Submit</button>
+                        </div>
+                    </li>
+                    <li>
+                        <h5>_setTransferPaused</h5>
+                        <div className="form-group flex">
+                            <label htmlFor="_setTransferPaused">Bool</label>
+                            <input 
+                                type="text" 
+                                name="_setTransferPaused" 
+                                placeholder="True False" 
+                                onChange={this.handleInputChange}
+                            />
+                            <button className="btn btn-primary" onClick={_setTransferPaused}>Submit</button>
+                        </div>
+                    </li>
+                    <li>
+                        <h5>_setSeizePaused</h5>
+                        <div className="form-group flex">
+                            <label htmlFor="_setSeizePaused">Bool</label>
+                            <input 
+                                type="text" 
+                                name="_setSeizePaused" 
+                                placeholder="True False" 
+                                onChange={this.handleInputChange}
+                            />
+                            <button className="btn btn-primary" onClick={_setSeizePaused}>Submit</button>
+                        </div>
+                    </li>
+                    <li>
+                        <h5>_setMintPaused</h5>
+                        <div className="form-group flex">
+                            <select className="custom-select my-1 mr-sm-2" name="_setMintPaused1" onChange={this.handleInputChange}>
+                                <option>Choose...</option>
+                                {this.props.mainstate.markets.map( (element) => 
+                                    <option key={element.index} value={element.contract._address}>{element.symbol}</option>
+                                )}
+                            </select>
+                            <label htmlFor="_setMintPaused2">Bool</label>
+                            <input 
+                                type="text" 
+                                name="_setMintPaused2" 
+                                placeholder="True False" 
+                                onChange={this.handleInputChange}
+                            />
+                            <button className="btn btn-primary" onClick={_setMintPaused}>Submit</button>
+                        </div>
+                    </li>
+                    <li>
+                        <h5>_setBorrowPaused</h5>
+                        <div className="form-group flex">
+                            <select className="custom-select my-1 mr-sm-2" name="_setBorrowPaused1" onChange={this.handleInputChange}>
+                                <option>Choose...</option>
+                                {this.props.mainstate.markets.map( (element) => 
+                                    <option key={element.index} value={element.contract._address}>{element.symbol}</option>
+                                )}
+                            </select>
+                            <label htmlFor="_setBorrowPaused2">Bool</label>
+                            <input 
+                                type="text" 
+                                name="_setBorrowPaused2" 
+                                placeholder="True False" 
+                                onChange={this.handleInputChange}
+                            />
+                            <button className="btn btn-primary" onClick={_setBorrowPaused}>Submit</button>
                         </div>
                     </li>
                     <li>

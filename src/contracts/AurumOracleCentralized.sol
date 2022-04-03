@@ -7,8 +7,8 @@ import "./interface/ISlidingWindow.sol";
 contract AurumOracleCentralized is PriceOracle {
     //Using TWAP model, using index for looping and re-write the price storage
 
-    address admin; // Admin can initiate price and set manager (reducing risk of privatekey leak)   Admin private key store in Hardware wallet.
-    address manager; // Manager can update the price (bot address), tihs address has some risk of private key leak.
+    address public admin; // Admin can initiate price and set manager (reducing risk of privatekey leak)   Admin private key store in Hardware wallet.
+    address public manager; // Manager can update the price (bot address), tihs address has some risk of private key leak.
     
     address kuma; //Reference stable coin price.
 

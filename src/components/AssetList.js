@@ -575,10 +575,10 @@ const AssetList = (props) => {
         default     : logo = unassignedlogo; break;
     }
 
-
+        
         return (
             <Popup modal lockScroll nested trigger={
-                <tr> 
+                <tr className={props.markets.mintPause || props.markets.borrowPause ? 'pause':''}> 
                     <td className='asset-name'>
                         <img src={logo} alt='tokens' className='logoimg' />
                         <h3>{props.markets.underlyingSymbol}</h3>    

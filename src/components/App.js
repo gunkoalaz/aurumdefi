@@ -270,27 +270,28 @@ class App extends Component {
         for(i=0; i< getAllMarkets.length; i++) {
             try {
                 let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
-                let name = await lendToken.methods.name().call()
-                let symbol = await lendToken.methods.symbol().call()
-                let decimals = await lendToken.methods.decimals().call()
-                let borrowRatePerSeconds = await lendToken.methods.borrowRatePerSeconds().call()
-                let supplyRatePerSeconds = await lendToken.methods.supplyRatePerSeconds().call()
-                let reserveFactorMantissa = await lendToken.methods.reserveFactorMantissa().call()
-                let accrualTimestamp = await lendToken.methods.accrualTimestamp().call()
-                let totalBorrows = await lendToken.methods.totalBorrows().call()
-                let totalReserves = await lendToken.methods.totalReserves().call()
-                let getCash = await lendToken.methods.getCash().call()
-                let exchangeRateStored = await lendToken.methods.exchangeRateStored().call()
-                let collateralFactorMantissa = await compStorage.methods.getMarketCollateralFactorMantissa(lendToken._address).call()
-                let getUnderlyingPrice = await aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call()
-                let borrowCaps = await compStorage.methods.getBorrowCaps(lendToken._address).call()
-                let borrowAddress = await lendToken.methods.getBorrowAddress().call()
-                let balanceOf = await lendToken.methods.balanceOf(this.state.account).call()
-                let borrowBalanceStored = await lendToken.methods.borrowBalanceStored(this.state.account).call()
-                let membership = await compStorage.methods.checkMembership(this.state.account, lendToken._address).call()
-                let allowance = await lendToken.methods.allowance(this.state.account, lendToken._address).call()
-                let aurumSpeeds = await compStorage.methods.getAurumSpeeds(lendToken._address).call()
-    
+                let name = await lendToken.methods.name().call();
+                let symbol = await lendToken.methods.symbol().call();
+                let decimals = await lendToken.methods.decimals().call();
+                let borrowRatePerSeconds = await lendToken.methods.borrowRatePerSeconds().call();
+                let supplyRatePerSeconds = await lendToken.methods.supplyRatePerSeconds().call();
+                let reserveFactorMantissa = await lendToken.methods.reserveFactorMantissa().call();
+                let accrualTimestamp = await lendToken.methods.accrualTimestamp().call();
+                let totalBorrows = await lendToken.methods.totalBorrows().call();
+                let totalReserves = await lendToken.methods.totalReserves().call();
+                let getCash = await lendToken.methods.getCash().call();
+                let exchangeRateStored = await lendToken.methods.exchangeRateStored().call();
+                let borrowAddress = await lendToken.methods.getBorrowAddress().call();
+                let balanceOf = await lendToken.methods.balanceOf(this.state.account).call();
+                let borrowBalanceStored = await lendToken.methods.borrowBalanceStored(this.state.account).call();
+                let collateralFactorMantissa = await compStorage.methods.getMarketCollateralFactorMantissa(lendToken._address).call();
+                let getUnderlyingPrice = await aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call();
+                let borrowCaps = await compStorage.methods.getBorrowCaps(lendToken._address).call();
+                let membership = await compStorage.methods.checkMembership(this.state.account, lendToken._address).call();
+                let allowance = await lendToken.methods.allowance(this.state.account, lendToken._address).call();
+                let aurumSpeeds = await compStorage.methods.getAurumSpeeds(lendToken._address).call();
+                let mintPause = await compStorage.methods.getMintGuardianPaused(lendToken._address).call();
+                let borrowPause = await compStorage.methods.getBorrowGuardianPaused(lendToken._address).call();
     
                 //Underlying parameters
                 let underlyingAddress 
@@ -346,6 +347,7 @@ class App extends Component {
                     underlyingPrice: getUnderlyingPrice.toString(),
                     
                     //Market variables
+                    mintPause: mintPause,
                     totalBorrows: totalBorrows.toString(),
                     totalReserves: totalReserves.toString(),
                     cash: getCash.toString(),
