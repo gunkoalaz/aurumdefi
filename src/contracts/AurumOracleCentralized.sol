@@ -95,7 +95,7 @@ contract AurumOracleCentralized is PriceOracle {
             nextIndex = index+1;
         }
         //newDeltaTime is the time n - time K  // it must more than period time
-        //oldDeltaTime is the time 0 - time K
+        //oldDeltaTime is the time K - time 0
         uint newDeltaTime = block.timestamp - asset[token].timestamp[lastIndex];
         require(newDeltaTime >= periodRange, "update too early");   //If update oracle bot catch this means the privatekey got hacked OR the bot error.
         uint oldDeltaTime = asset[token].timestamp[lastIndex]-asset[token].timestamp[nextIndex]; // This need to be initialized
@@ -164,10 +164,11 @@ contract AurumOracleCentralized is PriceOracle {
         } else {
             nextIndex = index+1;
         }
-        //oldDeltaTime is the time 0 - time K
         //newDeltaTime is the time n - time K
-        uint oldDeltaTime = goldPrice.timestamp[lastIndex]-goldPrice.timestamp[nextIndex]; // This need to be initialized
+        //oldDeltaTime is the time K - time 0
         uint newDeltaTime = block.timestamp - goldPrice.timestamp[lastIndex];
+        require(newDeltaTime >= periodRange, "update too early");   //If update oracle bot catch this means the privatekey got hacked OR the bot error.
+        uint oldDeltaTime = goldPrice.timestamp[lastIndex]-goldPrice.timestamp[nextIndex]; // This need to be initialized
 
         //new AvgPrice is ( price*tk  +  price*tn  ) / tk+tn
         uint newAvgPrice = ((oldDeltaTime*lastPrice) + (newDeltaTime*price)) / (newDeltaTime+oldDeltaTime);
