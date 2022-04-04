@@ -60,7 +60,7 @@ const MainInfoList = (props) => {
                 <img src={logo} alt='tokens' className='logoimg' />
                 <h3>{props.symbol}</h3>    
             </td>
-            <td className='mobile'>
+            <td className='mobile asset-number'>
                 <h5>{BigNumber(props.collateralfactor).div(e18).times(100).toFormat(0)}%</h5>
             </td>
             <td className='asset-number'>
@@ -69,7 +69,7 @@ const MainInfoList = (props) => {
             <td className='asset-number'>
                 <h5 style={{textAlign: 'right'}}>{price} $</h5>
             </td>
-            <td className='mobile'>
+            <td className='mobile asset-number'>
                 <h5 style={{textAlign: 'right'}}>{tvl} $</h5>
             </td>
         </tr>

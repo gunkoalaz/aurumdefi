@@ -31,18 +31,18 @@ contract Comptroller is ComptrollerInterface {
     ComptrollerCalculation public compCalculate;
     AurumControllerInterface public aurumController;
 
-    address public treasuryGuardian;        //Guardian of the treasury (not the galaxy :P)
-    address public treasuryAddress;         //Address
+    address public treasuryGuardian;        //Guardian of the treasury
+    address public treasuryAddress;         //Wallet Address
     uint256 public treasuryPercent;         //Fee in percent of accrued interest with decimal 18 , This value is used in liquidate function of each LendToken
     
-    bool internal locked;
+    bool internal locked;   // reentrancy Guardian
 
 
 
-    constructor(ComptrollerStorage setStorage) {
+    constructor(ComptrollerStorage compStorage_) {
         admin = msg.sender;
-        compStorage = setStorage;       //Bind storage to the comptroller contract.
-        locked = false;
+        compStorage = compStorage_;       //Bind storage to the comptroller contract.
+        locked = false;     // reentrancyGuard Variable
     }
 
 
@@ -50,18 +50,16 @@ contract Comptroller is ComptrollerInterface {
     //  Get parameters function
     //
 
-    /*** Assets You Are In ***/
-
-    function isComptroller() external pure returns(bool){   // Original source code call the isComptroller variable for double check the contract
+    function isComptroller() external pure returns(bool){   // double check the contract
         return true;
     }
     function isProtocolPaused() external view returns(bool) {
         return compStorage.protocolPaused();
     }
-    function getMintedGOLDs(address minter) external view returns(uint) {
+    function getMintedGOLDs(address minter) external view returns(uint) {   // The ledger of user's AURUM minted is stored in ComptrollerStorage contract.
         return compStorage.getMintedGOLDs(minter);
     }
-    function getComptrollerOracleAddress() external view returns(address) {
+    function getComptrollerOracleAddress() external view returns(address) {  
         return address(compStorage.oracle());
     }
     function getAssetsIn(address account) external view returns (LendTokenInterface[] memory) {
@@ -75,22 +73,29 @@ contract Comptroller is ComptrollerInterface {
     }
     function exitMarket(address lendTokenAddress) external{
         LendTokenInterface lendToken = LendTokenInterface(lendTokenAddress);
-        /* Get sender tokensHeld and amountOwed underlying from the lendToken */
-        (uint tokensHeld, uint amountOwed, ) = lendToken.getAccountSnapshot(msg.sender);
+        /* Get sender tokensHeld and borrowBalance from the lendToken */
+        (uint tokensHeld, uint borrowBalance, ) = lendToken.getAccountSnapshot(msg.sender);
 
         /* Fail if the sender has a borrow balance */
-        if (amountOwed != 0) {
+        if (borrowBalance != 0) {
             revert();
         }
 
-        this.redeemAllowed(lendTokenAddress, msg.sender, tokensHeld);
+        // if All of user's tokensHeld allowed to redeem, then it's allowed to UNCOLLATERALIZED.
+        this.redeemAllowed(lendTokenAddress, msg.sender, tokensHeld);  
 
+        // Execute change of state variable in ComptrollerStorage.
         compStorage.exitMarket(lendTokenAddress, msg.sender);
     }
+
 
     /*** Policy Hooks ***/
 
     // Check if the account be allowed to mint tokens
+    // This check only
+    // 1. Protocol not pause
+    // 2. The lendToken is listed
+    // Then update the reward SupplyIndex
     function mintAllowed(address lendToken, address minter) external{
         bool protocolPaused = compStorage.protocolPaused();
         if(protocolPaused){ revert ProtocolPaused(); }
@@ -156,10 +161,10 @@ contract Comptroller is ComptrollerInterface {
             revert MarketNotList();
         }
         if (!compStorage.checkMembership(borrower, LendTokenInterface(lendToken)) ) {
-            // only lendTokens may call borrowAllowed if borrower not in market
+            // previously we check that 'lendToken' is one of the verify LendToken, so make sure that this function is called by the verified lendToken not ATTACKER wallet.
             require(msg.sender == lendToken, "sender must be lendToken");
 
-            // attempt to add borrower to the market
+            // the borrow token automatically addToMarket.
             compStorage.addToMarket(LendTokenInterface(lendToken), borrower);
         }
 
@@ -207,9 +212,9 @@ contract Comptroller is ComptrollerInterface {
     //  Liquidate allowed will check
     //      1. is market listed ?
     //      2. is the borrower currently shortfall ? (run predict function without borrowing or redeeming)
-    //      3. calculate the max repayAmount could be by formula   borrowBalance * closeFactorMantissa (%)
-    //      4. check if repayAmount > maximumClose then return error.
-    //      5. if all pass return NO ERROR. (allowed)
+    //      3. calculate the max repayAmount by formula   borrowBalance * closeFactorMantissa (%)
+    //      4. check if repayAmount > maximumClose   then revert.
+    //      5. if all pass => allowed
     //
     function liquidateBorrowAllowed(address lendTokenBorrowed, address lendTokenCollateral, address borrower, uint repayAmount) external view{
         bool protocolPaused = compStorage.protocolPaused();
@@ -244,10 +249,11 @@ contract Comptroller is ComptrollerInterface {
     //
     //  SeizeAllowed will check
     //      1. check the lendToken Borrow and Collateral both are listed in market (aurumController also can be lendTokenBorrowed address)    
-    //          if seize function caller is other non-listed contract OR attacker address, seize function will pass the attacker contract to 'lendTokenBorrowed' variable
+    //         
     //      2. lendToken Borrow and Collateral are in the same market (Comptroller)
-    //      3. if all pass then return NO ERROR (allowed).
+    //      3. if all pass => (allowed).
     //      
+    //  lendTokenBorrowed is the called LendToken or aurumController.
     function seizeAllowed(address lendTokenCollateral, address lendTokenBorrowed, address liquidator, address borrower) external{
         bool protocolPaused = compStorage.protocolPaused();
         if(protocolPaused){ revert ProtocolPaused(); }
@@ -290,19 +296,12 @@ contract Comptroller is ComptrollerInterface {
     }
 
     /*** Liquidity/Liquidation Calculations ***/
-
+    //  Calculating function in ComptrollerCalculation contract
 
     function liquidateCalculateSeizeTokens(address lendTokenBorrowed, address lendTokenCollateral, uint actualRepayAmount) external view returns (uint) {
         return compCalculate.liquidateCalculateSeizeTokens(lendTokenBorrowed, lendTokenCollateral, actualRepayAmount);
     }
 
-    /**
-     * @notice Calculate number of tokens of collateral asset to seize given an underlying amount
-     * @dev Used in liquidation (called in lendToken.liquidateBorrowFresh)
-     * @param lendTokenCollateral The address of the collateral lendToken
-     * @param actualRepayAmount The amount of lendTokenBorrowed underlying to convert into lendTokenCollateral tokens
-     * @return (errorCode, number of lendTokenCollateral tokens to be seized in a liquidation)
-     */
     function liquidateGOLDCalculateSeizeTokens(address lendTokenCollateral, uint actualRepayAmount) external view returns (uint) {
         return compCalculate.liquidateGOLDCalculateSeizeTokens(lendTokenCollateral, actualRepayAmount);
     }
@@ -326,14 +325,12 @@ contract Comptroller is ComptrollerInterface {
         address oldAdmin = admin;
         address newAdmin = pendingAdmin;
         admin = pendingAdmin;
+        //Also set ComptrollerStorage's new admin to the same as comptroller.
         compStorage._setNewStorageAdmin(newAdmin);
 
         emit NewAdminConfirm (oldAdmin, newAdmin);
     }
-    /**
-      * @notice Sets a new GOLD controller
-      * @dev Admin function to set a new GOLD controller
-      */
+    
     function _setAurumController(AurumControllerInterface aurumController_) external{
         if(msg.sender != admin) { revert AdminOnly();}
 
@@ -380,7 +377,7 @@ contract Comptroller is ComptrollerInterface {
         this.claimARM(holder, lendTokens, true, true);
     }
 
-    function claimARM(address holders, LendTokenInterface[] memory lendTokens, bool borrowers, bool suppliers) external {
+    function claimARM(address holder, LendTokenInterface[] memory lendTokens, bool borrowers, bool suppliers) external {
         require (locked == false,"No reentrance"); //Reentrancy guard
         locked = true;
         for (uint i = 0; i < lendTokens.length; i++) {
@@ -390,15 +387,15 @@ contract Comptroller is ComptrollerInterface {
             if (borrowers) {
                 uint borrowIndex = lendToken.borrowIndex();
                 compStorage.updateARMBorrowIndex(address(lendToken), borrowIndex);
-                compStorage.distributeBorrowerARM(address(lendToken), holders, borrowIndex);
-                armAccrued = compStorage.getArmAccrued(holders);
-                compStorage.grantARM(holders, armAccrued);
+                compStorage.distributeBorrowerARM(address(lendToken), holder, borrowIndex);
+                armAccrued = compStorage.getArmAccrued(holder);
+                compStorage.grantARM(holder, armAccrued);
             }
             if (suppliers) {
                 compStorage.updateARMSupplyIndex(address(lendToken));
-                compStorage.distributeSupplierARM(address(lendToken), holders);
-                armAccrued = compStorage.getArmAccrued(holders);
-                compStorage.grantARM(holders, armAccrued);
+                compStorage.distributeSupplierARM(address(lendToken), holder);
+                armAccrued = compStorage.getArmAccrued(holder);
+                compStorage.grantARM(holder, armAccrued);
             }
         }
         locked = false;
