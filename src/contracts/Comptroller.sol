@@ -434,8 +434,7 @@ contract Comptroller is ComptrollerInterface {
 
 
         bool mintGOLDGuardianPaused = compStorage.mintGOLDGuardianPaused();
-        bool repayGOLDGuardianPaused = compStorage.repayGOLDGuardianPaused();
-        require(!mintGOLDGuardianPaused && !repayGOLDGuardianPaused, "GOLD is paused");
+        require(!mintGOLDGuardianPaused, "Mint GOLD is paused");
 
         
         compStorage.setMintedGOLD(owner,amount);
@@ -474,9 +473,9 @@ contract ComptrollerCalculation {
 
     /**
      * @notice Determine the current account liquidity wrt collateral requirements
-     * @return (possible error code (semi-opaque),
-                account liquidity in excess of collateral requirements,
-     *          account shortfall below collateral requirements)
+     * @return
+              1.  account liquidity in excess of collateral requirements,
+     *        2.  account shortfall below collateral requirements)
      */
     function getAccountLiquidity(address account) external view returns (uint, uint) {
         (uint liquidity, uint shortfall) = getHypotheticalAccountLiquidityInternal(account, LendTokenInterface(address(0)), 0, 0);
@@ -507,6 +506,7 @@ contract ComptrollerCalculation {
     }
 
     function isShortage(address account) external view returns(bool){
+        // This function will be called by the front-end Liquidator query. the LendTokenInterface(msg.sender) is the dummy parameter, it's not use for calculation.
         (,uint shortfall) = getHypotheticalAccountLiquidityInternal(account, LendTokenInterface(msg.sender), 0, 0);
         if(shortfall > 0){
             return true;
@@ -544,6 +544,8 @@ contract ComptrollerCalculation {
             LendTokenInterface asset = assets[i];
 
             // Read the balances and exchange rate from the lendToken
+            // As noted above, if no one interact with the LendToken, the 'accrueInterest' function not called for long time.
+            // May lead to outdated exchangeRate.
             (vars.lendTokenBalance, vars.borrowBalance, vars.exchangeRateMantissa) = asset.getAccountSnapshot(account);
 
 
@@ -554,6 +556,8 @@ contract ComptrollerCalculation {
             if (vars.oraclePriceMantissa == 0) {
                 revert("Oracle error");
             }
+
+
 
             // Pre-compute a conversion factor
             // Unit compensate = 1e18 :: (e18*e18 / e18) *e18 / e18 
@@ -601,8 +605,8 @@ contract ComptrollerCalculation {
      * @dev Used in liquidation (called in lendToken.liquidateBorrowFresh)
      * @param lendTokenBorrowed The address of the borrowed lendToken
      * @param lendTokenCollateral The address of the collateral lendToken
-     * @param actualRepayAmount The amount of lendTokenBorrowed underlying to convert into lendTokenCollateral tokens
-     * @return (errorCode, number of lendTokenCollateral tokens to be seized in a liquidation)
+     * @param actualRepayAmount The amount of underlying token that liquidator had paid.
+     * @return number of lendTokenCollateral tokens to be seized in a liquidation
      */
     function liquidateCalculateSeizeTokens(address lendTokenBorrowed, address lendTokenCollateral, uint actualRepayAmount) external view returns (uint) {
         /* Read oracle prices for borrowed and collateral markets */
@@ -635,10 +639,10 @@ contract ComptrollerCalculation {
 
     /**
      * @notice Calculate number of tokens of collateral asset to seize given an underlying amount
-     * @dev Used in liquidation (called in lendToken.liquidateBorrowFresh)
+     * @dev Used in liquidation. Called by AurumController contract
      * @param lendTokenCollateral The address of the collateral lendToken
-     * @param actualRepayAmount The amount of lendTokenBorrowed underlying to convert into lendTokenCollateral tokens
-     * @return (errorCode, number of lendTokenCollateral tokens to be seized in a liquidation)
+     * @param actualRepayAmount The amount of AURUM that liquidator had paid.
+     * @return number of lendTokenCollateral tokens to be seized in a liquidation
      */
     function liquidateGOLDCalculateSeizeTokens(address lendTokenCollateral, uint actualRepayAmount) external view returns (uint) {
         /* Read oracle prices for borrowed and collateral markets */
@@ -689,6 +693,7 @@ contract ComptrollerStorage {
     event ActionSeizePaused(bool state);
     event ActionMintPaused(address lendToken, bool state);
     event ActionBorrowPaused(address lendToken, bool state);
+    event NewGuardianAddress(address oldGuardian, address newGuardian);
     event NewBorrowCap(LendTokenInterface indexed lendToken, uint newBorrowCap);
     event NewPriceOracle(PriceOracle oldPriceOracle, PriceOracle newPriceOracle);
     event MintGOLDPause(bool state);
@@ -696,13 +701,17 @@ contract ComptrollerStorage {
     address public armAddress;
     address public comptrollerAddress;
     address public admin;
+    address public guardian;    //Guardian address, can only stop protocol
+
     PriceOracle public oracle;                              //stored contract of current PriceOracle (can be changed by _setPriceOracle function)
     function getARMAddress() external view returns(address) {return armAddress;}
 
     //
     // Liquidation variables
     //
-    //Close factor is the % (in 1e18 value) of borrowing asset can be liquidate   e.g. if set 50% --> borrow 1000 USD, position can be liquidate maximum of 500 USD
+
+    //Close factor is the % (in 1e18 value) of borrowing asset can be liquidate   
+    //e.g. if set 50% --> borrow 1000 USD, position can be liquidate maximum of 500 USD
     uint public closeFactorMantissa;                        //calculate the maximum repayAmount when liquidating a borrow   --> can be set by _setCloseFactor(uint)
     uint public liquidationIncentiveMantissa;               //multiplier that liquidator will receive after successful liquidate ; venus comptroller set up = 1100000000000000000 (1.1e18)
 
@@ -714,7 +723,7 @@ contract ComptrollerStorage {
     /**
      * @notice The Pause Guardian can pause certain actions as a safety mechanism.
      *  Actions which allow users to remove their own assets cannot be paused.
-     *  Liquidation / seizing / transfer can only be paused globally, not by market.
+     *  Liquidation / seizing can only be paused globally, not by market.
      */
     bool public protocolPaused;
     bool public transferGuardianPaused;
@@ -724,7 +733,6 @@ contract ComptrollerStorage {
     mapping(address => bool) public borrowGuardianPaused;
     function getBorrowGuardianPaused(address lendTokenAddress) external view returns(bool){ return borrowGuardianPaused[lendTokenAddress];}
     bool public mintGOLDGuardianPaused;
-    bool public repayGOLDGuardianPaused;
 
 
 
@@ -794,6 +802,7 @@ contract ComptrollerStorage {
     mapping(address => TheMarketState) public armBorrowState;     //market borrow state for each market
 
     //Individual index variables  will update once individual check allowed function (will lastly call distributeSupplier / distributeBorrower function) to the current market's index.
+
     mapping(address => mapping(address => uint)) public aurumSupplierIndex;     //supply index of each market for each supplier as of the last time they accrued ARM
     mapping(address => mapping(address => uint)) public aurumBorrowerIndex;     //borrow index of each market for each borrower as of the last time they accrued ARM
 
@@ -820,7 +829,7 @@ contract ComptrollerStorage {
         admin = msg.sender;
         armAddress = _armAddress;
         closeFactorMantissa = 0.5e18;
-        liquidationIncentiveMantissa = 1.1e18;
+        liquidationIncentiveMantissa = 1.2e18;
     }
 
 
@@ -883,7 +892,7 @@ contract ComptrollerStorage {
 
         /* Return out if the sender is not ‘in’ the market */
         if (!marketToExit.accountMembership[user]) {
-            return ;
+            return ;    //the state variable had changed in redeemAllowed function (updateARMSupplyIndex, distributeSupplierARM)
         }
 
         /* Set lendToken account membership to false */
@@ -909,17 +918,25 @@ contract ComptrollerStorage {
     }
 
     function setAurumSpeed(LendTokenInterface lendToken, uint aurumSpeed) external onlyComptroller {
+        // This function called by comptroller's _setAurumSpeed
+        //Update the aurumSpeeds state variable.
         aurumSpeeds[address(lendToken)] = aurumSpeed;
         emit AurumSpeedUpdated(lendToken, aurumSpeed);
     }
 
-    // This function is called by _setAurumSpeed admin function when starting distribute ARM reward (from aurumSpeed 0)
+    // This function is called by _setAurumSpeed admin function when FIRST TIME starting distribute ARM reward (from aurumSpeed 0)
     // it will check the MarketState of this lendToken and set to InitialIndex
     function addARMdistributionMarket(LendTokenInterface lendToken) external onlyComptroller {
         // Add the ARM market
         Market storage market = markets[address(lendToken)];
         require(market.isListed == true, "aurum market is not listed");
 
+        //
+        // These Lines of code is modified from Venus
+        // If someone had mint lendToken or Allowed function is called, the timestamp would be change and not equal to zero
+        // 
+        
+        /*
         if (armSupplyState[address(lendToken)].index == 0 && armSupplyState[address(lendToken)].lastTimestamp == 0) {
             armSupplyState[address(lendToken)] = TheMarketState({
                 index: armInitialIndex,
@@ -929,6 +946,26 @@ contract ComptrollerStorage {
 
 
         if (armBorrowState[address(lendToken)].index == 0 && armBorrowState[address(lendToken)].lastTimestamp == 0) {
+                armBorrowState[address(lendToken)] = TheMarketState({
+                    index: armInitialIndex,
+                    lastTimestamp: block.timestamp
+                });
+        }
+        */
+
+        //
+        // We remove the timeStamp == 0 , once distribution is initiated the index will not back to zero again.
+        // This prevent over-reward of ARM if someone is pre-supply before the reward is initiating distribution.
+        //
+        if (armSupplyState[address(lendToken)].index == 0) {
+            armSupplyState[address(lendToken)] = TheMarketState({
+                index: armInitialIndex,
+                lastTimestamp: block.timestamp
+            });
+        }
+
+
+        if (armBorrowState[address(lendToken)].index == 0) {
                 armBorrowState[address(lendToken)] = TheMarketState({
                     index: armInitialIndex,
                     lastTimestamp: block.timestamp
@@ -1157,34 +1194,43 @@ contract ComptrollerStorage {
     /**
      * Set whole protocol pause/unpause state
      */
+
+    function _setGuardianAddress(address newGuardian) external {
+        require(msg.sender == admin, "No Auth");
+        address oldGuardian = guardian;
+        guardian = newGuardian;
+
+        emit NewGuardianAddress(oldGuardian, newGuardian);
+    }
+    //Guardians can pause protocol but can't unpause
     function _setProtocolPaused(bool state) external {
-        require(msg.sender == admin, "Only admin");
+        require(msg.sender == admin || (msg.sender == guardian && state == true), "No Auth");
         protocolPaused = state;
         emit ActionProtocolPaused(state);
     }
     function _setTransferPaused(bool state) external {
-        require(msg.sender == admin, "Only admin");
+        require(msg.sender == admin || (msg.sender == guardian && state == true), "No Auth");
         transferGuardianPaused = state;
         emit ActionTransferPaused(state);
     }
     function _setSeizePaused(bool state) external {
-        require(msg.sender == admin, "Only admin");
+        require(msg.sender == admin || (msg.sender == guardian && state == true), "No Auth");
         seizeGuardianPaused = state;
         emit ActionSeizePaused(state);
     }
 
     function _setMintPaused(address lendToken, bool state) external {
-        require(msg.sender == admin, "Only admin");
+        require(msg.sender == admin || (msg.sender == guardian && state == true), "No Auth");
         mintGuardianPaused[lendToken] = state;
         emit ActionMintPaused(lendToken, state);
     }
     function _setBorrowPaused(address lendToken, bool state) external {
-        require(msg.sender == admin, "Only admin");
+        require(msg.sender == admin || (msg.sender == guardian && state == true), "No Auth");
         borrowGuardianPaused[lendToken] = state;
         emit ActionBorrowPaused(lendToken, state);
     }
     function _setMintGoldPause(bool state) external {
-        require(msg.sender == admin, "Only admin");
+        require(msg.sender == admin || (msg.sender == guardian && state == true), "No Auth");
         mintGOLDGuardianPaused = state;
         emit MintGOLDPause(state);
     }
@@ -1224,14 +1270,5 @@ contract ComptrollerStorage {
         // Emit NewPriceOracle(oldOracle, newOracle)
         emit NewPriceOracle(oldOracle, newOracle);
     }
-
-    
-    // function _setARMAddress(address newARMAddress) external{
-    //     require (msg.sender == admin, "Only admin function");
-    //     address oldARMAddress = armAddress;
-    //     armAddress = newARMAddress;
-    //     emit NewARMAddress(oldARMAddress, newARMAddress);
-    // }
-
 
 }

@@ -288,6 +288,7 @@ contract LendToken is LendTokenInterface{
     /**
      * @notice Calculates the exchange rate from the underlying to the lendToken
      * @dev This function does not accrue interest before calculating the exchange rate
+     *      
      * @return Calculated exchange rate scaled by 1e18
      */
     function exchangeRateStored() public view returns (uint) {
