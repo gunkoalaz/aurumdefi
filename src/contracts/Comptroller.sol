@@ -385,13 +385,16 @@ contract Comptroller is ComptrollerInterface {
             require(compStorage.isMarketListed(address(lendToken)));
             uint armAccrued;
             if (borrowers) {
+                // Update the borrow index of each lendToken in the storage of comptroller
+                // Borrow index is the multiplier which gradually increase by the amount of interest (borrowRate)
                 uint borrowIndex = lendToken.borrowIndex();
                 compStorage.updateARMBorrowIndex(address(lendToken), borrowIndex);
+
                 compStorage.distributeBorrowerARM(address(lendToken), holder, borrowIndex);
                 armAccrued = compStorage.getArmAccrued(holder);
-                compStorage.grantARM(holder, armAccrued);
+                compStorage.grantARM(holder, armAccrued);   //reward the user then set user's armAccrued to 0;
             }
-            if (suppliers) {
+            if (suppliers) { 
                 compStorage.updateARMSupplyIndex(address(lendToken));
                 compStorage.distributeSupplierARM(address(lendToken), holder);
                 armAccrued = compStorage.getArmAccrued(holder);
@@ -1034,7 +1037,8 @@ contract ComptrollerStorage {
 
     function grantARM(address user, uint amount) external onlyComptroller returns (uint) {
         IERC20 arm = IERC20(armAddress);
-        uint armRemaining = arm.balanceOf(address(this));
+        uint armRemaining = arm.balanceOf(address(this)); // when the ARM reward pool is nearly empty, admin should manually turn aurum speed to 0
+        //Treasury reserves will be used when there is human error in reward process.
         if (amount > 0 && amount <= armRemaining) {
             armAccrued[user] = 0;
             arm.transfer(user, amount);
