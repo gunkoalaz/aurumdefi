@@ -1038,14 +1038,14 @@ contract ComptrollerStorage {
         aurumSupplierIndex[lendToken][supplier] = supplyIndex;  // update the user's index to the current state
 
         if (supplierIndex == 0 && supplyIndex > 0) {    
-        //This happen when first time minting lendToken (mintingAllowed function) 
+        //This happen when first time using Allowed function after initialized reward distribution (Mint/Redeem/Seize)
         //or receiving a lendToken but currently don't have this token (transferAllowed function)
             supplierIndex = armInitialIndex; // 1e36
         }
         //Calculate the new accrued arm since last update
         uint deltaIndex = supplyIndex - supplierIndex;
 
-        uint supplierTokens = LendTokenInterface(lendToken).balanceOf(supplier); //e18
+        uint supplierTokens = LendTokenInterface(lendToken).balanceOf(supplier); //e18      //If first time Mint/receive transfer LendToken, the balanceOf should be 0
         uint supplierDelta = supplierTokens * deltaIndex / 1e36;   //e18  :: e18*e36/ 1e36
         uint supplierAccrued = armAccrued[supplier] + supplierDelta;
         armAccrued[supplier] = supplierAccrued;
@@ -1062,7 +1062,17 @@ contract ComptrollerStorage {
         if (borrowerIndex > 0) {
             uint deltaIndex = borrowIndex - borrowerIndex; // e36
 
-            uint borrowerAmount = LendTokenInterface(lendToken).borrowBalanceStored(borrower) * 1e18 / marketBorrowIndex;  // e18
+            // Let explain in diagram
+            // [p] = principal
+            // [i] = interest
+            // [/i] = interest not yet record in accountBorrows[user]
+
+            //  [p][p][p][p][i]         principal with interest (accountBorrows[user] stored  1. principal  and  2.interestIndex multiplier)
+            //  [p][p][p][p]            principal / interestIndex
+            //  [p][p][p][p][i][/i]     principal / interestIndex * marketBorrowIndex (this is what borrowBalanceStored function returns);
+            //  We need only principal amount to be calculated.
+
+            uint borrowerAmount = LendTokenInterface(lendToken).borrowBalanceStored(borrower) * 1e18 / marketBorrowIndex;  // e18    //This result
             uint borrowerDelta = borrowerAmount * deltaIndex / 1e36;  // e18 ::  e18 * e36 / 1e36
             uint borrowerAccrued = armAccrued[borrower] + borrowerDelta;
             armAccrued[borrower] = borrowerAccrued;
@@ -1071,7 +1081,9 @@ contract ComptrollerStorage {
     }
 
 
-
+    //called by claimARM function
+    //This function execute change of state variable 'armAccrued'   and transfer ARM token to user.
+    //returns the pending reward after claim. by the way it's not necessory.
     function grantARM(address user, uint amount) external onlyComptroller returns (uint) {
         IERC20 arm = IERC20(armAddress);
         uint armRemaining = arm.balanceOf(address(this)); // when the ARM reward pool is nearly empty, admin should manually turn aurum speed to 0
