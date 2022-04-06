@@ -148,7 +148,7 @@ module.exports = async function (deployer, network, accounts) {
     //KUMA setup
     await compStorage._supportMarket(lendTokenKUMA.address, {from: owner});
     console.log("LendToken KUMA has been bind to comptroller.");
-    await lendTokenKUMA._setReserveFactor('200000000000000000', {from: owner});
+    await lendTokenKUMA._setReserveFactor('100000000000000000', {from: owner});
     console.log("Reserve factor is set 10%");
 
     //BNB setup
