@@ -30,14 +30,14 @@ contract StakingARM {
         //   4. User's `rewardBalanceOf` gets updated.
 
 
-    IERC20 public armToken;     // ARM token
+    IERC20 public armToken;     // ARM token  OR  LP-token to be staked
     IERC20 public rewardToken;  // BUSD token
 
 
 
     //Set object of ARM to armToken and object of BUSD to rewardToken when the contract is deployed.
     constructor(IERC20 importARMToken, IERC20 importRewardToken){
-        armToken = importARMToken;
+        armToken = importARMToken; // This can be LP token when deploying contract
         rewardToken = importRewardToken;
         owner = msg.sender;
         rewardSpendingDuration = 30 days; // set default is 30 days
@@ -49,6 +49,7 @@ contract StakingARM {
     event ClaimReward(address _claimer, uint _amount);
     event EmergencyWithdraw(address _withdrawer, uint _amount);
     event SetRewardSpendingDuration(uint OldDuration, uint NewDuration);
+    event SetNewOwner(address OldOwner, address NewOwner);
 
     modifier onlyOwner {
       require(msg.sender == owner);
@@ -269,7 +270,7 @@ contract StakingARM {
     }
 
     //Set reward duration  only Owner can access
-    function setRewardDurationSpending (uint hour) external onlyOwner {
+    function _setRewardDurationSpending (uint hour) external onlyOwner {
         updateRewardBlock();  //update distribute reward before
         uint OldDuration = rewardSpendingDuration;
         uint NewDuration = hour * 60 * 60; // Input in 'hour', Stored in Seconds
@@ -278,6 +279,15 @@ contract StakingARM {
         accRewardPerShare = (getRewardRemaining() * 1e18 / getTotalStakedARM()) / NewDuration; // update the distribution RATE
         emit SetRewardSpendingDuration(OldDuration, NewDuration);
     }
+
+    //Set new admin
+    function _transferOwnership (address newOwner) external onlyOwner {
+        address oldOwner = owner;
+        owner = newOwner;
+
+        emit SetNewOwner(oldOwner, newOwner);
+    }
+
 
     //Withdraw ARM token without caring reward
     function emergencyWithdraw() external reentrancyGuard {

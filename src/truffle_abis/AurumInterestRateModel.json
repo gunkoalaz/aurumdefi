@@ -38,7 +38,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -67,7 +68,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -96,7 +98,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -130,7 +133,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.12+commit.f00d7308\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_baseRate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_maxRate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_trigger\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_peakMax\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"cash\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"borrows\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reserves\",\"type\":\"uint256\"}],\"name\":\"getBorrowRate\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"cash\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"borrows\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reserves\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reserveFactorMantissa\",\"type\":\"uint256\"}],\"name\":\"getSupplyRate\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"isInterestRateModel\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"cash\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"borrows\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"reserves\",\"type\":\"uint256\"}],\"name\":\"utility\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/AurumInterestRateModel.sol\":\"AurumInterestRateModel\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/contracts/AurumInterestRateModel.sol\":{\"keccak256\":\"0xaea76fcb16ab20ca443736a5991cd49ad525459f9bb84907000289431f93f797\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6cb6268df79f576c725386d57dd41e3a4df3fd2ecbd13deb80782c84b3d256f5\",\"dweb:/ipfs/Qmb9Lz8jCjAHSGWf3ZLjpnE2fTa78YNMdy9ogvYgb6bMZE\"]},\"project:/src/contracts/interface/ComptrollerInterface.sol\":{\"keccak256\":\"0xde8c8a1cccea06c37dafc93b58735b0c1c8c58992b1e943f3f563e503dd897a4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c320c683d8b38dd8568dc070a16af2b84964d54dbd16a16a8f4819482bce43e3\",\"dweb:/ipfs/QmUhfLG1rFyoVsEzxTYCaeXUQUho82XV3ALYguZh1ZcFcR\"]}},\"version\":1}",
@@ -3801,28 +3805,28 @@
     "absolutePath": "project:/src/contracts/AurumInterestRateModel.sol",
     "exportedSymbols": {
       "AurumControllerInterface": [
-        14501
+        14058
       ],
       "AurumInterestRateModel": [
         3048
       ],
       "ComptrollerInterface": [
-        14214
+        13771
       ],
       "ComptrollerStorageInterface": [
-        14222
+        13779
       ],
       "IComptroller": [
-        14238
+        13795
       ],
       "InterestRateModel": [
-        14531
+        14088
       ],
       "LendTokenInterface": [
-        14437
+        13994
       ],
       "PriceOracle": [
-        14463
+        14020
       ]
     },
     "id": 3049,
@@ -3847,7 +3851,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 3049,
-        "sourceUnit": 14532,
+        "sourceUnit": 14089,
         "src": "60:46:7",
         "symbolAliases": [],
         "unitAlias": ""
@@ -3860,7 +3864,7 @@
               "id": 2829,
               "name": "InterestRateModel",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 14531,
+              "referencedDeclaration": 14088,
               "src": "145:17:7"
             },
             "id": 2830,
@@ -3875,7 +3879,7 @@
         "id": 3048,
         "linearizedBaseContracts": [
           3048,
-          14531
+          14088
         ],
         "name": "AurumInterestRateModel",
         "nameLocation": "119:22:7",
@@ -3883,7 +3887,7 @@
         "nodes": [
           {
             "baseFunctions": [
-              14506
+              14063
             ],
             "body": {
               "id": 2837,
@@ -4910,7 +4914,7 @@
           },
           {
             "baseFunctions": [
-              14517
+              14074
             ],
             "body": {
               "id": 2987,
@@ -5927,7 +5931,7 @@
           },
           {
             "baseFunctions": [
-              14530
+              14087
             ],
             "body": {
               "id": 3046,
@@ -6713,28 +6717,28 @@
     "absolutePath": "project:/src/contracts/AurumInterestRateModel.sol",
     "exportedSymbols": {
       "AurumControllerInterface": [
-        14501
+        14058
       ],
       "AurumInterestRateModel": [
         3048
       ],
       "ComptrollerInterface": [
-        14214
+        13771
       ],
       "ComptrollerStorageInterface": [
-        14222
+        13779
       ],
       "IComptroller": [
-        14238
+        13795
       ],
       "InterestRateModel": [
-        14531
+        14088
       ],
       "LendTokenInterface": [
-        14437
+        13994
       ],
       "PriceOracle": [
-        14463
+        14020
       ]
     },
     "id": 3049,
@@ -6759,7 +6763,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 3049,
-        "sourceUnit": 14532,
+        "sourceUnit": 14089,
         "src": "60:46:7",
         "symbolAliases": [],
         "unitAlias": ""
@@ -6772,7 +6776,7 @@
               "id": 2829,
               "name": "InterestRateModel",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 14531,
+              "referencedDeclaration": 14088,
               "src": "145:17:7"
             },
             "id": 2830,
@@ -6787,7 +6791,7 @@
         "id": 3048,
         "linearizedBaseContracts": [
           3048,
-          14531
+          14088
         ],
         "name": "AurumInterestRateModel",
         "nameLocation": "119:22:7",
@@ -6795,7 +6799,7 @@
         "nodes": [
           {
             "baseFunctions": [
-              14506
+              14063
             ],
             "body": {
               "id": 2837,
@@ -7822,7 +7826,7 @@
           },
           {
             "baseFunctions": [
-              14517
+              14074
             ],
             "body": {
               "id": 2987,
@@ -8839,7 +8843,7 @@
           },
           {
             "baseFunctions": [
-              14530
+              14087
             ],
             "body": {
               "id": 3046,
@@ -9629,18 +9633,19 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x299Eb855052F7e02D4710A625cCFDcc46A0EA2ea",
-      "transactionHash": "0x9cd98b01efd15044b63ed32658157f437d2461b41b6797cdbd51808bb92dd403"
+      "address": "0x8dCfE40B785c153681F2DD785a08dE02512F11C5",
+      "transactionHash": "0x9fd49e29d73deb0823afa3b60ca98903be87bad1ee85884f249cd0a64dbbde5d"
     },
     "55556": {
       "events": {},
       "links": {},
-      "address": "0xe8CB6EBf32db7e341E64e686c8F97F3A161777A0",
-      "transactionHash": "0x206374b83722b9f45291a443b4aa302c0e61a28803ff93637d02887e6a32303f"
+      "address": "0xBA4b4aD3E6Ff329b9d3B83e359EEDdc7623aF65d",
+      "transactionHash": "0x65be328e96a6416e201516da6617a960e5d4a829ece1be02e688c88d94b55acf"
     }
   },
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-04-04T14:04:50.373Z",
+  "updatedAt": "2022-04-06T07:21:17.498Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},

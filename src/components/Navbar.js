@@ -22,7 +22,7 @@ const Navbar = (props) => {
                     <li className="link"><Link to='/aurum'>Aurum</Link></li>
                     <li className="link"><Link to='/armvault'>ARM Vault</Link></li>
                     <li className="link"><Link to='/liquidate'>Liquidate</Link></li>
-                    <li className="link"><Link to='/mint'>=TEST:Mint=</Link></li>
+                    {props.networkId === 55556 || props.networkId === 5777 ? <li className="link"><Link to='/mint'>=TEST:Mint=</Link></li> : ''}
                 </ul>
             </div>
             <div className="lt-space"></div>

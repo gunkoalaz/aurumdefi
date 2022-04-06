@@ -223,7 +223,7 @@ contract AurumController is AurumControllerInterface {
 
     /**
      * @dev Local vars for avoiding stack-depth limits in calculating account total supply balance.
-     *  Note that `vTokenBalance` is the number of vTokens the account owns in the market,
+     *  Note that `lendTokenBalance` is the number of lendTokens the account owns in the market,
      *  whereas `borrowBalance` is the amount of underlying that the account has borrowed.
      */
     struct AccountAmountLocalVars {
@@ -320,7 +320,7 @@ contract AurumController is AurumControllerInterface {
 
     /**
      * @notice Return the address of the AURUM GOLD token
-     * @return The address of GOLD
+     * @return The address of AURUM GOLD
      */
     function getAURUMAddress() public view returns (address) {
         return aurumAddress;

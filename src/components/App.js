@@ -1,34 +1,35 @@
-import React, {Component} from 'react'
-import {BrowserRouter, Routes, Route} from "react-router-dom"
+import React, {Component} from 'react';
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 //Web components
-import ParticleSettings from './ParticleSettings.js'
-import Navbar from './Navbar.js'
-import Header from './Header.js'
-import Main from './Main.js'
-import Lending from './Lending.js'
-import AurumMinter from './AurumMinter.js'
-import ArmVault from './ArmVault.js'
-import Liquidate from './Liquidate.js'
-import AdminInterface from './AdminInterface.js'
-import MintTestTokens from './MintTestTokens.js'
+import ParticleSettings from './ParticleSettings.js';
+import Navbar from './Navbar.js';
+import Header from './Header.js';
+import Main from './Main.js';
+import Lending from './Lending.js';
+import AurumMinter from './AurumMinter.js';
+import ArmVault from './ArmVault.js';
+import Liquidate from './Liquidate.js';
+import AdminInterface from './AdminInterface.js';
+import MintTestTokens from './MintTestTokens.js';
+import NoMatch from './NoMatch.js';
 
 //Blockchain components
 import Web3 from 'web3';
-import ARM from '../truffle_abis/ARM.json'
-import StakingARM from '../truffle_abis/StakingARM.json'
-import Comptroller from '../truffle_abis/Comptroller.json'
-import ComptrollerStorage from '../truffle_abis/ComptrollerStorage.json'
-import ComptrollerCalculation from '../truffle_abis/ComptrollerCalculation.json'
-import AurumController from '../truffle_abis/AurumController.json'
-import AurumPriceOracle from '../truffle_abis/AurumOracleCentralized.json'
-import LendToken from '../truffle_abis/LendToken.json'
-import LendREI from '../truffle_abis/LendREI.json'
-import AURUM from '../truffle_abis/AURUM.json'
-import ERC20 from '../truffle_abis/ERC20.json'
+import ARM from '../truffle_abis/ARM.json';
+import StakingARM from '../truffle_abis/StakingARM.json';
+import Comptroller from '../truffle_abis/Comptroller.json';
+import ComptrollerStorage from '../truffle_abis/ComptrollerStorage.json';
+import ComptrollerCalculation from '../truffle_abis/ComptrollerCalculation.json';
+import AurumController from '../truffle_abis/AurumController.json';
+import AurumPriceOracle from '../truffle_abis/AurumOracleCentralized.json';
+import LendToken from '../truffle_abis/LendToken.json';
+import LendREI from '../truffle_abis/LendREI.json';
+import AURUM from '../truffle_abis/AURUM.json';
+import ERC20 from '../truffle_abis/ERC20.json';
 
 // const e18 = 1000000000000000000
-const MAX_UINT = "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+const MAX_UINT = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
 
 
 const initialState = {
@@ -576,7 +577,7 @@ class App extends Component {
                     <ParticleSettings/>
                 </div>
                 <BrowserRouter>
-                    <Navbar price={this.state.price}/>
+                    <Navbar price={this.state.price} networkId={this.state.networkId}/>
                     <Header 
                         mainstate={this.state}
                         connectMetamask={this.connectAurumDeFi}
@@ -590,6 +591,8 @@ class App extends Component {
                         <Route path='/liquidate' element={<Liquidate mainstate={this.state} updateWeb3={this.updateWeb3} loadLiquidateList={this.loadLiquidateList}/>} />
                         <Route path='/admin' element={<AdminInterface mainstate={this.state}/>} />
                         <Route path='/mint' element={<MintTestTokens mainstate={this.state}/>} />
+
+                        <Route path='*' element={<NoMatch />} />
                     </Routes>
                 </BrowserRouter>
             </div>

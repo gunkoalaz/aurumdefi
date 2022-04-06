@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 //
 //  Lend token contract is forked and modified from venus' VToken contract
+// !! WARNING  LendToken is NOT ERC20 standard (transfer, transferFrom, approve :: don't have returns bool)
 //
 
 contract LendToken is LendTokenInterface{
@@ -56,7 +57,7 @@ contract LendToken is LendTokenInterface{
     uint256 public reserveFactorMantissa;                          //Current fraction of interest
 
     // AccrueInterest update parameter
-    uint256 public accrualTimestamp;                                //Last accrued block number
+    uint256 public accrualTimestamp;                                //Last accrued timestamp
     uint public borrowIndex;                                       //Accumulate total earned interest rate
     uint public totalBorrows;                                      //Total amount of borrowed underlying asset
     uint public totalReserves;                                     //Total amount of underlying asset
@@ -260,7 +261,7 @@ contract LendToken is LendTokenInterface{
     /**
      * @notice Return the borrow balance of account based on stored data
      * @param account The address whose balance should be calculated
-     * @return The calculated balance
+     * @return The principal * market borrow index / recorded borrowIndex
      */
     function borrowBalanceStored(address account) public view returns (uint) {
         uint principalTimesIndex;
@@ -326,11 +327,11 @@ contract LendToken is LendTokenInterface{
     }
     /**
      * @notice Applies accrued interest to total borrows and reserves
-     * @dev This calculates interest accrued from the last checkpointed block
-     *   up to the current block and writes new checkpoint to storage.
+     * @dev This calculates interest accrued from the last checkpointed timestamp
+     *   up to the current timestamp and writes new checkpoint to storage.
      */
     function accrueInterest() public {
-        /* Remember the initial block number */
+        /* Remember the initial block timestamp */
         uint currentTimestamp = block.timestamp;
         uint accrualTimestampPrior = accrualTimestamp;
 
@@ -349,12 +350,12 @@ contract LendToken is LendTokenInterface{
         uint borrowRateMantissa = interestRateModel.getBorrowRate(cashPrior, borrowsPrior, reservesPrior);
         require(borrowRateMantissa <= borrowRateMaxMantissa, "borrow rate is absurdly high");
 
-        /* Calculate the number of blocks elapsed since the last accrual */
-        uint blockDelta = currentTimestamp - accrualTimestampPrior;
+        /* Calculate the elapsed time (seconds) since the last accrual */
+        uint timeDelta = currentTimestamp - accrualTimestampPrior;
 
         /*
          * Calculate the interest accumulated into borrows and reserves and the new index:
-         *  simpleInterestFactor = borrowRate * blockDelta
+         *  simpleInterestFactor = borrowRate * timeDelta
          *  interestAccumulated = simpleInterestFactor * totalBorrows
          *  totalBorrowsNew = interestAccumulated + totalBorrows
          *  totalReservesNew = interestAccumulated * reserveFactor + totalReserves
@@ -368,7 +369,7 @@ contract LendToken is LendTokenInterface{
         uint borrowIndexNew;
 
         // simpleInterestFactor is 1e18 :: e18 * e1
-        simpleInterestFactor = borrowRateMantissa * blockDelta;
+        simpleInterestFactor = borrowRateMantissa * timeDelta;
         // interestAccumulated is 1e18 :: e18 * e18 /1e18
         interestAccumulated = simpleInterestFactor * borrowsPrior / 1e18;
         // totalBorrowsNew is 1e18
@@ -392,16 +393,16 @@ contract LendToken is LendTokenInterface{
         emit AccrueInterest(cashPrior, interestAccumulated, borrowIndexNew, totalBorrowsNew);
     }
     /**
-     * @notice Returns the current per-block borrow interest rate for this LendToken
-     * @return The borrow interest rate per block, scaled by 1e18
+     * @notice Returns the current per-seconds borrow interest rate for this LendToken
+     * @return The borrow interest rate per seconds, scaled by 1e18
      */
     function borrowRatePerSeconds() external view returns (uint) {
         return interestRateModel.getBorrowRate(getCash(), totalBorrows, totalReserves);
     }
 
     /**
-     * @notice Returns the current per-block supply interest rate for this lendToken
-     * @return The supply interest rate per block, scaled by 1e18
+     * @notice Returns the current per-seconds supply interest rate for this lendToken
+     * @return The supply interest rate per seconds, scaled by 1e18
      */
     function supplyRatePerSeconds() external view returns (uint) {
         return interestRateModel.getSupplyRate(getCash(), totalBorrows, totalReserves, reserveFactorMantissa);
@@ -424,7 +425,7 @@ contract LendToken is LendTokenInterface{
      * @notice Sender supplies assets into the market and receives lendTokens in exchange
      * @dev Accrues interest whether or not the operation succeeds, unless reverted
      * @param mintAmount The amount of the underlying asset to supply
-     * @return (uint, uint) An error code (0=success, otherwise a failure, see ErrorReporter.sol), and the actual mint amount.
+     * @return (uint) the actual mint amount.
      */
     function mint(uint mintAmount) external returns(uint) {
         return mintInternal(mintAmount);
@@ -438,10 +439,10 @@ contract LendToken is LendTokenInterface{
 
     /**
      * @notice User supplies assets into the market and receives lendTokens in exchange
-     * @dev Assumes interest has already been accrued up to the current block
+     * @dev Assumes interest has already been accrued up to the current timestamp
      * @param minter The address of the account which is supplying the assets
      * @param mintAmount The amount of the underlying asset to supply
-     * @return (uint, uint) An error code (0=success, otherwise a failure, see ErrorReporter.sol), and the actual mint amount.
+     * @return (uint) the actual mint amount.
      */
     function mintFresh(address minter, uint mintAmount) internal returns (uint) {
         /* Fail if mint not allowed */
@@ -461,7 +462,7 @@ contract LendToken is LendTokenInterface{
 
         /*
          *  We call `doTransferIn` for the minter and the mintAmount.
-         *  Note: The lendToken must handle variations between BEP-20 and BNB underlying.
+         *  Note: The lendToken must handle variations between ERC-20 and REI underlying.
          *  `doTransferIn` reverts if anything goes wrong, since we can't be sure if
          *  side-effects occurred. The function returns the amount actually transferred,
          *  in case of a fee. On success, the lendToken holds an additional `actualMintAmount`
@@ -532,13 +533,13 @@ contract LendToken is LendTokenInterface{
     }
     /**
      * @notice User redeems lendTokens in exchange for the underlying asset
-     * @dev Assumes interest has already been accrued up to the current block
+     * @dev Assumes interest has already been accrued up to the current timestamp
      * @param redeemer The address of the account which is redeeming the tokens
      * @param redeemTokensIn The number of lendTokens to redeem into underlying (only one of redeemTokensIn or redeemAmountIn may be non-zero)
      * @param redeemAmountIn The number of underlying tokens to receive from redeeming lendTokens (only one of redeemTokensIn or redeemAmountIn may be non-zero)
      */
     function redeemFresh(address redeemer, uint redeemTokensIn, uint redeemAmountIn) internal{
-        require(redeemTokensIn == 0 || redeemAmountIn == 0, "one of redeemTokensIn or redeemAmountIn must be zero");
+        require(redeemTokensIn == 0 || redeemAmountIn == 0, "BAD_INPUT");
 
 
 
@@ -601,7 +602,7 @@ contract LendToken is LendTokenInterface{
 
         /*
          * We invoke doTransferOut for the redeemer and the redeemAmount.
-         *  Note: The lendToken must handle variations between BEP-20 and BNB underlying.
+         *  Note: The lendToken must handle variations between ERC-20 and REI underlying.
          *  On success, the lendToken has redeemAmount less of cash.
          *  doTransferOut reverts if anything goes wrong, since we can't be sure if side effects occurred.
          */
@@ -651,8 +652,7 @@ contract LendToken is LendTokenInterface{
     /*
       * @notice Users borrow assets from the protocol to their own address
       * @param borrowAmount The amount of the underlying asset to borrow
-      * @return uint 0=success, otherwise a failure (see ErrorReporter.sol for details)
-      */
+    */
     function borrowFresh(address  borrower, uint borrowAmount) internal {
         /* Fail if borrow not allowed */
         comptroller.borrowAllowed(address(this), borrower, borrowAmount);
@@ -680,7 +680,7 @@ contract LendToken is LendTokenInterface{
 
         /*
          * We invoke doTransferOut for the borrower and the borrowAmount.
-         *  Note: The lendToken must handle variations between BEP-20 and BNB underlying.
+         *  Note: The lendToken must handle variations between ERC-20 and REI underlying.
          *  On success, the lendToken borrowAmount less of cash.
          *  doTransferOut reverts if anything goes wrong, since we can't be sure if side effects occurred.
          */
@@ -754,7 +754,7 @@ contract LendToken is LendTokenInterface{
 
         /*
          * We call doTransferIn for the payer and the repayAmount
-         *  Note: The lendToken must handle variations between BEP-20 and BNB underlying.
+         *  Note: The lendToken must handle variations between ERC-20 and REI underlying.
          *  On success, the lendToken holds an additional repayAmount of cash.
          *  doTransferIn reverts if anything goes wrong, since we can't be sure if side effects occurred.
          *   it returns the amount actually transferred, in case of a fee.
@@ -1017,7 +1017,7 @@ contract LendToken is LendTokenInterface{
      *      This function returns the actual amount received,
      *      which may be less than `amount` if there is a fee attached to the transfer.
      *
-     *      Note: This wrapper safely handles non-standard BEP-20 tokens that do not return a value.
+     *      Note: This wrapper safely handles non-standard ERC-20 tokens that do not return a value.
      *            See here: https://medium.com/coinmonks/missing-return-value-bug-at-least-130-tokens-affected-d67bf08521ca
      */
     function doTransferIn(address from, uint amount) internal returns (uint) {
@@ -1028,14 +1028,14 @@ contract LendToken is LendTokenInterface{
         bool success;
         assembly {
             switch returndatasize()
-                case 0 {                       // This is a non-standard BEP-20
+                case 0 {                       // This is a non-standard ERC-20
                     success := not(0)          // set success to true
                 }
-                case 32 {                      // This is a compliant BEP-20
+                case 32 {                      // This is a compliant ERC-20
                     returndatacopy(0, 0, 32)
                     success := mload(0)        // Set `success = returndata` of external call
                 }
-                default {                      // This is an excessively non-compliant BEP-20, revert.
+                default {                      // This is an excessively non-compliant ERC-20, revert.
                     revert(0, 0)
                 }
         }
@@ -1054,7 +1054,7 @@ contract LendToken is LendTokenInterface{
      *      insufficient cash held in this contract. If caller has checked protocol's balance prior to this call, and verified
      *      it is >= amount, this should not revert in normal conditions.
      *
-     *      Note: This wrapper safely handles non-standard BEP-20 tokens that do not return a value.
+     *      Note: This wrapper safely handles non-standard ERC-20 tokens that do not return a value.
      *            See here: https://medium.com/coinmonks/missing-return-value-bug-at-least-130-tokens-affected-d67bf08521ca
      */
     function doTransferOut(address to, uint amount) internal {
@@ -1064,14 +1064,14 @@ contract LendToken is LendTokenInterface{
         bool success;
         assembly {
             switch returndatasize()
-                case 0 {                      // This is a non-standard BEP-20
+                case 0 {                      // This is a non-standard ERC-20
                     success := not(0)          // set success to true
                 }
-                case 32 {                     // This is a complaint BEP-20
+                case 32 {                     // This is a complaint ERC-20
                     returndatacopy(0, 0, 32)
                     success := mload(0)        // Set `success = returndata` of external call
                 }
-                default {                     // This is an excessively non-compliant BEP-20, revert.
+                default {                     // This is an excessively non-compliant ERC-20, revert.
                     revert(0, 0)
                 }
         }

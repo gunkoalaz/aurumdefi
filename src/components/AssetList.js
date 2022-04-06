@@ -137,11 +137,11 @@ const PopupSupply = (props) => {
         amount = valueStake.toString()
         amount = Web3.utils.toWei(amount, 'Ether')
         if(props.markets.underlyingSymbol === 'REI' || props.markets.underlyingSymbol === 'tREI') {
-            props.markets.contract.methods.mint().send({from: props.account, value: amount}).on('transactionHash', (hash) => {
+            props.markets.contract.methods.mint().send({from: props.account, value: amount, gas: '400000'}).on('transactionHash', (hash) => {
                 props.update()
             })
         } else {
-            props.markets.contract.methods.mint(amount).send({from: props.account}).on('transactionHash', (hash) => {
+            props.markets.contract.methods.mint(amount).send({from: props.account, gas: '400000'}).on('transactionHash', (hash) => {
                 props.update()
             })
         }
@@ -150,7 +150,7 @@ const PopupSupply = (props) => {
         let amount
         amount = valueUnstake.toString()
         amount = Web3.utils.toWei(amount, 'Ether')
-        props.markets.contract.methods.redeemUnderlying(amount).send({from: props.account}).on('transactionHash', (hash) => {
+        props.markets.contract.methods.redeemUnderlying(amount).send({from: props.account, gas: '400000'}).on('transactionHash', (hash) => {
             props.update()
         })
     }
@@ -337,7 +337,7 @@ const PopupBorrow = (props) => {
         let amount
         amount = valueBorrow.toString()
         amount = Web3.utils.toWei(amount, 'Ether')
-        props.markets.contract.methods.borrow(amount).send({from: props.account}).on('transactionHash', (hash) => {
+        props.markets.contract.methods.borrow(amount).send({from: props.account, gas: '1200000'}).on('transactionHash', (hash) => {
             props.update()
         })
     }
@@ -346,11 +346,11 @@ const PopupBorrow = (props) => {
         amount = valueRepay.toString()
         amount = Web3.utils.toWei(amount, 'Ether')
         if(props.markets.symbol==='lendREI'){
-            props.markets.contract.methods.repayBorrow().send({from: props.account, value:amount}).on('transactionHash', (hash) => {
+            props.markets.contract.methods.repayBorrow().send({from: props.account, value:amount, gas: '1200000'}).on('transactionHash', (hash) => {
                 props.update()
             })
         } else {
-            props.markets.contract.methods.repayBorrow(amount).send({from: props.account}).on('transactionHash', (hash) => {
+            props.markets.contract.methods.repayBorrow(amount).send({from: props.account, gas: '1200000'}).on('transactionHash', (hash) => {
                 props.update()
             })
         }

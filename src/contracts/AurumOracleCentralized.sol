@@ -13,8 +13,8 @@ contract AurumOracleCentralized is PriceOracle {
     address kuma; //Reference stable coin price.
 
     struct PriceList {
-        uint128[24] avgPrice;
-        uint128[24] timestamp;
+        uint128[6] avgPrice;
+        uint128[6] timestamp;
         uint8 currentIndex;
     }
     
@@ -58,7 +58,7 @@ contract AurumOracleCentralized is PriceOracle {
     function initializedAsset(address token, uint128 price) external onlyAdmin{
         uint8 i;
         uint128 currentTime = uint128(block.timestamp);
-        for(i=0;i<24;i++){
+        for(i=0;i<6;i++){
             asset[token].avgPrice[i] = price;
             asset[token].timestamp[i] = currentTime;
         }
@@ -68,7 +68,7 @@ contract AurumOracleCentralized is PriceOracle {
     function initializedGold(uint128 price) external onlyAdmin{
         uint8 i;
         uint128 currentTime = uint128(block.timestamp);
-        for(i=0;i<24;i++){
+        for(i=0;i<6;i++){
             goldPrice.avgPrice[i] = price;
             goldPrice.timestamp[i] = currentTime;
         }
@@ -83,13 +83,13 @@ contract AurumOracleCentralized is PriceOracle {
         uint8 lastIndex;
         uint8 nextIndex;
         if(index == 0){
-            lastIndex = 23;
+            lastIndex = 5;
         } else {
             lastIndex = index-1;
         }
         uint lastPrice = asset[token].avgPrice[lastIndex];
 
-        if(index == 23){
+        if(index == 5){
             nextIndex = 0;
         } else {
             nextIndex = index+1;
@@ -120,12 +120,12 @@ contract AurumOracleCentralized is PriceOracle {
         uint8 nextIndex;
         ISlidingWindow uniswapOracle = ISlidingWindow(slidingWindow);
         if(index == 0){
-            lastIndex = 23;
+            lastIndex = 5;
         } else {
             lastIndex = index-1;
         }
 
-        if(index == 23){
+        if(index == 5){
             nextIndex = 0;
         } else {
             nextIndex = index+1;
@@ -153,13 +153,13 @@ contract AurumOracleCentralized is PriceOracle {
         uint8 lastIndex;
         uint8 nextIndex;
         if(index == 0){
-            lastIndex = 23;
+            lastIndex = 5;
         } else {
             lastIndex = index-1;
         }
         uint lastPrice = goldPrice.avgPrice[lastIndex];
 
-        if(index == 23){
+        if(index == 5){
             nextIndex = 0;
         } else {
             nextIndex = index+1;
@@ -203,7 +203,7 @@ contract AurumOracleCentralized is PriceOracle {
         uint8 index = goldPrice.currentIndex;
         uint8 lastIndex;
         if(index == 0){
-            lastIndex = 23;
+            lastIndex = 5;
         } else {
             lastIndex = index-1;
         }
@@ -221,7 +221,7 @@ contract AurumOracleCentralized is PriceOracle {
         uint8 index = asset[underlying].currentIndex;
         uint8 lastIndex;
         if(index == 0){
-            lastIndex = 23;
+            lastIndex = 5;
         } else {
             lastIndex = index-1;
         }
@@ -232,7 +232,7 @@ contract AurumOracleCentralized is PriceOracle {
         uint8 index = asset[token].currentIndex;
         uint8 lastIndex;
         if(index == 0){
-            lastIndex = 23;
+            lastIndex = 5;
         } else {
             lastIndex = index-1;
         }

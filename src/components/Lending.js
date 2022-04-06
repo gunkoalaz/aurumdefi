@@ -90,7 +90,7 @@ const MainLending = (props) => {
     }
 
     function manualClaimReward() {
-        props.mainstate.comptrollerState.contract.methods.claimARMAllMarket(props.mainstate.account).send({from: props.mainstate.account}).on('transactionHash', (hash) => {
+        props.mainstate.comptrollerState.contract.methods.claimARMAllMarket(props.mainstate.account).send({from: props.mainstate.account, gas: '1000000'}).on('transactionHash', (hash) => {
             props.updateWeb3();
         })
     }

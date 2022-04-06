@@ -1069,7 +1069,7 @@ contract ComptrollerStorage {
 
             //  [p][p][p][p][i]         principal with interest (accountBorrows[user] stored  1. principal  and  2.interestIndex multiplier)
             //  [p][p][p][p]            principal / interestIndex
-            //  [p][p][p][p][i][/i]     principal / interestIndex * marketBorrowIndex (this is what borrowBalanceStored function returns);
+            //  [p][p][p][p][/i][/i]     principal / interestIndex * marketBorrowIndex (this is what borrowBalanceStored function returns);
             //  We need only principal amount to be calculated.
 
             uint borrowerAmount = LendTokenInterface(lendToken).borrowBalanceStored(borrower) * 1e18 / marketBorrowIndex;  // e18    //This result

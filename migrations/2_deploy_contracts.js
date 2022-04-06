@@ -20,12 +20,23 @@ const AurumOracleCentralized = artifacts.require('AurumOracleCentralized');
 
 module.exports = async function (deployer, network, accounts) {
 
+//Mainnet
     // const WREI = '0x7539595ebdA66096e8913a24Cc3C8c0ba1Ec79a0';
     // const KUMA = '0xbf2C56466213F553Fcf52810fE360dFe29E88471';
     // const BNB  = '0xf8aB4aaf70cef3F3659d3F466E35Dc7ea10d4A5d';
     // const NEAR = '0x1DE000831C053EA30f6B6760D9898d0bb830C1d9';
     // const ETH  = '0xa969c32977589210E0234144410FB2d21867d215';
     // const KUB  = '0x2eE5c5146368e4B2569b25E01Dcc9514757dA55e';
+
+
+//Testnet
+    KUMA = '0x20c2aD0E490Da3070Ee3718F55C36BF7D7BAfd36'   //
+    ETH  = '0xf4a29654CaA42842138329154D3aF9921575b6c0'   //
+    BNB  = '0xB173e143F1FDC8f6bBAd9AD11322B7F0B53C7cd0'  //
+    NEAR = '0xDe9adfC9a5939F7cb92d8E42fBd18a3182E1A90e'   //
+    KUB  = '0xc749e8DC347064ee37555a3AD8B175636Fe23ca1'   //
+    WREI = '0xc36e5B0FDB4Ea9fBF045D46b4B4D9A5a88aa514e'   //
+
 
     const TreasuryWallet = '0xa94E41461C508F227fdF061EB9a056A54678b93B';
     const DevWallet  = '0x7419E1C2B7b473a418cC582aa40d8dfbb89b8224';
@@ -34,25 +45,25 @@ module.exports = async function (deployer, network, accounts) {
     const owner = accounts[0];
 
     //TEST MOCKED TOKENs
-    await deployer.deploy(tWREI);      //Gov token
-    const wrei = await tWREI.deployed();
-    await deployer.deploy(tKUMA);      //Gov token
-    const kuma = await tKUMA.deployed();
-    await deployer.deploy(tBNB);      //Gov token
-    const bnb = await tBNB.deployed();
-    await deployer.deploy(tNEAR);      //Gov token
-    const near = await tNEAR.deployed();
-    await deployer.deploy(tETH);      //Gov token
-    const eth = await tETH.deployed();
-    await deployer.deploy(tKUB);      //Gov token
-    const kub = await tKUB.deployed();
+    // await deployer.deploy(tWREI);      //Gov token
+    // const wrei = await tWREI.deployed();
+    // await deployer.deploy(tKUMA);      //Gov token
+    // const kuma = await tKUMA.deployed();
+    // await deployer.deploy(tBNB);      //Gov token
+    // const bnb = await tBNB.deployed();
+    // await deployer.deploy(tNEAR);      //Gov token
+    // const near = await tNEAR.deployed();
+    // await deployer.deploy(tETH);      //Gov token
+    // const eth = await tETH.deployed();
+    // await deployer.deploy(tKUB);      //Gov token
+    // const kub = await tKUB.deployed();
 
-    const WREI = wrei.address;
-    const KUMA = kuma.address;
-    const BNB = bnb.address;
-    const NEAR = near.address;
-    const ETH = eth.address;
-    const KUB = kub.address;
+    // const WREI = wrei.address;
+    // const KUMA = kuma.address;
+    // const BNB = bnb.address;
+    // const NEAR = near.address;
+    // const ETH = eth.address;
+    // const KUB = kub.address;
     
     
     //Deploy essential component
@@ -68,8 +79,8 @@ module.exports = async function (deployer, network, accounts) {
     const oracle = await AurumOracleCentralized.deployed();
     
     //Deploy Operating contract
-    // await deployer.deploy(StakingARM,arm.address,KUMA)  // Staking Token (ARM) , and Reward token (KUMA) /* Can it be Foodcourt LP ? */
-    // const stakingARM = await StakingARM.deployed()
+    await deployer.deploy(StakingARM,arm.address,KUMA)  // Staking Token (ARM) , and Reward token (KUMA) /* Can it be Foodcourt LP ? */
+    const stakingARM = await StakingARM.deployed()
     await deployer.deploy(AurumController, aurum.address); // set Aurum address
     const aurumController = await AurumController.deployed();
     aurum.rely(aurumController.address, {from: owner});
@@ -99,10 +110,10 @@ module.exports = async function (deployer, network, accounts) {
     await compStorage._setGOLDMintRate('4000', {from: owner});
     console.log("GoldMintRate is set to 40%");
 
-    await comptroller._setTreasuryData(TreasuryWallet, TreasuryWallet, web3.utils.toWei('0.05','Ether'), {from: owner});
+    await comptroller._setTreasuryData(TreasuryWallet, TreasuryWallet, web3.utils.toWei('0.0015','Ether'), {from: owner});
     console.log("Comptroller treasury is set to address " + TreasuryWallet);
 
-    await aurumController._setTreasuryData(TreasuryWallet, TreasuryWallet, web3.utils.toWei('0.05','Ether'), {from: owner});
+    await aurumController._setTreasuryData(TreasuryWallet, TreasuryWallet, web3.utils.toWei('0.002','Ether'), {from: owner});
     console.log("AurumController treasury is set to address " + TreasuryWallet);
 
 
@@ -131,38 +142,38 @@ module.exports = async function (deployer, network, accounts) {
     //Rei setup
     await compStorage._supportMarket(lendTokenREI.address, {from: owner});
     console.log("LendToken REI has been bind to comptroller.");
-    await lendTokenREI._setReserveFactor('50000000000000000', {from: owner});
-    console.log("Reserve factor is set 5%");
+    await lendTokenREI._setReserveFactor('200000000000000000', {from: owner});
+    console.log("Reserve factor is set 20%");
     
     //KUMA setup
     await compStorage._supportMarket(lendTokenKUMA.address, {from: owner});
     console.log("LendToken KUMA has been bind to comptroller.");
-    await lendTokenKUMA._setReserveFactor('50000000000000000', {from: owner});
-    console.log("Reserve factor is set 5%");
+    await lendTokenKUMA._setReserveFactor('200000000000000000', {from: owner});
+    console.log("Reserve factor is set 10%");
 
     //BNB setup
     await compStorage._supportMarket(lendTokenBNB.address, {from: owner});
     console.log("LendToken BNB has been bind to comptroller.");
-    await lendTokenBNB._setReserveFactor('50000000000000000', {from: owner});
-    console.log("Reserve factor is set 5%");
+    await lendTokenBNB._setReserveFactor('200000000000000000', {from: owner});
+    console.log("Reserve factor is set 20%");
 
     //NEAR setup
     await compStorage._supportMarket(lendTokenNEAR.address, {from: owner});
     console.log("LendToken NEAR has been bind to comptroller.");
-    await lendTokenNEAR._setReserveFactor('50000000000000000', {from: owner});
-    console.log("Reserve factor is set 5%");
+    await lendTokenNEAR._setReserveFactor('200000000000000000', {from: owner});
+    console.log("Reserve factor is set 20%");
 
     //ETH setup
     await compStorage._supportMarket(lendTokenETH.address, {from: owner});
     console.log("LendToken ETH has been bind to comptroller.");
-    await lendTokenETH._setReserveFactor('50000000000000000', {from: owner});
-    console.log("Reserve factor is set 5%");
+    await lendTokenETH._setReserveFactor('200000000000000000', {from: owner});
+    console.log("Reserve factor is set 20%");
 
     //KUB setup
     await compStorage._supportMarket(lendTokenKUB.address, {from: owner});
     console.log("LendToken KUB has been bind to comptroller.");
-    await lendTokenKUB._setReserveFactor('50000000000000000', {from: owner});
-    console.log("Reserve factor is set 5%");
+    await lendTokenKUB._setReserveFactor('200000000000000000', {from: owner});
+    console.log("Reserve factor is set 20%");
 
 
 //After deploy all asset -- set price oracle
@@ -184,7 +195,7 @@ module.exports = async function (deployer, network, accounts) {
     console.log("KUB price is initialized");
 
 
-    // Set Collateral Factor (After set oracle)
+// Set Collateral Factor (After set oracle)
     await compStorage._setCollateralFactor(lendTokenREI.address,    '500000000000000000', {from: owner});
     console.log("LendToken REI has set CollateralFactor to 50%.");
     await compStorage._setCollateralFactor(lendTokenKUMA.address,   '800000000000000000', {from: owner});
@@ -201,7 +212,7 @@ module.exports = async function (deployer, network, accounts) {
 
 
 
-    //Transfer tokens
+//Transfer tokens
     await arm.transfer(compStorage.address, web3.utils.toWei('7200000'), {from: owner});
     console.log("Transfer ARM token to compStorage.");
     await arm.transfer(DevWallet, web3.utils.toWei('800000'), {from: owner});
@@ -210,18 +221,36 @@ module.exports = async function (deployer, network, accounts) {
     console.log("Transfer ARM token to Treasury.");
 
 
-    // Pause protocol, manual setting everything before release
-    await compStorage._setProtocolPaused(true);
-    console.log("Protocol is currently pause.");
+// Pause protocol, manual setting everything before release
+    // await compStorage._setProtocolPaused(true, {from: owner});
+    // console.log("Protocol is currently pause.");
+    await compStorage._setMintPaused(lendTokenREI.address, true, {from: owner});
+    console.log("LendREI Minting is paused.")
 
-    // Lastly transfer admin to Dev (except oracle)
-    await comptroller._setPendingAdmin(DevWallet, {from: owner});
-    await comptroller._confirmNewAdmin({from: owner});  // This also set admin of compStorage.
+// Lastly transfer admin to Dev (except oracle)
+    // await comptroller._setPendingAdmin(DevWallet, {from: owner});
+    // await comptroller._confirmNewAdmin({from: owner});  // This also set admin of compStorage.
+    // console.log("Set admin for Comptroller successful.");
     await oracle._setAdmin(DevWallet, {from: owner});  //Manager not set yet (manager should be manual set later )
+    console.log("Set admin for oracle successful.");
     
     await aurum.rely(DevWallet, {from: owner});    // Give authentication to DevWallet. In case changing the AurumController
     await aurum.deny(owner, {from: owner});
+    console.log("Set admin for AURUM");
     await arm.transferOwnership(publicDead, {from: owner}); // bye bye  no more mint
+    console.log("ARM admin is now public.");
+    await lendTokenKUMA._setAdmin(DevWallet, {from: owner});
+    console.log("Set admin for lendTokenKUMA.");
+    await lendTokenREI._setAdmin(DevWallet, {from: owner});
+    console.log("Set admin for lendTokenREI.");
+    await lendTokenBNB._setAdmin(DevWallet, {from: owner});
+    console.log("Set admin for lendTokenBNB.");
+    await lendTokenNEAR._setAdmin(DevWallet, {from: owner});
+    console.log("Set admin for lendTokenNEAR.");
+    await lendTokenETH._setAdmin(DevWallet, {from: owner});
+    console.log("Set admin for lendTokenETH.");
+    await lendTokenKUB._setAdmin(DevWallet, {from: owner});
+    console.log("Set admin for lendTokenKUB.");
 
 
 }

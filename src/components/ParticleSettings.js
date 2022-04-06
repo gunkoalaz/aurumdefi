@@ -27,7 +27,7 @@ render(){
                                 quantity:4,
                             },
                             repulse:{
-                                distance: 200,
+                                distance: 300,
                                 duration: 0.4,
                             },
                         },
@@ -36,7 +36,7 @@ render(){
                         color: {value:"#dda74f"},
                         links: {
                             color: "#ffffff",
-                            distance: 150,
+                            distance: 200,
                             enable: true,
                             opacity: 0.3,
                             width: 1,
@@ -55,7 +55,7 @@ render(){
                         number: {
                             density: {
                                 enable: true,
-                                value_area: 400,
+                                value_area: 300,
                             },
                             value: 10,
 
