@@ -553,6 +553,8 @@ const AssetList = (props) => {
     switch(props.markets.underlyingSymbol) {
         case 'BTC'  : logo = BTClogo; break;
         case 'USDT' : logo = USDTlogo; break;
+
+        case 'kBUSD': 
         case 'BUSD' : logo = BUSDlogo; break;
 
         case 'NEAR' :

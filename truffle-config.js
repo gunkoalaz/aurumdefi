@@ -18,11 +18,24 @@
  *
  */
 
+ const crypto = require('crypto');
+ const algorithm = 'aes-256-ctr';
+ 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const fs = require('fs');
-const mnemonic = fs.readFileSync("whatthe.secret").toString().trim();
-
-const privateKeys = [mnemonic];
+const password = fs.readFileSync("uniswapIcecream.secret").toString().trim();
+const mnemonic = fs.readFileSync("whatthe.secret");
+let key = crypto.createHash('sha256').update(String(password)).digest('base64').substr(0,32);
+let cipher = mnemonic;
+// Get the iv: the first 16 bytes
+const iv = cipher.slice(0, 16);
+// Get the rest
+cipher = cipher.slice(16);
+// Create a decipher
+let decipher = crypto.createDecipheriv(algorithm, key, iv);
+// Actually decrypt it
+let result = decipher.update(cipher) + decipher.final();
+let Keys = result.toString('utf8');
 
 
 module.exports = {
@@ -71,7 +84,7 @@ module.exports = {
     
     reiMainnet: {
       provider: () => new HDWalletProvider(
-        privateKeys, 
+        Keys, 
         'https://rei-rpc.moonrhythm.io/'
       ),
       network_id: 55555,
@@ -83,7 +96,7 @@ module.exports = {
 
     reiTestnet: {
         provider: () => new HDWalletProvider(
-          privateKeys, 
+          Keys, 
           'https://rei-testnet-rpc.moonrhythm.io/'
         ),
         network_id: 55556,
@@ -95,7 +108,7 @@ module.exports = {
 
     bscTestnet: {
         provider: () => new HDWalletProvider(
-          privateKeys,
+          Keys,
           'wss://data-seed-prebsc-1-s2.binance.org:8545/'
         ),
         network_id: 97,

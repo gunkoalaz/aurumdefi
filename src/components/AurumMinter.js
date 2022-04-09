@@ -3,6 +3,7 @@ import { useState } from "react"
 import './css/AurumMinter.css'
 import AURUMlogo from '../aurum.png'
 import Loading from './Loading.js'
+import Constructing from "./Constructing"
 import Web3 from "web3"
 
 const BigNumber = require('bignumber.js');
@@ -349,10 +350,15 @@ class AurumMinter extends Component{
         let content    
     
         if(this.props.mainstate.loadedMarket === false || this.props.mainstate.loading === true){
-            content = <Loading />
+            content = <Loading mainstate={this.props.mainstate}/>
+            // content = <Constructing />
         }
         else {
-            content = <AurumMinterMain mainstate={this.props.mainstate} update={this.props.updateWeb3}/>
+            if(this.props.mainstate.networkId === 55556) {
+                content = <AurumMinterMain mainstate={this.props.mainstate} update={this.props.updateWeb3}/>
+            } else {
+                content = <Constructing />
+            }
         }
         return (
             <div>

@@ -26,6 +26,8 @@ const MainInfoList = (props) => {
     switch(props.symbol) {
         case 'BTC'  : logo = BTClogo; break;
         case 'USDT' : logo = USDTlogo; break;
+
+        case 'kBUSD': 
         case 'BUSD' : logo = BUSDlogo; break;
 
         case 'NEAR' :
@@ -104,6 +106,7 @@ const MainInfo = (props) => {
 
     return (
         <div>
+            <h1>Welcome to AurumDeFi</h1>
             <div className='main-info-top'>
                 <div className={'main-items tvl'}>
                     <h3>
@@ -188,7 +191,7 @@ class Main extends Component {
         let content    
         
         if(this.props.mainstate.loadMarket === false || this.props.mainstate.loading === true){
-            content = <Loading/>
+            content = <Loading mainstate={this.props.mainstate}/>
         }
         else {
             content = <MainInfo mainstate={this.props.mainstate} />
@@ -196,7 +199,6 @@ class Main extends Component {
         return (
             <div>
                 <div className='mainbox'>
-                    <h1>Welcome to AurumDeFi</h1>
                     {content}
                 </div>
             </div>

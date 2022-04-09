@@ -33,12 +33,13 @@ const Navbar = (props) => {
                         <p>${armPrice}</p>
                     </div>
                     <div className="flex">
-                        <button  onClick={(e) => {e.preventDefault(); window.location.href='https://reix.foodcourt.finance/#/swap';}} className="button">Buy ARM</button>
+                        {/* <button  onClick={(e) => {e.preventDefault(); window.location.href='https://reix.foodcourt.finance/#/swap';}} className="button">Buy ARM</button> */}
+                        <a href="https://reix.foodcourt.finance/#/swap" target={"_blank"} className="button"> Buy ARM </a>
                     </div>
                     <div className="flex">
                         <a href="https://github.com/gunkoalaz/aurumdefi" target={"_blank"} className="iconlink"><Github /></a>
                         <a href="https://aurumdefi.gitbook.io/aurum-defi/" target={"_blank"} className="iconlink"><Book /></a>
-                        <a href="https://github.com/gunkoalaz/aurumdefi" target={"_blank"} className="iconlink"><Telegram /></a>
+                        <a href="https://t.me/aurumdefi" target={"_blank"} className="iconlink"><Telegram /></a>
                     </div>
                 </div>
             </div>

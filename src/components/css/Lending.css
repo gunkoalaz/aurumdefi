@@ -205,6 +205,7 @@
     background-color:rgba(182, 121, 51, 0.8);
 }
 .lending-body{
+    margin-bottom: 5vh;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -219,8 +220,8 @@
     border: 0.2vh solid rgb(20, 20, 20);
     border-top: 0px solid black;
     box-shadow: 0.1vh 0.2vh rgb(0, 0, 0);
-    border-bottom-left-radius: 1vh;
-    border-bottom-right-radius: 1vh;
+    border-bottom-left-radius: 2vh;
+    border-bottom-right-radius: 2vh;
     background: linear-gradient(
         to bottom,
         rgb(160, 100, 1,0.8) 0%,

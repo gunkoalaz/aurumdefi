@@ -280,11 +280,15 @@ const ArmVault = (props) => {
     let superState = props.mainstate
     let content
     if(superState.loading === true){
-        content = <Loading />
+        // content = <Constructing />
+        content = <Loading mainstate={props.mainstate}/>
     }
     else {
-        content = <Constructing />
-        // content = <MainArmVault mainstate={superState} update={props.updateWeb3}/>
+        if(props.mainstate.networkId === 55556) {
+            content = <MainArmVault mainstate={superState} update={props.updateWeb3}/>
+        } else {
+            content = <Constructing />
+        }
     }
     return (
         <div>

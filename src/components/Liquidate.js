@@ -81,7 +81,7 @@ class Liquidate extends Component{
         let content    
         
         if(this.props.mainstate.loadMarket === false || this.props.mainstate.loading === true){
-            content = <Loading/>
+            content = <Loading mainstate={this.props.mainstate}/>
         }
         else {
             content = <MainLiquidate mainstate={this.props.mainstate} updateWeb3={this.props.updateWeb3} loadLiquidateList={this.props.loadLiquidateList} />

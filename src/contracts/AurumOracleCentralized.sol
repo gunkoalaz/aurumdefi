@@ -10,7 +10,7 @@ contract AurumOracleCentralized is PriceOracle {
     address public admin; // Admin can initiate price and set manager (reducing risk of privatekey leak)   Admin private key store in Hardware wallet.
     address public manager; // Manager can update the price (bot address), tihs address has some risk of private key leak.
     
-    address kuma; //Reference stable coin price.
+    address busd; //Reference stable coin price.
 
     struct PriceList {
         uint128[6] avgPrice;
@@ -33,9 +33,9 @@ contract AurumOracleCentralized is PriceOracle {
     address WREI; // Wrapped REI address
 
 
-    constructor (address WREI_, address kuma_) {
+    constructor (address WREI_, address busd_) {
         admin = msg.sender;
-        kuma = kuma_;
+        busd = busd_;
         WREI = WREI_;  // WREI will prevent crash when query the 'lendREI' token
     }
 
@@ -131,10 +131,10 @@ contract AurumOracleCentralized is PriceOracle {
             nextIndex = index+1;
         }
         // So.. We helping sliding Window update each time we read parameter.
-        uniswapOracle.update(token,kuma);
+        uniswapOracle.update(token,busd);
 
         // The price we got already time-weight average price.
-        uint newAvgPrice = uniswapOracle.consult(token,1e18,kuma);
+        uint newAvgPrice = uniswapOracle.consult(token,1e18,busd);
 
         if(newAvgPrice > type(uint128).max){
             revert("Overflow");

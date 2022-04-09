@@ -34,12 +34,16 @@ const MAX_UINT = "11579208923731619542357098500868790785326998466564056403945758
 
 const initialState = {
     account: '0x0',
-    chainId: '0',
-    networkId: '0',
+    chainId: 0,
+    networkId: 0,
     price: {armPrice: '0', goldPrice: '0'},
     markets: [] ,
     allShortage: [],
+    comptrollerState: {},
 
+    loadedMarket: false,
+    loadedVault: false,
+    loadingNow: 0,
     loading: true,
     loadedMarket: false,
     autoupdate: false,
@@ -125,31 +129,9 @@ class App extends Component {
     }
 
     
-    componentDidMount() {
-        this.interval = setInterval(
-            async () => {
-                if(this.state.account !== '0x0' && this.state.loading === false && this.state.autoupdate === false) {
-                    let currentTime = parseInt(Date.now() / 1000)
-                    this.setState({time: currentTime})
-                }
-            },
-            1000
-        )
-        this.marketInterval = setInterval(
-            async() => {
-                if(this.state.account !== '0x0') {
-                    this.setState({autoupdate: true})
-                    const comptroller = this.loadComptroller()
-                    const armVault = this.loadArmVault()
-                    const markets = this.loadMarketsInfo()
-                    Promise.all([comptroller,armVault,markets]).then( () => this.setState({autoupdate: false})  )
-                }
-            },
-            5000
-        )
-    }
     componentWillUnmount() {
         clearInterval(this.interval);
+        clearInterval(this.marketInterval);
     }
     async loadArmVault() {
         const web3 = window.web3
@@ -157,37 +139,37 @@ class App extends Component {
         // Load ARM data
         const armLoader = ARM.networks[networkId]
         const arm = new web3.eth.Contract(ARM.abi, armLoader.address)
-        // Load stakingARM data
-        const stakingARMLoader = StakingARM.networks[networkId]
-        const stakingARM = new web3.eth.Contract(StakingARM.abi, stakingARMLoader.address)
-        if(stakingARMLoader) {
-            let stakingARMBalance = await stakingARM.methods.getStakingBalance(this.state.account).call()
-            let getRewardRemaining = await stakingARM.methods.getRewardRemaining().call()
-            let getRewardSpendingDuration = await stakingARM.methods.getRewardSpendingDuration().call()
-            let getTotalStakedARM = await stakingARM.methods.getTotalStakedARM().call()
-            let getRewardBalanceOf = await stakingARM.methods.getRewardBalanceOf(this.state.account).call()
-            let armAllowanceToVault = await arm.methods.allowance(this.state.account, stakingARM._address).call()
-            let getLastRewardTimestamp = await stakingARM.methods.getLastRewardTimestamp().call()
-            let getAccRewardPerShare = await stakingARM.methods.getAccRewardPerShare().call()
-            let armBalance = await arm.methods.balanceOf(this.state.account).call()
+        // // Load stakingARM data
+        // const stakingARMLoader = StakingARM.networks[networkId]
+        // const stakingARM = new web3.eth.Contract(StakingARM.abi, stakingARMLoader.address)
+        // if(stakingARMLoader) {
+        //     let stakingARMBalance = await stakingARM.methods.getStakingBalance(this.state.account).call()
+        //     let getRewardRemaining = await stakingARM.methods.getRewardRemaining().call()
+        //     let getRewardSpendingDuration = await stakingARM.methods.getRewardSpendingDuration().call()
+        //     let getTotalStakedARM = await stakingARM.methods.getTotalStakedARM().call()
+        //     let getRewardBalanceOf = await stakingARM.methods.getRewardBalanceOf(this.state.account).call()
+        //     let armAllowanceToVault = await arm.methods.allowance(this.state.account, stakingARM._address).call()
+        //     let getLastRewardTimestamp = await stakingARM.methods.getLastRewardTimestamp().call()
+        //     let getAccRewardPerShare = await stakingARM.methods.getAccRewardPerShare().call()
+        //     let armBalance = await arm.methods.balanceOf(this.state.account).call()
 
-            let armVault = {
-                contract: stakingARM,
-                armContract: arm,
-                armBalance: armBalance.toString(),
-                getTotalStakedARM: getTotalStakedARM.toString(),
-                userStakingBalance: stakingARMBalance.toString(),
-                totalAvailableReward: getRewardRemaining.toString(),
-                rewardDistributionIndex: getRewardSpendingDuration.toString(),
-                getRewardBalanceOf: getRewardBalanceOf.toString(),
-                armAllowanceToVault: armAllowanceToVault.toString(),
-                getLastRewardTimestamp: getLastRewardTimestamp.toString(),
-                getAccRewardPerShare: getAccRewardPerShare.toString(),
-            }
-            this.setState({armVault})
-        } else {
-            window.alert('Error! no stakingARM contract found')
-        }
+        //     let armVault = {
+        //         contract: stakingARM,
+        //         armContract: arm,
+        //         armBalance: armBalance.toString(),
+        //         getTotalStakedARM: getTotalStakedARM.toString(),
+        //         userStakingBalance: stakingARMBalance.toString(),
+        //         totalAvailableReward: getRewardRemaining.toString(),
+        //         rewardDistributionIndex: getRewardSpendingDuration.toString(),
+        //         getRewardBalanceOf: getRewardBalanceOf.toString(),
+        //         armAllowanceToVault: armAllowanceToVault.toString(),
+        //         getLastRewardTimestamp: getLastRewardTimestamp.toString(),
+        //         getAccRewardPerShare: getAccRewardPerShare.toString(),
+        //     }
+        //     this.setState({armVault})
+        // } else {
+        //     window.alert('Error! no stakingARM contract found')
+        // }
         this.setState({loadedVault: true})        
     }
     async loadComptroller() {
@@ -230,7 +212,8 @@ class App extends Component {
                 closeFactor: closeFactor,
                 totalMintedAURUM: totalMintedAURUM,
             }
-            this.setState({comptrollerState})
+            this.setState({comptrollerState});
+            this.setState({loadingNow: 40});
 
         } else {
             window.alert('Error! no comptroller contract found')
@@ -268,6 +251,7 @@ class App extends Component {
         let i
         let getAllMarkets = await compStorage.methods.getAllMarkets().call()
 
+        this.setState({loadingNow: 50});
         for(i=0; i< getAllMarkets.length; i++) {
             try {
                 let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
@@ -357,11 +341,13 @@ class App extends Component {
                     aurumSpeeds: aurumSpeeds.toString(),
                 }
                 markets.push(marketsInfo)
+                this.setState({loadingNow: this.state.loadingNow+6});
             } catch {
                 console.log('Failed load markets data');
             }
         }
-        this.setState({markets})
+        this.setState({loadingNow: 100});
+        this.setState({markets});
         this.setState({loadedMarket: true})
         this.setState({autoupdate: false})
     }
@@ -478,35 +464,38 @@ class App extends Component {
     // Common Web3 function
     //
     async loadWeb3() {
+        let connect;
         if(window.ethereum){
             window.web3 = new Web3(window.ethereum)
-            return true
+            connect = true
             // const accounts = await window.ethereum.send('eth_requestAccounts');
             // console.log(accounts)
         } else if(window.web3){
                 window.web3 = new Web3(window.web3.currentProvider)
-                return true
+                connect = true
             }
             else {
                 window.alert('No ethereum browser detected.')
-                return false
+                connect = false
             }
+        return connect;
     }
     async loadBlockchainData() {
         const web3 = window.web3
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const networkId = await web3.eth.net.getId()
+        let networkId = await web3.eth.net.getId()
         const chainId = await web3.eth.getChainId()
         this.setState({account: accounts[0], networkId: networkId, chainId: chainId})
 
         //Only allowed to load the data if the chainId is localhost
         //else switch the chain to BSC(testnet)
-        if(chainId === 1337 || chainId === 55556 || chainId === 97){
+        if(chainId === 1337 || chainId === 55556 || chainId === 55555){
             let currentTime = parseInt(Date.now() / 1000)   //Compatible with blockchain timestamp
             this.setState({time: currentTime})
         } else {
             console.log("Wrong network")
         }
+        return networkId;
     }
 
     //
@@ -517,38 +506,65 @@ class App extends Component {
         const comptroller = this.loadComptroller()
         const armVault = this.loadArmVault()
         const markets = this.loadMarketsInfo()
-        Promise.all([comptroller, armVault, markets]).then( () => this.setState({loading:false})   )
+        Promise.all([comptroller, armVault, markets]).then( () => 
+            {
+                this.setState({loadingNow: 100});
+                this.setState({loading:false})   
+            })
     }
 
-    checkNetwork(chainId) {
-        if(chainId === 5777 || chainId === 55556 || chainId === 97){
-            return true
-        } else {
-            return false
-        }
-    }
 
     connectAurumDeFi = async () =>{
         const LoadWeb3 = await this.loadWeb3()
-            if(LoadWeb3 === true) {
-                await this.loadBlockchainData()
-                if(this.checkNetwork(this.state.networkId)){
-                    await this.loadComptroller()
-                    await this.updateWeb3(this.setLoadingFinish)
-                } else {
-                    await changeNetwork({networkName: 'TestnetRei'})
-                }        
+        if(LoadWeb3 === true) {
+            this.setState({loadingNow: 10});
+            let networkId = await this.loadBlockchainData()
+            this.setState({loadingNow: 20});
+            if(networkId === 5777 || networkId === 55556 || networkId === 55555){
+                await this.loadComptroller()
+                await this.setState({loadingNow: 30});
+                await this.updateWeb3(this.setLoadingFinish)
                 
-            }
+                    this.marketInterval = setInterval(
+                        async() => {
+                            if(this.state.account !== '0x0') {
+                                if(this.state.networkId === 55555 || this.state.networkId === 55556 || this.state.networkId === 5777){
+                                    
+                                }
+                            }
+                        },
+                        5000
+                    )
+                    this.interval = setInterval(
+                        async () => {
+                            if(this.state.account !== '0x0' && this.state.loading === false && this.state.autoupdate === false) {
+                                if(this.state.networkId === 55555 || this.state.networkId === 55556 || this.state.networkId === 5777){
+                                    let currentTime = parseInt(Date.now() / 1000)
+                                    this.setState({time: currentTime})
+                                }
+                            }
+                        },
+                        1000
+                    )
+            } else {
+                await changeNetwork({networkName: 'Rei'})
+                this.connectAurumDeFi();
+            }        
+            
+        }
     }
 
     disconnectAurumDeFi = async () =>{
+        clearInterval(this.marketInterval);
         if(this.state.autoupdate === false) {
             this.setState(initialState)
         }
     }
 
-
+    clear = () => {
+        clearInterval(this.interval);
+        clearInterval(this.marketInterval);
+    }
 
 
     
@@ -556,20 +572,19 @@ class App extends Component {
         if(window.ethereum) {
             window.ethereum.on('accountsChanged', async (accounts) => {
                 if(this.state.loading === false){
-                    this.setState({account: accounts[0], loading: true})
-                    const comptroller = this.loadComptroller()
-                    const armVault = this.loadArmVault()
-                    const markets = this.loadMarketsInfo()
-                    Promise.all([comptroller, armVault, markets]).then( () => this.setState({loading:false})   )
+                    this.clear();
+                    this.setState(initialState)
+                    await this.connectAurumDeFi();
                 }
-        })
+            })
+            window.ethereum.on('networkChanged', async (networkId) => {
+                if(this.state.loading === false){
+                    this.clear();
+                    this.setState(initialState)
+                    await this.connectAurumDeFi();
+                }
+            })
         }
-        // window.ethereum.on('networkChanged', async (networkId) => {
-        //     await this.loadWeb3()
-        //     await this.loadBlockchainData()
-        //     await this.loadComptroller()
-        //     await this.updateWeb3()
-        // })
         
         return(
             <div style={{height: '100vh'}}>

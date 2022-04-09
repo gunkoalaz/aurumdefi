@@ -89,7 +89,7 @@ class MintTestTokens extends Component {
         let content    
         
         if(this.props.mainstate.loadMarket === false || this.props.mainstate.loading === true){
-            content = <Loading/>
+            content = <Loading mainstate={this.props.mainstate}/>
         }
         else {
             content = <MintMain mainstate={this.props.mainstate}/>

@@ -53,7 +53,7 @@ const MainLending = (props) => {
 
         // userTotalBorrow = BigNumber(superState.markets[i].borrowBalanceStored).times(oraclePrice[i]).plus(userTotalBorrow)
 
-        userTotalSupply = BigNumber(superState.markets[i].balanceOf).times(oraclePrice[i]).plus(userTotalSupply)
+        userTotalSupply = BigNumber(superState.markets[i].balanceOf).times(oraclePrice[i]).times(superState.markets[i].exchangeRateStored).div(e18).plus(userTotalSupply)
 
         let thisBorrow = (BigNumber(superState.markets[i].borrowBalanceStored).div(e18).times(superState.markets[i].borrowRatePerSeconds).times(deltaTime) ).plus(superState.markets[i].borrowBalanceStored)
         thisBorrow = thisBorrow.times(oraclePrice[i])
@@ -193,7 +193,7 @@ class Lending extends Component{
         let content    
     
         if(this.props.mainstate.loadMarket === false || this.props.mainstate.loading === true){
-            content = <Loading/>
+            content = <Loading mainstate={this.props.mainstate}/>
         }
         else {
             content = <MainLending mainstate={this.props.mainstate} updateWeb3={this.props.updateWeb3} />

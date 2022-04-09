@@ -4,6 +4,9 @@
     animation-name: fadeup;
     animation-duration: 0.5s;
 }
+.mint-topic h1{
+    color:rgb(88, 54, 9);
+}
 .minting-box{
     position: relative;
     width: auto;
@@ -13,9 +16,9 @@
     padding: 2vw;
     background: linear-gradient(
         to bottom,
-        rgba(150, 91, 77, 0.95) 0%,
-        rgba(128, 59, 28, 0.95) 20%,
-        rgba(107, 15, 11, 0.95) 100%
+        rgb(255, 198, 40) 0%,
+        rgb(196, 117, 14) 20%,
+        rgb(94, 64, 9) 100%
     );
     border: 0.2vw solid rgb(20, 20, 20);
     box-shadow: 0.1vw 0.2vw rgb(0, 0, 0);

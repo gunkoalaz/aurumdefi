@@ -20,6 +20,7 @@ contract AurumController is AurumControllerInterface {
     event NewTreasuryPercent(uint oldTreasuryPercent, uint newTreasuryPercent);
     event MintFee(address minter, uint feeAmount);
     event NewAURUMAddress(address oldAURUMAddress, address newAURUMAddress);
+    event SetNewAdmin(address oldAdmin, address newAdmin);
 
 
     uint public constant goldInitialIndex = 1e36;
@@ -208,6 +209,14 @@ contract AurumController is AurumControllerInterface {
 
     /*** Admin Functions ***/
 
+    function _setAdmin(address newAdmin) external {
+        // Check caller is admin
+        require(msg.sender == admin, "Only Admin");
+
+        address oldAdmin = admin;
+        admin = newAdmin;
+        emit SetNewAdmin(oldAdmin, newAdmin);
+    }
     /**
       * @notice Sets a new comptroller
       * @dev Admin function to set a new comptroller
@@ -220,6 +229,35 @@ contract AurumController is AurumControllerInterface {
         comptroller = comptroller_;
         emit NewComptroller(oldComptroller, comptroller_);
     }
+    //
+    //  set Treasury information
+    //  TreasuryPercent is minting 'fee' 1e18 = 100%
+    //
+    function _setTreasuryData(address newTreasuryGuardian, address newTreasuryAddress, uint newTreasuryPercent) external{
+        // Check caller is admin
+        require(msg.sender == admin || msg.sender == treasuryGuardian,"Only admin or treasury guardian");
+        require(newTreasuryPercent < 1e18, "treasury percent cap overflow");
+
+        address oldTreasuryGuardian = treasuryGuardian;
+        address oldTreasuryAddress = treasuryAddress;
+        uint oldTreasuryPercent = treasuryPercent;
+
+        treasuryGuardian = newTreasuryGuardian;
+        treasuryAddress = newTreasuryAddress;
+        treasuryPercent = newTreasuryPercent;
+
+        emit NewTreasuryGuardian(oldTreasuryGuardian, newTreasuryGuardian);
+        emit NewTreasuryAddress(oldTreasuryAddress, newTreasuryAddress);
+        emit NewTreasuryPercent(oldTreasuryPercent, newTreasuryPercent);
+    }
+    function _setAURUMAddress(address newAURUMAddress) external {
+        require (msg.sender == admin, "Only admin");
+        address oldAURUMAddress = aurumAddress;
+        aurumAddress = newAURUMAddress;
+
+        emit NewAURUMAddress(oldAURUMAddress,newAURUMAddress);
+    }
+
 
     /**
      * @dev Local vars for avoiding stack-depth limits in calculating account total supply balance.
@@ -292,27 +330,7 @@ contract AurumController is AurumControllerInterface {
     }
 
 
-    //
-    //  set Treasury information
-    //  TreasuryPercent is minting 'fee' 1e18 = 100%
-    //
-    function _setTreasuryData(address newTreasuryGuardian, address newTreasuryAddress, uint newTreasuryPercent) external{
-        // Check caller is admin
-        require(msg.sender == admin || msg.sender == treasuryGuardian,"Only admin or treasury guardian");
-        require(newTreasuryPercent < 1e18, "treasury percent cap overflow");
 
-        address oldTreasuryGuardian = treasuryGuardian;
-        address oldTreasuryAddress = treasuryAddress;
-        uint oldTreasuryPercent = treasuryPercent;
-
-        treasuryGuardian = newTreasuryGuardian;
-        treasuryAddress = newTreasuryAddress;
-        treasuryPercent = newTreasuryPercent;
-
-        emit NewTreasuryGuardian(oldTreasuryGuardian, newTreasuryGuardian);
-        emit NewTreasuryAddress(oldTreasuryAddress, newTreasuryAddress);
-        emit NewTreasuryPercent(oldTreasuryPercent, newTreasuryPercent);
-    }
 
     function getTimestamp() public view returns (uint) {
         return block.timestamp;
@@ -324,13 +342,6 @@ contract AurumController is AurumControllerInterface {
      */
     function getAURUMAddress() public view returns (address) {
         return aurumAddress;
-    }
-    function _setAURUMAddress(address newAURUMAddress) external {
-        require (msg.sender == admin, "Only admin");
-        address oldAURUMAddress = aurumAddress;
-        aurumAddress = newAURUMAddress;
-
-        emit NewAURUMAddress(oldAURUMAddress,newAURUMAddress);
     }
 
     /*** Reentrancy Guard ***/

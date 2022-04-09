@@ -444,6 +444,23 @@ contract Comptroller is ComptrollerInterface {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 contract ComptrollerCalculation {
 
     // no admin setting in this contract, 
@@ -674,6 +691,24 @@ contract ComptrollerCalculation {
         return seizeTokens;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 contract ComptrollerStorage {

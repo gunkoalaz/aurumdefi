@@ -26,6 +26,8 @@
     text-shadow: 0.2vh 0.2vh black;
 }
 .button{
+    text-align: center;
+    color: rgb(43, 43, 43);
     background: linear-gradient(
         to bottom,
         rgb(255, 251, 195) 0%,
@@ -42,6 +44,8 @@
 }
 
 .button:hover{
+    text-decoration: none;
+    color: rgb(43, 43, 43);
     background: linear-gradient(
         to bottom,
         rgb(255, 251, 195) 0%,
