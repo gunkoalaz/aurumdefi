@@ -285,7 +285,8 @@ const ArmVault = (props) => {
     }
     else {
         if(props.mainstate.networkId === 55556) {
-            content = <MainArmVault mainstate={superState} update={props.updateWeb3}/>
+            content = <Constructing />
+            // content = <MainArmVault mainstate={superState} update={props.updateWeb3}/>
         } else {
             content = <Constructing />
         }
