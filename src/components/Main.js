@@ -102,7 +102,7 @@ const MainInfo = (props) => {
         tvl = tvl.plus(addTVL[i])
     }
     tvl = tvl.toFormat(2)
-    let mCap
+    // let mCap
 
     return (
         <div>
@@ -181,6 +181,15 @@ const MainInfo = (props) => {
 
                     </tbody>
                 </table>
+                <div>
+                    <p className='m-3'>Price data provided by @
+                        <a href='https://www.binance.com' target={'_blank'}>Binance</a>, @
+                        <a href='https://www.bitkub.com' target={'_blank'}>Bitkub</a>, 
+                        and @
+                        <a href='https://www.coinmarketcap.com' target={'_blank'}>CoinMarketCap</a>.
+                        
+                    </p>
+                </div>
             </div>
         </div>
     )

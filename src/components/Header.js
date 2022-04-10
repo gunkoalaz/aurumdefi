@@ -52,7 +52,7 @@ const Header = (props) => {
                     <a href="/aurum"><li className="menulist">Aurum</li></a>
                     <a href="/armvault"><li className="menulist">ARM vault</li></a>
                     <a href="/liquidate"><li className="menulist">Liquidate</li></a>
-                    <a href="/mint"><li className="menulist">MINT test tokens</li></a>
+                    {props.mainstate.networkId === 55556 ? <a href="/mint"><li className="menulist">MINT test tokens</li></a> : ''}
                 </ul>
             </div>
         </div>

@@ -17,7 +17,7 @@ import NoMatch from './NoMatch.js';
 //Blockchain components
 import Web3 from 'web3';
 import ARM from '../truffle_abis/ARM.json';
-import StakingARM from '../truffle_abis/StakingARM.json';
+// import StakingARM from '../truffle_abis/StakingARM.json';
 import Comptroller from '../truffle_abis/Comptroller.json';
 import ComptrollerStorage from '../truffle_abis/ComptrollerStorage.json';
 import ComptrollerCalculation from '../truffle_abis/ComptrollerCalculation.json';
@@ -45,7 +45,6 @@ const initialState = {
     loadedVault: false,
     loadingNow: 0,
     loading: true,
-    loadedMarket: false,
     autoupdate: false,
 }
 
@@ -130,15 +129,16 @@ class App extends Component {
 
     
     componentWillUnmount() {
-        clearInterval(this.interval);
-        clearInterval(this.marketInterval);
+        // clearInterval(this.interval);
+        // clearInterval(this.marketInterval);
     }
     async loadArmVault() {
-        const web3 = window.web3
-        const networkId = await web3.eth.net.getId()
-        // Load ARM data
-        const armLoader = ARM.networks[networkId]
-        const arm = new web3.eth.Contract(ARM.abi, armLoader.address)
+        let res;
+        // const web3 = window.web3
+        // const networkId = await web3.eth.net.getId()
+        // // Load ARM data
+        // const armLoader = ARM.networks[networkId]
+        // const arm = new web3.eth.Contract(ARM.abi, armLoader.address)
         // // Load stakingARM data
         // const stakingARMLoader = StakingARM.networks[networkId]
         // const stakingARM = new web3.eth.Contract(StakingARM.abi, stakingARMLoader.address)
@@ -170,9 +170,13 @@ class App extends Component {
         // } else {
         //     window.alert('Error! no stakingARM contract found')
         // }
-        this.setState({loadedVault: true})        
+        res = true;
+        this.setState({loadedVault: true});
+        return res;
     }
     async loadComptroller() {
+        let res;
+        try {
         const web3 = window.web3
         const networkId = await web3.eth.net.getId()
         // Load comptroller data
@@ -180,7 +184,7 @@ class App extends Component {
         const comptrollerStorageLoader = ComptrollerStorage.networks[networkId]
         const AURUMLoader = AURUM.networks[networkId]
         const AurumControllerLoader = AurumController.networks[networkId]
-        if(comptrollerLoader && comptrollerStorageLoader) {
+
             const comptroller = new web3.eth.Contract(Comptroller.abi, comptrollerLoader.address)
             const compStorage = new web3.eth.Contract(ComptrollerStorage.abi, comptrollerStorageLoader.address)
             const aurum = new web3.eth.Contract(AURUM.abi, AURUMLoader.address)
@@ -212,148 +216,162 @@ class App extends Component {
                 closeFactor: closeFactor,
                 totalMintedAURUM: totalMintedAURUM,
             }
+            res = true;
             this.setState({comptrollerState});
-            this.setState({loadingNow: 40});
-
-        } else {
-            window.alert('Error! no comptroller contract found')
+            
+        } catch {
+            console.log('Fail load comptroller.');
+            res = false;
         }
+
         this.setState({autoupdate: false})
+        return res;
     }
     async loadMarketsInfo() {
+        let res;
         this.setState({autoupdate: true})
-        const web3 = window.web3
-        const networkId = await web3.eth.net.getId()
+        try {
+            const web3 = window.web3
+            const networkId = await web3.eth.net.getId()
 
-        // Load all LendToken data to markets[]
+            // Load all LendToken data to markets[]
 
-        const arm = new web3.eth.Contract(ARM.abi, ARM.networks[networkId].address)
-        const compStorage = new web3.eth.Contract(ComptrollerStorage.abi, ComptrollerStorage.networks[networkId].address)
-        const aurumPriceOracleLoader = AurumPriceOracle.networks[networkId]
-        const aurumPriceOracle = new web3.eth.Contract(AurumPriceOracle.abi, aurumPriceOracleLoader.address)
-        if(aurumPriceOracleLoader) {
-            try {
+            const arm = new web3.eth.Contract(ARM.abi, ARM.networks[networkId].address)
+            const compStorage = new web3.eth.Contract(ComptrollerStorage.abi, ComptrollerStorage.networks[networkId].address)
+            const aurumPriceOracleLoader = AurumPriceOracle.networks[networkId]
+            const aurumPriceOracle = new web3.eth.Contract(AurumPriceOracle.abi, aurumPriceOracleLoader.address)
 
-                let armPrice = await aurumPriceOracle.methods.assetPrices(arm._address).call()
-                let goldPrice = await aurumPriceOracle.methods.getGoldPrice().call()
-                let price = {
-                    armPrice: armPrice.toString(),
-                    goldPrice: goldPrice.toString(),
-                }
-                this.setState({price})
-            } catch {
-                console.log('Failed load price')
+            let armPrice = await aurumPriceOracle.methods.assetPrices(arm._address).call()
+            let goldPrice = await aurumPriceOracle.methods.getGoldPrice().call()
+            let price = {
+                armPrice: armPrice.toString(),
+                goldPrice: goldPrice.toString(),
             }
-        } else {
-            window.alert('Error! no Price oracle contract found.')
-        }
-        let markets = []
-        let i
-        let getAllMarkets = await compStorage.methods.getAllMarkets().call()
+            this.setState({price})
 
-        this.setState({loadingNow: 50});
-        for(i=0; i< getAllMarkets.length; i++) {
-            try {
-                let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
-                let name = await lendToken.methods.name().call();
-                let symbol = await lendToken.methods.symbol().call();
-                let decimals = await lendToken.methods.decimals().call();
-                let borrowRatePerSeconds = await lendToken.methods.borrowRatePerSeconds().call();
-                let supplyRatePerSeconds = await lendToken.methods.supplyRatePerSeconds().call();
-                let reserveFactorMantissa = await lendToken.methods.reserveFactorMantissa().call();
-                let accrualTimestamp = await lendToken.methods.accrualTimestamp().call();
-                let totalBorrows = await lendToken.methods.totalBorrows().call();
-                let totalReserves = await lendToken.methods.totalReserves().call();
-                let getCash = await lendToken.methods.getCash().call();
-                let exchangeRateStored = await lendToken.methods.exchangeRateStored().call();
-                let borrowAddress = await lendToken.methods.getBorrowAddress().call();
-                let balanceOf = await lendToken.methods.balanceOf(this.state.account).call();
-                let borrowBalanceStored = await lendToken.methods.borrowBalanceStored(this.state.account).call();
-                let collateralFactorMantissa = await compStorage.methods.getMarketCollateralFactorMantissa(lendToken._address).call();
-                let getUnderlyingPrice = await aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call();
-                let borrowCaps = await compStorage.methods.getBorrowCaps(lendToken._address).call();
-                let membership = await compStorage.methods.checkMembership(this.state.account, lendToken._address).call();
-                let allowance = await lendToken.methods.allowance(this.state.account, lendToken._address).call();
-                let aurumSpeeds = await compStorage.methods.getAurumSpeeds(lendToken._address).call();
-                let mintPause = await compStorage.methods.getMintGuardianPaused(lendToken._address).call();
-                let borrowPause = await compStorage.methods.getBorrowGuardianPaused(lendToken._address).call();
-    
-                //Underlying parameters
-                let underlyingAddress 
-                let underlying 
-                let underlyingBalance
-                let underlyingSymbol
-                let underlyingAllowance
-                if(symbol !== 'lendREI') {
-                    underlyingAddress = await lendToken.methods.underlying().call()
-                    underlying = new web3.eth.Contract(ERC20.abi, underlyingAddress)
-                    underlyingSymbol = await underlying.methods.symbol().call()
-                    underlyingBalance = await underlying.methods.balanceOf(this.state.account).call()
-                    underlyingAllowance = await underlying.methods.allowance(this.state.account, lendToken._address).call()
-                } else {
-                    lendToken = new web3.eth.Contract(LendREI.abi, getAllMarkets[i])
-                    underlyingAddress = ''
-                    underlying = ''
-                    underlyingSymbol = 'REI'
-                    underlyingBalance = await web3.eth.getBalance(this.state.account)
-                    underlyingAllowance = MAX_UINT.toString()
-                }
-    
-                let marketsInfo = {
-                    index: parseInt(i),
-                    contract: lendToken,
-                    underlyingContract: underlying,
-                    
-                    borrowAddress: borrowAddress,
-                    
-                    name: name.toString(), 
-                    symbol: symbol.toString(), 
-                    underlyingSymbol: underlyingSymbol.toString(),
-                    decimals: decimals.toString(), 
-    
-                    //Personal info
-                    membership: membership,
-                    balanceOf: balanceOf.toString(),
-                    allowance: allowance.toString(),
-                    underlyingAllowance: underlyingAllowance.toString(),
-                    underlyingBalance: underlyingBalance.toString(),
-                    borrowBalanceStored: borrowBalanceStored.toString(),
-    
-    
-    
-    
-                    //Market calculating variables
-                    borrowRatePerSeconds: borrowRatePerSeconds.toString(),
-                    supplyRatePerSeconds: supplyRatePerSeconds.toString(),
-                    reserveFactorMantissa: reserveFactorMantissa.toString(),
-                    collateralFactorMantissa: collateralFactorMantissa.toString(),
-                    accrualTimestamp: accrualTimestamp.toString(),
-                    exchangeRateStored: exchangeRateStored.toString(),
-                    underlyingPrice: getUnderlyingPrice.toString(),
-                    
-                    //Market variables
-                    mintPause: mintPause,
-                    totalBorrows: totalBorrows.toString(),
-                    totalReserves: totalReserves.toString(),
-                    cash: getCash.toString(),
-                    borrowCaps: borrowCaps.toString(),
-    
-                    aurumSpeeds: aurumSpeeds.toString(),
-                }
-                markets.push(marketsInfo)
-                this.setState({loadingNow: this.state.loadingNow+6});
-            } catch {
-                console.log('Failed load markets data');
+            let markets = []
+            let i
+            let getAllMarkets = await compStorage.methods.getAllMarkets().call()
+
+            this.setState({loadingNow: 50});
+            for(i=0; i< getAllMarkets.length; i++) {
+                    let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
+                    let name = await lendToken.methods.name().call();
+                    let symbol = await lendToken.methods.symbol().call();
+                    let decimals = await lendToken.methods.decimals().call();
+                    let borrowRatePerSeconds = await lendToken.methods.borrowRatePerSeconds().call();
+                    let supplyRatePerSeconds = await lendToken.methods.supplyRatePerSeconds().call();
+                    let reserveFactorMantissa = await lendToken.methods.reserveFactorMantissa().call();
+                    let accrualTimestamp = await lendToken.methods.accrualTimestamp().call();
+                    let totalBorrows = await lendToken.methods.totalBorrows().call();
+                    let totalReserves = await lendToken.methods.totalReserves().call();
+                    let getCash = await lendToken.methods.getCash().call();
+                    let exchangeRateStored = await lendToken.methods.exchangeRateStored().call();
+                    let borrowAddress = await lendToken.methods.getBorrowAddress().call();
+                    let balanceOf = await lendToken.methods.balanceOf(this.state.account).call();
+                    let borrowBalanceStored = await lendToken.methods.borrowBalanceStored(this.state.account).call();
+                    let collateralFactorMantissa = await compStorage.methods.getMarketCollateralFactorMantissa(lendToken._address).call();
+                    let getUnderlyingPrice = await aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call();
+                    let borrowCaps = await compStorage.methods.getBorrowCaps(lendToken._address).call();
+                    let membership = await compStorage.methods.checkMembership(this.state.account, lendToken._address).call();
+                    let allowance = await lendToken.methods.allowance(this.state.account, lendToken._address).call();
+                    let aurumSpeeds = await compStorage.methods.getAurumSpeeds(lendToken._address).call();
+                    let mintPause = await compStorage.methods.getMintGuardianPaused(lendToken._address).call();
+                    let borrowPause = await compStorage.methods.getBorrowGuardianPaused(lendToken._address).call();
+        
+                    //Underlying parameters
+                    let underlyingAddress 
+                    let underlying 
+                    let underlyingBalance
+                    let underlyingSymbol
+                    let underlyingAllowance
+                    if(symbol !== 'lendREI') {
+                        underlyingAddress = await lendToken.methods.underlying().call()
+                        underlying = new web3.eth.Contract(ERC20.abi, underlyingAddress)
+                        underlyingSymbol = await underlying.methods.symbol().call()
+                        underlyingBalance = await underlying.methods.balanceOf(this.state.account).call()
+                        underlyingAllowance = await underlying.methods.allowance(this.state.account, lendToken._address).call()
+                    } else {
+                        lendToken = new web3.eth.Contract(LendREI.abi, getAllMarkets[i])
+                        underlyingAddress = ''
+                        underlying = ''
+                        underlyingSymbol = 'REI'
+                        underlyingBalance = await web3.eth.getBalance(this.state.account)
+                        underlyingAllowance = MAX_UINT.toString()
+                    }
+        
+                    let marketsInfo = {
+                        index: parseInt(i),
+                        contract: lendToken,
+                        underlyingContract: underlying,
+                        
+                        borrowAddress: borrowAddress,
+                        
+                        name: name.toString(), 
+                        symbol: symbol.toString(), 
+                        underlyingSymbol: underlyingSymbol.toString(),
+                        decimals: decimals.toString(), 
+        
+                        //Personal info
+                        membership: membership,
+                        balanceOf: balanceOf.toString(),
+                        allowance: allowance.toString(),
+                        underlyingAllowance: underlyingAllowance.toString(),
+                        underlyingBalance: underlyingBalance.toString(),
+                        borrowBalanceStored: borrowBalanceStored.toString(),
+        
+        
+        
+        
+                        //Market calculating variables
+                        borrowRatePerSeconds: borrowRatePerSeconds.toString(),
+                        supplyRatePerSeconds: supplyRatePerSeconds.toString(),
+                        reserveFactorMantissa: reserveFactorMantissa.toString(),
+                        collateralFactorMantissa: collateralFactorMantissa.toString(),
+                        accrualTimestamp: accrualTimestamp.toString(),
+                        exchangeRateStored: exchangeRateStored.toString(),
+                        underlyingPrice: getUnderlyingPrice.toString(),
+                        
+                        //Market variables
+                        mintPause: mintPause,
+                        borrowPause: borrowPause,
+                        totalBorrows: totalBorrows.toString(),
+                        totalReserves: totalReserves.toString(),
+                        cash: getCash.toString(),
+                        borrowCaps: borrowCaps.toString(),
+        
+                        aurumSpeeds: aurumSpeeds.toString(),
+                    }
+                    markets.push(marketsInfo)
+                    this.setState({loadingNow: this.state.loadingNow+6});
             }
+            res = true;
+            this.setState({loadingNow: 100});
+            this.setState({markets});
+            this.setState({autoupdate: false})
+        } catch {
+            res = false;
+            clearInterval(this.marketInterval)
+            this.setState(initialState)
         }
-        this.setState({loadingNow: 100});
-        this.setState({markets});
-        this.setState({loadedMarket: true})
-        this.setState({autoupdate: false})
+        if( res === true ) {
+            this.setState({loadedMarket: true})
+            clearInterval(this.marketInterval);
+            this.marketInterval = setInterval(
+                async() => {
+                    if(this.state.account !== '0x0') {
+                        if(this.state.networkId === 55555 || this.state.networkId === 55556 || this.state.networkId === 5777){
+                            this.updateWeb3();
+                        }
+                    }
+                },
+                5000
+            )
+        }
+        return res;
     }
 
     async loadLiquidateList() {
-        console.log("Loading liquidate list")
         this.setState({loading: true})
         const web3 = window.web3
         const networkId = await web3.eth.net.getId()
@@ -385,7 +403,6 @@ class App extends Component {
                 allBorrower.push(getGoldMinter[i])
             }
         }
-        console.log(allBorrower)
         // this.setState({allBorrower: allBorrower})
         let isShortage = []
         // Check each borrower position
@@ -457,7 +474,6 @@ class App extends Component {
             }
             this.setState({allShortage})
             this.setState({loading: false})
-            console.log("Loading done")
         })
     }
     //
@@ -469,7 +485,6 @@ class App extends Component {
             window.web3 = new Web3(window.ethereum)
             connect = true
             // const accounts = await window.ethereum.send('eth_requestAccounts');
-            // console.log(accounts)
         } else if(window.web3){
                 window.web3 = new Web3(window.web3.currentProvider)
                 connect = true
@@ -502,39 +517,39 @@ class App extends Component {
     // Functions
     //
     updateWeb3 = async () => {
-        this.setState({loading: true})
-        const comptroller = this.loadComptroller()
-        const armVault = this.loadArmVault()
-        const markets = this.loadMarketsInfo()
-        Promise.all([comptroller, armVault, markets]).then( () => 
-            {
-                this.setState({loadingNow: 100});
-                this.setState({loading:false})   
-            })
+        // this.setState({loading: true})
+        let res
+        try {
+            const comptroller = await this.loadComptroller()
+            const armVault = this.loadArmVault()
+            const markets = this.loadMarketsInfo()
+            Promise.all([comptroller, armVault, markets]).then( (value) => 
+                {
+                    if(value[0] === true && value[1] === true && value[2] === true){
+                        res = true;
+                        this.setState({loading:false})
+                    } else {
+                        res = false;
+                    }
+    
+                })
+        } catch {
+            res = false
+        }
+        return res
     }
 
 
     connectAurumDeFi = async () =>{
+        clearInterval(this.marketInterval);
         const LoadWeb3 = await this.loadWeb3()
         if(LoadWeb3 === true) {
             this.setState({loadingNow: 10});
             let networkId = await this.loadBlockchainData()
             this.setState({loadingNow: 20});
             if(networkId === 5777 || networkId === 55556 || networkId === 55555){
-                await this.loadComptroller()
-                await this.setState({loadingNow: 30});
-                await this.updateWeb3(this.setLoadingFinish)
-                
-                    this.marketInterval = setInterval(
-                        async() => {
-                            if(this.state.account !== '0x0') {
-                                if(this.state.networkId === 55555 || this.state.networkId === 55556 || this.state.networkId === 5777){
-                                    
-                                }
-                            }
-                        },
-                        5000
-                    )
+                const web3load = this.updateWeb3()
+                Promise.all([web3load]).then( (value)=> {
                     this.interval = setInterval(
                         async () => {
                             if(this.state.account !== '0x0' && this.state.loading === false && this.state.autoupdate === false) {
@@ -546,6 +561,7 @@ class App extends Component {
                         },
                         1000
                     )
+                })
             } else {
                 await changeNetwork({networkName: 'Rei'})
                 this.connectAurumDeFi();
@@ -556,32 +572,24 @@ class App extends Component {
 
     disconnectAurumDeFi = async () =>{
         clearInterval(this.marketInterval);
-        if(this.state.autoupdate === false) {
-            this.setState(initialState)
-        }
+        this.setState(initialState);
     }
 
-    clear = () => {
-        clearInterval(this.interval);
-        clearInterval(this.marketInterval);
-    }
 
 
     
     render() {
         if(window.ethereum) {
-            window.ethereum.on('accountsChanged', async (accounts) => {
+            window.ethereum.on('accountsChanged', (accounts) => {
                 if(this.state.loading === false){
-                    this.clear();
                     this.setState(initialState)
-                    await this.connectAurumDeFi();
+                    this.connectAurumDeFi();
                 }
             })
-            window.ethereum.on('networkChanged', async (networkId) => {
+            window.ethereum.on('chainChanged',  (networkId) => {
                 if(this.state.loading === false){
-                    this.clear();
                     this.setState(initialState)
-                    await this.connectAurumDeFi();
+                    this.connectAurumDeFi();
                 }
             })
         }

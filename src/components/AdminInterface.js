@@ -67,42 +67,42 @@ class Admin extends Component {
             compStorage.methods._setPriceOracle(this.state._setPriceOracle).send({from: accounts}).on('transactionHash', (hash) => {})
         }
         const _setProtocolPaused = () => {
-            if(this.state._setProtocolPaused == 1) {
+            if(this.state._setProtocolPaused === '1') {
                 compStorage.methods._setProtocolPaused(true).send({from: accounts}).on('transactionHash', (hash) => {})
             } else {
                 compStorage.methods._setProtocolPaused(false).send({from: accounts}).on('transactionHash', (hash) => {})
             }
         }
         const _setTransferPaused = () => {
-            if(this.state._setTransferPaused == 1) {
+            if(this.state._setTransferPaused === '1') {
                 compStorage.methods._setTransferPaused(true).send({from: accounts}).on('transactionHash', (hash) => {})
             } else {
                 compStorage.methods._setTransferPaused(false).send({from: accounts}).on('transactionHash', (hash) => {})
             }
         }
         const _setSeizePaused = () => {
-            if(this.state._setSeizePaused == 1) {
+            if(this.state._setSeizePaused === '1') {
                 compStorage.methods._setSeizePaused(true).send({from: accounts}).on('transactionHash', (hash) => {})
             } else {
                 compStorage.methods._setSeizePaused(false).send({from: accounts}).on('transactionHash', (hash) => {})
             }
         }
         const _setMintPaused = () => {
-            if(this.state._setMintPaused2 == 1) {
+            if(this.state._setMintPaused2 === '1') {
                 compStorage.methods._setMintPaused(this.state._setMintPaused1, true).send({from: accounts}).on('transactionHash', (hash) => {})
             } else {
                 compStorage.methods._setMintPaused(this.state._setMintPaused1, false).send({from: accounts}).on('transactionHash', (hash) => {})
             }
         }
         const _setBorrowPaused = () => {
-            if(this.state._setBorrowPaused2 == 1) {
+            if(this.state._setBorrowPaused2 === '1') {
                 compStorage.methods._setBorrowPaused(this.state._setBorrowPaused1, true).send({from: accounts}).on('transactionHash', (hash) => {})
             } else {
                 compStorage.methods._setBorrowPaused(this.state._setBorrowPaused1, false).send({from: accounts}).on('transactionHash', (hash) => {})
             }
         }
         const _setMintGoldPause = () => {
-            if(this.state._setMintGoldPause == 1) {
+            if(this.state._setMintGoldPause === '1') {
                 compStorage.methods._setMintGoldPause(true).send({from: accounts}).on('transactionHash', (hash) => {})
             } else {
                 compStorage.methods._setMintGoldPause(false).send({from: accounts}).on('transactionHash', (hash) => {})
@@ -528,7 +528,7 @@ class AdminInterface extends Component {
         let content    
         
         if(this.props.mainstate.loadMarket === false || this.props.mainstate.loading === true){
-            content = <Loading/>
+            content = <Loading mainstate={this.props.mainstate}/>
         }
         else {
             content = <Admin mainstate={this.props.mainstate}/>

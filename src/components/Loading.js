@@ -1,5 +1,6 @@
 import React from 'react'
 import { ProgressBar } from 'react-bootstrap';
+import { XCircle } from 'react-bootstrap-icons';
 import './css/Main.css'
 
 const Loading = (props) => {
@@ -35,8 +36,8 @@ const Loading = (props) => {
             <div>
                 <div>
                     <br></br>
-                    <h1>Wrong network</h1>
-                    <p>please connect to REI or REI testnet.</p>
+                    <h1 style={{color: 'red'}}><XCircle /> Wrong network </h1>
+                    <p>please connect to REI chain or REI testnet.</p>
                 </div>
             </div>
         }
