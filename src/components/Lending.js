@@ -53,7 +53,8 @@ const MainLending = (props) => {
 
         // userTotalBorrow = BigNumber(superState.markets[i].borrowBalanceStored).times(oraclePrice[i]).plus(userTotalBorrow)
 
-        userTotalSupply = BigNumber(superState.markets[i].balanceOf).times(oraclePrice[i]).times(superState.markets[i].exchangeRateStored).div(e18).plus(userTotalSupply)
+        let userPendingTotalSupply = BigNumber(superState.markets[i].balanceOf).times(superState.markets[i].exchangeRateStored).div(e18).times(oraclePrice[i]).times(deltaTime).times(superState.markets[i].supplyRatePerSeconds).div(e18)
+        userTotalSupply = BigNumber(superState.markets[i].balanceOf).times(oraclePrice[i]).times(superState.markets[i].exchangeRateStored).div(e18).plus(userTotalSupply).plus(userPendingTotalSupply);
 
         let thisBorrow = (BigNumber(superState.markets[i].borrowBalanceStored).div(e18).times(superState.markets[i].borrowRatePerSeconds).times(deltaTime) ).plus(superState.markets[i].borrowBalanceStored)
         thisBorrow = thisBorrow.times(oraclePrice[i])
