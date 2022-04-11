@@ -690,6 +690,99 @@ contract ComptrollerCalculation {
 
         return seizeTokens;
     }
+
+    struct ARMAccrued {
+        uint supplierIndex;
+        uint borrowerIndex;
+        uint supplyStateIndex;
+        uint borrowStateIndex;
+        uint supplierTokens;
+        uint borrowerAmount;
+        uint aurumSpeed;
+    }
+
+    //
+    // Front-end function
+    // core function is getUpdateARMAccrued 
+    // input of timestamp in Javascript should be divided by 1000
+    //
+    function getUpdateARMSupplyIndex(address lendToken, uint currentTime) internal view returns(uint) {
+        (uint supplyStateIndex, uint supplyStateTimestamp) = compStorage.armSupplyState(lendToken);
+        uint supplySpeed = compStorage.aurumSpeeds(lendToken);
+        uint deltaTime = currentTime - supplyStateTimestamp;
+
+        if (deltaTime > 0 && supplySpeed > 0) {
+            uint supplyTokens = LendTokenInterface(lendToken).totalSupply();
+            uint armAcc = deltaTime * supplySpeed;
+            uint addingValue;
+            if (supplyTokens > 0){
+                addingValue = armAcc * 1e36 / supplyTokens;  // calculate index and stored in Double 
+            } else {
+                addingValue = 0;
+            }
+            return supplyStateIndex + addingValue;
+        } else {
+            return supplyStateIndex;
+        }
+    }
+
+    function getUpdateARMBorrowIndex(address lendToken, uint currentTime) internal view returns(uint) {
+        (uint borrowStateIndex, uint borrowStateTimestamp) = compStorage.armBorrowState(lendToken);
+        uint borrowSpeed = compStorage.aurumSpeeds(lendToken);
+        uint deltaTime = currentTime - borrowStateTimestamp;
+        uint marketBorrowIndex = LendTokenInterface(lendToken).borrowIndex();
+
+        if (deltaTime > 0 && borrowSpeed > 0) {
+            uint borrowTokens = LendTokenInterface(lendToken).totalBorrows() * 1e18 / marketBorrowIndex;
+            uint armAcc = deltaTime * borrowSpeed;
+            // addingValue is e36
+            uint addingValue;
+            if (borrowTokens > 0){
+                addingValue = armAcc * 1e36 / borrowTokens;  // calculate index and stored in Double 
+            } else {
+                addingValue = 0;
+            }
+            return borrowStateIndex + addingValue;
+        } else {
+            return borrowStateIndex;
+        }
+    }
+    // This function called by front-end dApp to get real-time reward
+    function getUpdateARMAccrued(address user, uint currentTime) external view returns(uint) {
+        LendTokenInterface[] memory lendToken = compStorage.getAllMarkets();
+        ARMAccrued memory vars;
+        uint priorARMAccrued = compStorage.getArmAccrued(user);
+        uint i;
+        uint deltaIndex;
+        uint marketBorrowIndex;
+        for(i=0;i<lendToken.length; i++){
+            vars.supplierIndex = compStorage.aurumSupplierIndex(address(lendToken[i]) , user);
+            vars.borrowerIndex = compStorage.aurumBorrowerIndex(address(lendToken[i]) , user);
+            vars.supplyStateIndex = getUpdateARMSupplyIndex(address(lendToken[i]), currentTime);
+            vars.borrowStateIndex = getUpdateARMBorrowIndex(address(lendToken[i]), currentTime);
+            marketBorrowIndex = lendToken[i].borrowIndex();
+            vars.aurumSpeed = compStorage.aurumSpeeds(address(lendToken[i]));
+
+            //Supply Accrued
+            if (vars.supplierIndex == 0 && vars.supplyStateIndex > 0) {    
+                vars.supplierIndex = 1e36;
+            }
+            deltaIndex = vars.supplyStateIndex - vars.supplierIndex;
+
+            vars.supplierTokens = lendToken[i].balanceOf(user);
+            priorARMAccrued += vars.supplierTokens * deltaIndex / 1e36;
+
+            //Borrow Accrued
+
+            if (vars.borrowerIndex > 0) {
+                deltaIndex = vars.borrowStateIndex - vars.borrowerIndex;
+                vars.borrowerAmount = lendToken[i].borrowBalanceStored(user) * 1e18 / marketBorrowIndex;
+                priorARMAccrued += vars.borrowerAmount * deltaIndex / 1e36;
+            }
+        }
+        return priorARMAccrued;
+    }
+
 }
 
 

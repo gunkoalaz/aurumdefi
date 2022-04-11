@@ -182,11 +182,15 @@ class App extends Component {
         // Load comptroller data
         const comptrollerLoader = Comptroller.networks[networkId]
         const comptrollerStorageLoader = ComptrollerStorage.networks[networkId]
+        const comptrollerCalculationLoader = ComptrollerCalculation.networks[networkId]
         const AURUMLoader = AURUM.networks[networkId]
         const AurumControllerLoader = AurumController.networks[networkId]
+        let currentTime = parseInt(Date.now() / 1000)
+        console.log(currentTime)
 
-            const comptroller = new web3.eth.Contract(Comptroller.abi, comptrollerLoader.address)
-            const compStorage = new web3.eth.Contract(ComptrollerStorage.abi, comptrollerStorageLoader.address)
+            const comptroller = new web3.eth.Contract(Comptroller.abi, comptrollerLoader.address);
+            const compStorage = new web3.eth.Contract(ComptrollerStorage.abi, comptrollerStorageLoader.address);
+            const compCalculation = new web3.eth.Contract(ComptrollerCalculation.abi, comptrollerCalculationLoader.address);
             const aurum = new web3.eth.Contract(AURUM.abi, AURUMLoader.address)
             const aurumController = new web3.eth.Contract(AurumController.abi, AurumControllerLoader.address)
             let isProtocolPaused = await comptroller.methods.isProtocolPaused().call()
@@ -197,7 +201,7 @@ class App extends Component {
             let aurumAllowance = await aurum.methods.allowance(this.state.account, aurumController._address).call()
             let liquidationIncentive = await compStorage.methods.liquidationIncentiveMantissa().call()
             let closeFactor = await compStorage.methods.closeFactorMantissa().call()
-            let getArmAccrued = await compStorage.methods.getArmAccrued(this.state.account).call()
+            let getArmAccrued = await compCalculation.methods.getUpdateARMAccrued(this.state.account, currentTime).call()
             let totalMintedAURUM = await aurum.methods.totalSupply().call()
 
             let comptrollerState = {
@@ -219,8 +223,8 @@ class App extends Component {
             res = true;
             this.setState({comptrollerState});
             
-        } catch {
-            console.log('Fail load comptroller.');
+        } catch(err) {
+            console.log('Fail load comptroller.' + err);
             res = false;
         }
 

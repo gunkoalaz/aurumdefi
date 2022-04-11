@@ -212,7 +212,7 @@ const MainArmVault = (props) => {
                         <p>{getTotalStakedARM}</p>
 
                         <h1>Available reward</h1>
-                        <p>{updateTotalAvailableReward} BUSD</p>
+                        <p>{updateTotalAvailableReward} kBUSD</p>
 
                         <h1>Staking APR</h1>
                         <p>{APR}%</p>
