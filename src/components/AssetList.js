@@ -487,8 +487,7 @@ const AssetList = (props) => {
     // totalBorrowAPR = totalBorrowAPR.toFormat(2)
 
 
-    // Should be calculate to Wei by parseInt (remove all integer)
-    const EXCHANGE_RATE = parseInt(props.markets.exchangeRateStored)
+    const EXCHANGE_RATE = props.markets.exchangeRateStored
 
     let tempDeposit = new BigNumber(props.markets.balanceOf)
     tempDeposit = tempDeposit.div(e18)
