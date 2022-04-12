@@ -18,7 +18,7 @@ class Admin extends Component {
         const accounts = this.props.mainstate.account
         const comptroller = this.props.mainstate.comptrollerState.contract
         const compStorage = this.props.mainstate.comptrollerState.storage
-
+            
         //Comptroller
         const _setPendingAdmin = () => {
             comptroller.methods._setPendingAdmin(this.state._setPendingAdmin).send({from: accounts}).on('transactionHash', (hash) => {})
@@ -111,18 +111,27 @@ class Admin extends Component {
         // LendToken function
 
         const _setAdmin = () => {
-
+            const lendToken = this.props.mainstate.markets[this.state.selectedLendToken].contract;
+            lendToken.methods._setAdmin(this.state._setAdmin).send({from: accounts}).on('transactionHash', (hash) => {})
         }
         const _reduceReserves = () => {
+            const lendToken = this.props.mainstate.markets[this.state.selectedLendToken].contract;
+            lendToken.methods._reduceReserves(this.state._reduceReserves).send({from: accounts}).on('transactionHash', (hash) => {})
 
         }
         const _setReserveFactor = () => {
+            const lendToken = this.props.mainstate.markets[this.state.selectedLendToken].contract;
+            lendToken.methods._setReserveFactor(this.state._setReserveFactor).send({from: accounts}).on('transactionHash', (hash) => {})
 
         }
         const _setInterestRateModel = () => {
+            const lendToken = this.props.mainstate.markets[this.state.selectedLendToken].contract;
+            lendToken.methods._setInterestRateModel(this.state._setInterestRateModel).send({from: accounts}).on('transactionHash', (hash) => {})
 
         }
         const _setComptroller = () => {
+            const lendToken = this.props.mainstate.markets[this.state.selectedLendToken].contract;
+            lendToken.methods._setComptroller(this.state._setComptroller).send({from: accounts}).on('transactionHash', (hash) => {})
 
         }
 
@@ -447,7 +456,7 @@ class Admin extends Component {
                     <select className="custom-select my-1 mr-sm-2" name="selectedLendToken" onChange={this.handleInputChange}>
                         <option>Choose...</option>
                         {this.props.mainstate.markets.map( (element) => 
-                            <option key={element.index} value={element.contract}>{element.symbol}</option>
+                            <option key={element.index} value={element.index}>{element.symbol}</option>
                         )}
                     </select>
                     <li>

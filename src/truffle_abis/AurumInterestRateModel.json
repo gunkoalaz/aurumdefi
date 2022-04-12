@@ -3801,28 +3801,28 @@
     "absolutePath": "project:/src/contracts/AurumInterestRateModel.sol",
     "exportedSymbols": {
       "AurumControllerInterface": [
-        14501
+        14500
       ],
       "AurumInterestRateModel": [
         3081
       ],
       "ComptrollerInterface": [
-        14214
+        14213
       ],
       "ComptrollerStorageInterface": [
-        14222
+        14221
       ],
       "IComptroller": [
-        14238
+        14237
       ],
       "InterestRateModel": [
-        14531
+        14530
       ],
       "LendTokenInterface": [
-        14437
+        14436
       ],
       "PriceOracle": [
-        14463
+        14462
       ]
     },
     "id": 3082,
@@ -3847,7 +3847,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 3082,
-        "sourceUnit": 14532,
+        "sourceUnit": 14531,
         "src": "60:46:7",
         "symbolAliases": [],
         "unitAlias": ""
@@ -3860,7 +3860,7 @@
               "id": 2862,
               "name": "InterestRateModel",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 14531,
+              "referencedDeclaration": 14530,
               "src": "145:17:7"
             },
             "id": 2863,
@@ -3875,7 +3875,7 @@
         "id": 3081,
         "linearizedBaseContracts": [
           3081,
-          14531
+          14530
         ],
         "name": "AurumInterestRateModel",
         "nameLocation": "119:22:7",
@@ -3883,7 +3883,7 @@
         "nodes": [
           {
             "baseFunctions": [
-              14506
+              14505
             ],
             "body": {
               "id": 2870,
@@ -4910,7 +4910,7 @@
           },
           {
             "baseFunctions": [
-              14517
+              14516
             ],
             "body": {
               "id": 3020,
@@ -5927,7 +5927,7 @@
           },
           {
             "baseFunctions": [
-              14530
+              14529
             ],
             "body": {
               "id": 3079,
@@ -6713,28 +6713,28 @@
     "absolutePath": "project:/src/contracts/AurumInterestRateModel.sol",
     "exportedSymbols": {
       "AurumControllerInterface": [
-        14501
+        14500
       ],
       "AurumInterestRateModel": [
         3081
       ],
       "ComptrollerInterface": [
-        14214
+        14213
       ],
       "ComptrollerStorageInterface": [
-        14222
+        14221
       ],
       "IComptroller": [
-        14238
+        14237
       ],
       "InterestRateModel": [
-        14531
+        14530
       ],
       "LendTokenInterface": [
-        14437
+        14436
       ],
       "PriceOracle": [
-        14463
+        14462
       ]
     },
     "id": 3082,
@@ -6759,7 +6759,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 3082,
-        "sourceUnit": 14532,
+        "sourceUnit": 14531,
         "src": "60:46:7",
         "symbolAliases": [],
         "unitAlias": ""
@@ -6772,7 +6772,7 @@
               "id": 2862,
               "name": "InterestRateModel",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 14531,
+              "referencedDeclaration": 14530,
               "src": "145:17:7"
             },
             "id": 2863,
@@ -6787,7 +6787,7 @@
         "id": 3081,
         "linearizedBaseContracts": [
           3081,
-          14531
+          14530
         ],
         "name": "AurumInterestRateModel",
         "nameLocation": "119:22:7",
@@ -6795,7 +6795,7 @@
         "nodes": [
           {
             "baseFunctions": [
-              14506
+              14505
             ],
             "body": {
               "id": 2870,
@@ -7822,7 +7822,7 @@
           },
           {
             "baseFunctions": [
-              14517
+              14516
             ],
             "body": {
               "id": 3020,
@@ -8839,7 +8839,7 @@
           },
           {
             "baseFunctions": [
-              14530
+              14529
             ],
             "body": {
               "id": 3079,
@@ -9646,7 +9646,7 @@
     }
   },
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-04-11T14:57:26.613Z",
+  "updatedAt": "2022-04-12T10:16:33.993Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

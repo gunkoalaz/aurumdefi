@@ -1,3 +1,4 @@
 node_modules
+transferowner.js
 *.secret
 *.psd

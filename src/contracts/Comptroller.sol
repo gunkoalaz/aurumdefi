@@ -410,14 +410,13 @@ contract Comptroller is ComptrollerInterface {
 
     function _setAurumSpeed(LendTokenInterface lendToken, uint aurumSpeed) external {
         if(msg.sender != admin) { revert AdminOnly();}
+        uint borrowIndex = lendToken.borrowIndex();
+        compStorage.updateARMSupplyIndex(address(lendToken));
+        compStorage.updateARMBorrowIndex(address(lendToken), borrowIndex);
+        
         uint currentAurumSpeed = compStorage.getAurumSpeeds(address(lendToken));
-        if (currentAurumSpeed != 0) {
-            // note that ARM speed could be set to 0 to halt liquidity rewards for a market
-            uint borrowIndex = lendToken.borrowIndex();
-            compStorage.updateARMSupplyIndex(address(lendToken));
-            compStorage.updateARMBorrowIndex(address(lendToken), borrowIndex);
-        } else if (aurumSpeed != 0) {
-            // Add the ARM market
+        if (currentAurumSpeed == 0 && aurumSpeed != 0) {
+            // Initialize
             compStorage.addARMdistributionMarket(lendToken);
         }
 

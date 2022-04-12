@@ -58,32 +58,20 @@ const networks = {
         decimals: 18
       },
       rpcUrls: ["https://rei-testnet-rpc.moonrhythm.io"],
-      blockExplorerUrls: ["https://testnet.bscscan.com"]
+      blockExplorerUrls: ["https://testnet.reiscan.com"]
     },
     Rei: {
       chainId: `0x${Number(55555).toString(16)}`,
-      chainName: "Binance Smart Chain Mainnet",
+      chainName: "REI chain",
       nativeCurrency: {
-        name: "Binance Chain Native Token",
-        symbol: "BNB",
+        name: "REI",
+        symbol: "REI",
         decimals: 18
       },
       rpcUrls: [
-        "https://bsc-dataseed1.binance.org",
-        "https://bsc-dataseed2.binance.org",
-        "https://bsc-dataseed3.binance.org",
-        "https://bsc-dataseed4.binance.org",
-        "https://bsc-dataseed1.defibit.io",
-        "https://bsc-dataseed2.defibit.io",
-        "https://bsc-dataseed3.defibit.io",
-        "https://bsc-dataseed4.defibit.io",
-        "https://bsc-dataseed1.ninicoin.io",
-        "https://bsc-dataseed2.ninicoin.io",
-        "https://bsc-dataseed3.ninicoin.io",
-        "https://bsc-dataseed4.ninicoin.io",
-        "wss://bsc-ws-node.nariox.org"
+        "https://rei-rpc.moonrhythm.io"
       ],
-      blockExplorerUrls: ["https://bscscan.com"]
+      blockExplorerUrls: ["https://reiscan.com"]
     },
     Local: {
         chainId: `0x${Number(1337).toString(16)}`,
@@ -186,7 +174,6 @@ class App extends Component {
         const AURUMLoader = AURUM.networks[networkId]
         const AurumControllerLoader = AurumController.networks[networkId]
         let currentTime = parseInt(Date.now() / 1000)
-        console.log(currentTime)
 
             const comptroller = new web3.eth.Contract(Comptroller.abi, comptrollerLoader.address);
             const compStorage = new web3.eth.Contract(ComptrollerStorage.abi, comptrollerStorageLoader.address);
