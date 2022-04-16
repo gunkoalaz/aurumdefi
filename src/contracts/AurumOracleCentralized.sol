@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import './interface/ComptrollerInterface.sol';
-import "./interface/ISlidingWindow.sol";
+import './interface/IAurumOracleCentralized.sol';
 
-contract AurumOracleCentralized is PriceOracle {
+contract AurumOracleCentralized is IAurumOracleCentralized {
     //Using TWAP model, using index for looping and re-write the price storage
 
     address public admin; // Admin can initiate price and set manager (reducing risk of privatekey leak)   Admin private key store in Hardware wallet.
-    address public manager; // Manager can update the price (bot address), tihs address has some risk of private key leak.
+    address public manager; // Manager can update the price, using Multi-signature wallet address to reduce risk of single key leak.
     
     address busd; //Reference stable coin price.
 
@@ -132,6 +131,9 @@ contract AurumOracleCentralized is PriceOracle {
         }
         // So.. We helping sliding Window update each time we read parameter.
         uniswapOracle.update(token,busd);
+
+        uint newDeltaTime = block.timestamp - asset[token].timestamp[lastIndex];
+        require(newDeltaTime >= periodRange, "update too early");   //If update oracle bot catch this means the privatekey got hacked OR the bot error.
 
         // The price we got already time-weight average price.
         uint newAvgPrice = uniswapOracle.consult(token,1e18,busd);

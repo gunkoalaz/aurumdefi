@@ -17,6 +17,7 @@ const LendREI = artifacts.require('LendREI');
 const AurumInterestRateModel = artifacts.require('AurumInterestRateModel');
 // const AurumPriceOracle = artifacts.require('AurumPriceOracle');   Change to Centralized feed version.
 const AurumOracleCentralized = artifacts.require('AurumOracleCentralized');
+const MultisigAurumOracle = artifacts.require('MultisigAurumOracle');
 
 module.exports = async function (deployer, network, accounts) {
 
@@ -43,6 +44,12 @@ module.exports = async function (deployer, network, accounts) {
     const DevWallet  = '0x7419E1C2B7b473a418cC582aa40d8dfbb89b8224';
     const publicDead = '0xdead00000000000000000000000000000000dead';
 
+    const ManagerWallet = [
+                            "0x67a45f2F461A3d70585066e64660AbC3943FE76A",
+                            "0xacD79822D3276EBd0c1FD29336DEC880b8a393A7",
+                            "0xA40cf5594E3d1462a3d2DD7D29E08E24B9294A09"
+                        ];
+
     const owner = accounts[0];
 
     //TEST MOCKED TOKENs
@@ -66,10 +73,19 @@ module.exports = async function (deployer, network, accounts) {
     // const ETH = eth.address;
     // const KUB = kub.address;
     
+    //Pending update
     const compStorage = '0x04Bd7445993dF442291995BcBC780f67196094De'
-    await deployer.deploy(Comptroller,compStorage);
-    const comptroller = await Comptroller.deployed();
+    const oracle = '0xEe5FA91b7F02a8839Dc8e87236e5E41bF1c43262';
+
+    // await deployer.deploy(Comptroller,compStorage);
+    // const comptroller = await Comptroller.deployed();
     
+    
+    await deployer.deploy(MultisigAurumOracle, oracle, ManagerWallet, 2);
+
+
+
+
 //     //Deploy essential component
 //     await deployer.deploy(ARM);      //Gov token
 //     const arm = await ARM.deployed();

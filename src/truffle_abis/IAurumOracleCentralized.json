@@ -1,0 +1,1641 @@
+{
+  "contractName": "IAurumOracleCentralized",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "isPriceOracle",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
+          "internalType": "uint128",
+          "name": "price",
+          "type": "uint128"
+        }
+      ],
+      "name": "initializedAsset",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "price",
+          "type": "uint128"
+        }
+      ],
+      "name": "initializedGold",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
+          "internalType": "uint128",
+          "name": "price",
+          "type": "uint128"
+        }
+      ],
+      "name": "updateAssetPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        }
+      ],
+      "name": "updateAssetPriceFromWindow",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "price",
+          "type": "uint128"
+        }
+      ],
+      "name": "updateGoldPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getGoldPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract LendTokenInterface",
+          "name": "lendToken",
+          "type": "address"
+        }
+      ],
+      "name": "getUnderlyingPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        }
+      ],
+      "name": "assetPrices",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.12+commit.f00d7308\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"name\":\"assetPrices\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getGoldPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract LendTokenInterface\",\"name\":\"lendToken\",\"type\":\"address\"}],\"name\":\"getUnderlyingPrice\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"uint128\",\"name\":\"price\",\"type\":\"uint128\"}],\"name\":\"initializedAsset\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint128\",\"name\":\"price\",\"type\":\"uint128\"}],\"name\":\"initializedGold\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"isPriceOracle\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"uint128\",\"name\":\"price\",\"type\":\"uint128\"}],\"name\":\"updateAssetPrice\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"name\":\"updateAssetPriceFromWindow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint128\",\"name\":\"price\",\"type\":\"uint128\"}],\"name\":\"updateGoldPrice\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/interface/IAurumOracleCentralized.sol\":\"IAurumOracleCentralized\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/src/contracts/interface/ComptrollerInterface.sol\":{\"keccak256\":\"0xde8c8a1cccea06c37dafc93b58735b0c1c8c58992b1e943f3f563e503dd897a4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c320c683d8b38dd8568dc070a16af2b84964d54dbd16a16a8f4819482bce43e3\",\"dweb:/ipfs/QmUhfLG1rFyoVsEzxTYCaeXUQUho82XV3ALYguZh1ZcFcR\"]},\"project:/src/contracts/interface/IAurumOracleCentralized.sol\":{\"keccak256\":\"0xf5b1d63b0933a02174e83d33ead97b1111da0f0602d64b2c3d629588fab57a3b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8867cf063c94403eec4807960ec2530b2b93eaae3fbc642d9b95f76a1e125983\",\"dweb:/ipfs/QmTUQu15HGFhrKfWyPdRqkmfvgfwZLQ4tgN9sWhFmoaqZT\"]},\"project:/src/contracts/interface/ISlidingWindow.sol\":{\"keccak256\":\"0x300f65dd48501f1a527e741f1661df52917a41a1aab3617a080dd4007c704bf9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8a73dbebf06b003bec05f3841dd8bb2893bbcaacf03e234b364c9d29faa97ce8\",\"dweb:/ipfs/Qma6NktCqjuKaVqBvK6B425WY8VTzoTJfRBzRsih5fzjPw\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\nimport './ComptrollerInterface.sol';\r\nimport \"./ISlidingWindow.sol\";\r\n\r\ninterface IAurumOracleCentralized is PriceOracle {\r\n    \r\n    function isPriceOracle() external pure returns (bool);\r\n\r\n    function initializedAsset(address token, uint128 price) external;\r\n    function initializedGold(uint128 price) external;\r\n    function updateAssetPrice(address token, uint128 price) external;\r\n    function updateAssetPriceFromWindow(address token) external;\r\n    function updateGoldPrice(uint128 price) external;\r\n    function getGoldPrice() external view returns (uint);\r\n    function getUnderlyingPrice(LendTokenInterface lendToken) external view returns (uint);\r\n    function assetPrices(address token) external view returns (uint);\r\n\r\n}",
+  "sourcePath": "C:\\Users\\chana\\desktop\\aurumdefi\\src\\contracts\\interface\\IAurumOracleCentralized.sol",
+  "ast": {
+    "absolutePath": "project:/src/contracts/interface/IAurumOracleCentralized.sol",
+    "exportedSymbols": {
+      "AurumControllerInterface": [
+        15761
+      ],
+      "ComptrollerInterface": [
+        15474
+      ],
+      "ComptrollerStorageInterface": [
+        15482
+      ],
+      "IAurumOracleCentralized": [
+        15924
+      ],
+      "IComptroller": [
+        15498
+      ],
+      "ISlidingWindow": [
+        15985
+      ],
+      "InterestRateModel": [
+        15791
+      ],
+      "LendTokenInterface": [
+        15697
+      ],
+      "PriceOracle": [
+        15723
+      ]
+    },
+    "id": 15925,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 15865,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:20"
+      },
+      {
+        "absolutePath": "project:/src/contracts/interface/ComptrollerInterface.sol",
+        "file": "./ComptrollerInterface.sol",
+        "id": 15866,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 15925,
+        "sourceUnit": 15792,
+        "src": "60:36:20",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "project:/src/contracts/interface/ISlidingWindow.sol",
+        "file": "./ISlidingWindow.sol",
+        "id": 15867,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 15925,
+        "sourceUnit": 15986,
+        "src": "98:30:20",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 15868,
+              "name": "PriceOracle",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 15723,
+              "src": "169:11:20"
+            },
+            "id": 15869,
+            "nodeType": "InheritanceSpecifier",
+            "src": "169:11:20"
+          }
+        ],
+        "canonicalName": "IAurumOracleCentralized",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 15924,
+        "linearizedBaseContracts": [
+          15924,
+          15723
+        ],
+        "name": "IAurumOracleCentralized",
+        "nameLocation": "142:23:20",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "baseFunctions": [
+              15702
+            ],
+            "functionSelector": "66331bba",
+            "id": 15874,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isPriceOracle",
+            "nameLocation": "203:13:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15870,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "216:2:20"
+            },
+            "returnParameters": {
+              "id": 15873,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15872,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15874,
+                  "src": "242:4:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 15871,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "242:4:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "241:6:20"
+            },
+            "scope": 15924,
+            "src": "194:54:20",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "3524cf6c",
+            "id": 15881,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "initializedAsset",
+            "nameLocation": "265:16:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15879,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15876,
+                  "mutability": "mutable",
+                  "name": "token",
+                  "nameLocation": "290:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15881,
+                  "src": "282:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15875,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "282:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15878,
+                  "mutability": "mutable",
+                  "name": "price",
+                  "nameLocation": "305:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15881,
+                  "src": "297:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 15877,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "297:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "281:30:20"
+            },
+            "returnParameters": {
+              "id": 15880,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "320:0:20"
+            },
+            "scope": 15924,
+            "src": "256:65:20",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "0f9e81ee",
+            "id": 15886,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "initializedGold",
+            "nameLocation": "336:15:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15884,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15883,
+                  "mutability": "mutable",
+                  "name": "price",
+                  "nameLocation": "360:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15886,
+                  "src": "352:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 15882,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "352:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "351:15:20"
+            },
+            "returnParameters": {
+              "id": 15885,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "375:0:20"
+            },
+            "scope": 15924,
+            "src": "327:49:20",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "71232b1b",
+            "id": 15893,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateAssetPrice",
+            "nameLocation": "391:16:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15891,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15888,
+                  "mutability": "mutable",
+                  "name": "token",
+                  "nameLocation": "416:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15893,
+                  "src": "408:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15887,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "408:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15890,
+                  "mutability": "mutable",
+                  "name": "price",
+                  "nameLocation": "431:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15893,
+                  "src": "423:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 15889,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "423:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "407:30:20"
+            },
+            "returnParameters": {
+              "id": 15892,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "446:0:20"
+            },
+            "scope": 15924,
+            "src": "382:65:20",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "6b7f0bd7",
+            "id": 15898,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateAssetPriceFromWindow",
+            "nameLocation": "462:26:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15896,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15895,
+                  "mutability": "mutable",
+                  "name": "token",
+                  "nameLocation": "497:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15898,
+                  "src": "489:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15894,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "489:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "488:15:20"
+            },
+            "returnParameters": {
+              "id": 15897,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "512:0:20"
+            },
+            "scope": 15924,
+            "src": "453:60:20",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "4b1386c9",
+            "id": 15903,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateGoldPrice",
+            "nameLocation": "528:15:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15901,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15900,
+                  "mutability": "mutable",
+                  "name": "price",
+                  "nameLocation": "552:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15903,
+                  "src": "544:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 15899,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "544:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "543:15:20"
+            },
+            "returnParameters": {
+              "id": 15902,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "567:0:20"
+            },
+            "scope": 15924,
+            "src": "519:49:20",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              15707
+            ],
+            "functionSelector": "da6bae10",
+            "id": 15908,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getGoldPrice",
+            "nameLocation": "583:12:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15904,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "595:2:20"
+            },
+            "returnParameters": {
+              "id": 15907,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15906,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15908,
+                  "src": "621:4:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15905,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "621:4:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "620:6:20"
+            },
+            "scope": 15924,
+            "src": "574:53:20",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              15715
+            ],
+            "functionSelector": "fc57d4df",
+            "id": 15916,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getUnderlyingPrice",
+            "nameLocation": "642:18:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15912,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15911,
+                  "mutability": "mutable",
+                  "name": "lendToken",
+                  "nameLocation": "680:9:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15916,
+                  "src": "661:28:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_LendTokenInterface_$15697",
+                    "typeString": "contract LendTokenInterface"
+                  },
+                  "typeName": {
+                    "id": 15910,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 15909,
+                      "name": "LendTokenInterface",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 15697,
+                      "src": "661:18:20"
+                    },
+                    "referencedDeclaration": 15697,
+                    "src": "661:18:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_LendTokenInterface_$15697",
+                      "typeString": "contract LendTokenInterface"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "660:30:20"
+            },
+            "returnParameters": {
+              "id": 15915,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15914,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15916,
+                  "src": "714:4:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15913,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "714:4:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "713:6:20"
+            },
+            "scope": 15924,
+            "src": "633:87:20",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              15722
+            ],
+            "functionSelector": "5e9a523c",
+            "id": 15923,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "assetPrices",
+            "nameLocation": "735:11:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15919,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15918,
+                  "mutability": "mutable",
+                  "name": "token",
+                  "nameLocation": "755:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15923,
+                  "src": "747:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15917,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "747:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "746:15:20"
+            },
+            "returnParameters": {
+              "id": 15922,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15921,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15923,
+                  "src": "785:4:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15920,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "785:4:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "784:6:20"
+            },
+            "scope": 15924,
+            "src": "726:65:20",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 15925,
+        "src": "132:664:20",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:763:20"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/src/contracts/interface/IAurumOracleCentralized.sol",
+    "exportedSymbols": {
+      "AurumControllerInterface": [
+        15761
+      ],
+      "ComptrollerInterface": [
+        15474
+      ],
+      "ComptrollerStorageInterface": [
+        15482
+      ],
+      "IAurumOracleCentralized": [
+        15924
+      ],
+      "IComptroller": [
+        15498
+      ],
+      "ISlidingWindow": [
+        15985
+      ],
+      "InterestRateModel": [
+        15791
+      ],
+      "LendTokenInterface": [
+        15697
+      ],
+      "PriceOracle": [
+        15723
+      ]
+    },
+    "id": 15925,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 15865,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:20"
+      },
+      {
+        "absolutePath": "project:/src/contracts/interface/ComptrollerInterface.sol",
+        "file": "./ComptrollerInterface.sol",
+        "id": 15866,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 15925,
+        "sourceUnit": 15792,
+        "src": "60:36:20",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "project:/src/contracts/interface/ISlidingWindow.sol",
+        "file": "./ISlidingWindow.sol",
+        "id": 15867,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 15925,
+        "sourceUnit": 15986,
+        "src": "98:30:20",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 15868,
+              "name": "PriceOracle",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 15723,
+              "src": "169:11:20"
+            },
+            "id": 15869,
+            "nodeType": "InheritanceSpecifier",
+            "src": "169:11:20"
+          }
+        ],
+        "canonicalName": "IAurumOracleCentralized",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 15924,
+        "linearizedBaseContracts": [
+          15924,
+          15723
+        ],
+        "name": "IAurumOracleCentralized",
+        "nameLocation": "142:23:20",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "baseFunctions": [
+              15702
+            ],
+            "functionSelector": "66331bba",
+            "id": 15874,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isPriceOracle",
+            "nameLocation": "203:13:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15870,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "216:2:20"
+            },
+            "returnParameters": {
+              "id": 15873,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15872,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15874,
+                  "src": "242:4:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 15871,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "242:4:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "241:6:20"
+            },
+            "scope": 15924,
+            "src": "194:54:20",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "3524cf6c",
+            "id": 15881,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "initializedAsset",
+            "nameLocation": "265:16:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15879,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15876,
+                  "mutability": "mutable",
+                  "name": "token",
+                  "nameLocation": "290:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15881,
+                  "src": "282:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15875,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "282:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15878,
+                  "mutability": "mutable",
+                  "name": "price",
+                  "nameLocation": "305:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15881,
+                  "src": "297:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 15877,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "297:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "281:30:20"
+            },
+            "returnParameters": {
+              "id": 15880,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "320:0:20"
+            },
+            "scope": 15924,
+            "src": "256:65:20",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "0f9e81ee",
+            "id": 15886,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "initializedGold",
+            "nameLocation": "336:15:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15884,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15883,
+                  "mutability": "mutable",
+                  "name": "price",
+                  "nameLocation": "360:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15886,
+                  "src": "352:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 15882,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "352:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "351:15:20"
+            },
+            "returnParameters": {
+              "id": 15885,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "375:0:20"
+            },
+            "scope": 15924,
+            "src": "327:49:20",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "71232b1b",
+            "id": 15893,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateAssetPrice",
+            "nameLocation": "391:16:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15891,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15888,
+                  "mutability": "mutable",
+                  "name": "token",
+                  "nameLocation": "416:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15893,
+                  "src": "408:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15887,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "408:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 15890,
+                  "mutability": "mutable",
+                  "name": "price",
+                  "nameLocation": "431:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15893,
+                  "src": "423:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 15889,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "423:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "407:30:20"
+            },
+            "returnParameters": {
+              "id": 15892,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "446:0:20"
+            },
+            "scope": 15924,
+            "src": "382:65:20",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "6b7f0bd7",
+            "id": 15898,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateAssetPriceFromWindow",
+            "nameLocation": "462:26:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15896,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15895,
+                  "mutability": "mutable",
+                  "name": "token",
+                  "nameLocation": "497:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15898,
+                  "src": "489:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15894,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "489:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "488:15:20"
+            },
+            "returnParameters": {
+              "id": 15897,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "512:0:20"
+            },
+            "scope": 15924,
+            "src": "453:60:20",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "4b1386c9",
+            "id": 15903,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateGoldPrice",
+            "nameLocation": "528:15:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15901,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15900,
+                  "mutability": "mutable",
+                  "name": "price",
+                  "nameLocation": "552:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15903,
+                  "src": "544:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 15899,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "544:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "543:15:20"
+            },
+            "returnParameters": {
+              "id": 15902,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "567:0:20"
+            },
+            "scope": 15924,
+            "src": "519:49:20",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              15707
+            ],
+            "functionSelector": "da6bae10",
+            "id": 15908,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getGoldPrice",
+            "nameLocation": "583:12:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15904,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "595:2:20"
+            },
+            "returnParameters": {
+              "id": 15907,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15906,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15908,
+                  "src": "621:4:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15905,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "621:4:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "620:6:20"
+            },
+            "scope": 15924,
+            "src": "574:53:20",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              15715
+            ],
+            "functionSelector": "fc57d4df",
+            "id": 15916,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getUnderlyingPrice",
+            "nameLocation": "642:18:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15912,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15911,
+                  "mutability": "mutable",
+                  "name": "lendToken",
+                  "nameLocation": "680:9:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15916,
+                  "src": "661:28:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_LendTokenInterface_$15697",
+                    "typeString": "contract LendTokenInterface"
+                  },
+                  "typeName": {
+                    "id": 15910,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 15909,
+                      "name": "LendTokenInterface",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 15697,
+                      "src": "661:18:20"
+                    },
+                    "referencedDeclaration": 15697,
+                    "src": "661:18:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_LendTokenInterface_$15697",
+                      "typeString": "contract LendTokenInterface"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "660:30:20"
+            },
+            "returnParameters": {
+              "id": 15915,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15914,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15916,
+                  "src": "714:4:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15913,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "714:4:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "713:6:20"
+            },
+            "scope": 15924,
+            "src": "633:87:20",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              15722
+            ],
+            "functionSelector": "5e9a523c",
+            "id": 15923,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "assetPrices",
+            "nameLocation": "735:11:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15919,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15918,
+                  "mutability": "mutable",
+                  "name": "token",
+                  "nameLocation": "755:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15923,
+                  "src": "747:13:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 15917,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "747:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "746:15:20"
+            },
+            "returnParameters": {
+              "id": 15922,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 15921,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 15923,
+                  "src": "785:4:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 15920,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "785:4:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "784:6:20"
+            },
+            "scope": 15924,
+            "src": "726:65:20",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 15925,
+        "src": "132:664:20",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:763:20"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.12+commit.f00d7308.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.6",
+  "updatedAt": "2022-04-16T15:53:56.963Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

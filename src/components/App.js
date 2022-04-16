@@ -122,42 +122,46 @@ class App extends Component {
     }
     async loadArmVault() {
         let res;
-        // const web3 = window.web3
-        // const networkId = await web3.eth.net.getId()
-        // // Load ARM data
-        // const armLoader = ARM.networks[networkId]
-        // const arm = new web3.eth.Contract(ARM.abi, armLoader.address)
-        // // Load stakingARM data
-        // const stakingARMLoader = StakingARM.networks[networkId]
-        // const stakingARM = new web3.eth.Contract(StakingARM.abi, stakingARMLoader.address)
-        // if(stakingARMLoader) {
-        //     let stakingARMBalance = await stakingARM.methods.getStakingBalance(this.state.account).call()
-        //     let getRewardRemaining = await stakingARM.methods.getRewardRemaining().call()
-        //     let getRewardSpendingDuration = await stakingARM.methods.getRewardSpendingDuration().call()
-        //     let getTotalStakedARM = await stakingARM.methods.getTotalStakedARM().call()
-        //     let getRewardBalanceOf = await stakingARM.methods.getRewardBalanceOf(this.state.account).call()
-        //     let armAllowanceToVault = await arm.methods.allowance(this.state.account, stakingARM._address).call()
-        //     let getLastRewardTimestamp = await stakingARM.methods.getLastRewardTimestamp().call()
-        //     let getAccRewardPerShare = await stakingARM.methods.getAccRewardPerShare().call()
-        //     let armBalance = await arm.methods.balanceOf(this.state.account).call()
-
-        //     let armVault = {
-        //         contract: stakingARM,
-        //         armContract: arm,
-        //         armBalance: armBalance.toString(),
-        //         getTotalStakedARM: getTotalStakedARM.toString(),
-        //         userStakingBalance: stakingARMBalance.toString(),
-        //         totalAvailableReward: getRewardRemaining.toString(),
-        //         rewardDistributionIndex: getRewardSpendingDuration.toString(),
-        //         getRewardBalanceOf: getRewardBalanceOf.toString(),
-        //         armAllowanceToVault: armAllowanceToVault.toString(),
-        //         getLastRewardTimestamp: getLastRewardTimestamp.toString(),
-        //         getAccRewardPerShare: getAccRewardPerShare.toString(),
-        //     }
-        //     this.setState({armVault})
-        // } else {
-        //     window.alert('Error! no stakingARM contract found')
-        // }
+        try {
+                const web3 = window.web3
+                const networkId = await web3.eth.net.getId()
+            // Load ARM data
+            const armLoader = ARM.networks[networkId]
+            const arm = new web3.eth.Contract(ARM.abi, armLoader.address)
+            // Load stakingARM data
+            const stakingARMLoader = StakingARM.networks[networkId]
+            const stakingARM = new web3.eth.Contract(StakingARM.abi, stakingARMLoader.address)
+            if(stakingARMLoader) {
+                let stakingARMBalance = await stakingARM.methods.getStakingBalance(this.state.account).call()
+                let getRewardRemaining = await stakingARM.methods.getRewardRemaining().call()
+                let getRewardSpendingDuration = await stakingARM.methods.getRewardSpendingDuration().call()
+                let getTotalStakedARM = await stakingARM.methods.getTotalStakedARM().call()
+                let getRewardBalanceOf = await stakingARM.methods.getRewardBalanceOf(this.state.account).call()
+                let armAllowanceToVault = await arm.methods.allowance(this.state.account, stakingARM._address).call()
+                let getLastRewardTimestamp = await stakingARM.methods.getLastRewardTimestamp().call()
+                let getAccRewardPerShare = await stakingARM.methods.getAccRewardPerShare().call()
+                let armBalance = await arm.methods.balanceOf(this.state.account).call()
+                
+                let armVault = {
+                    contract: stakingARM,
+                    armContract: arm,
+                    armBalance: armBalance.toString(),
+                    getTotalStakedARM: getTotalStakedARM.toString(),
+                    userStakingBalance: stakingARMBalance.toString(),
+                    totalAvailableReward: getRewardRemaining.toString(),
+                    rewardDistributionIndex: getRewardSpendingDuration.toString(),
+                    getRewardBalanceOf: getRewardBalanceOf.toString(),
+                    armAllowanceToVault: armAllowanceToVault.toString(),
+                    getLastRewardTimestamp: getLastRewardTimestamp.toString(),
+                    getAccRewardPerShare: getAccRewardPerShare.toString(),
+                }
+                this.setState({armVault})
+            } else {
+                window.alert('Error! no stakingARM contract found')
+            }
+        } catch (err) {
+            console.log(err);
+        }
         res = true;
         this.setState({loadedVault: true});
         return res;
