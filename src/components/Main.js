@@ -53,8 +53,16 @@ const MainInfoList = (props) => {
     }
 
     let aurumSpeedsPerDay = BigNumber(props.aurumSpeeds).times(60).times(60).times(24).div(e18).times(2).toFormat(0)
-    let price = BigNumber(props.price).div(e18).toFormat(2)
-    let tvl = BigNumber(props.cash).plus(props.totalBorrows).minus(props.totalReserves).times(props.price).div(e18).div(e18).toFormat(2)
+    let price = new BigNumber(props.price).div(e18);
+    let totalSupply = new BigNumber(props.cash).plus(props.totalBorrows).minus(props.totalReserves).div(e18);
+    let totalBorrow = new BigNumber(props.totalBorrows).div(e18);
+    let tvl = new BigNumber(totalSupply).times(price);
+    let borrowUSD = new BigNumber(totalBorrow).times(price);
+
+    let utility = totalBorrow.div(totalSupply).times(100);
+    if(utility.isNaN()){
+        utility = new BigNumber(0);
+    }
 
     return (
         <tr> 
@@ -69,10 +77,18 @@ const MainInfoList = (props) => {
                 <h5>{aurumSpeedsPerDay}</h5>
             </td>
             <td className='asset-number'>
-                <h5 style={{textAlign: 'right'}}>{price} $</h5>
+                <h5 style={{textAlign: 'right'}}>{price.toFormat(2)} $</h5>
             </td>
             <td className='mobile asset-number'>
-                <h5 style={{textAlign: 'right'}}>{tvl} $</h5>
+                <h5 style={{textAlign: 'right', color: 'gray'}}>{totalSupply.toFormat(2)}</h5>
+                <h5 style={{textAlign: 'right'}}>{tvl.toFormat(2)} $</h5>
+            </td>
+            <td className='mobile asset-number'>
+                <h5 style={{textAlign: 'right', color: 'gray'}}>{totalBorrow.toFormat(2)}</h5>
+                <h5 style={{textAlign: 'right'}}>{borrowUSD.toFormat(2)} $</h5>
+            </td>
+            <td className='mobile asset-number'>
+                <h5>{utility.toFormat(2)} %</h5>
             </td>
         </tr>
     )
@@ -81,7 +97,8 @@ const MainInfo = (props) => {
 
     let i
     let allMarkets = props.mainstate.markets
-    let tvl = BigNumber(0)
+    let tvl = new BigNumber(0);
+    let fee = new BigNumber(0);
     let totalBorrows = []
     let totalReserves = []
     let totalCash = []
@@ -97,17 +114,28 @@ const MainInfo = (props) => {
         // console.log('Reserve '+totalReserves[i])
         // console.log('Cash    '+totalCash[i])
         // console.log('Price   '+price[i])
-        addTVL[i] = BigNumber(totalCash[i]).plus(totalBorrows[i]).minus(totalReserves[i]).times(price[i]).div(e18).div(e18)
-
-        tvl = tvl.plus(addTVL[i])
+        addTVL[i] = new BigNumber(totalCash[i]).plus(totalBorrows[i]).minus(totalReserves[i]).times(price[i]).div(e18).div(e18)
+        let borrowRatePerDay = new BigNumber(allMarkets[i].borrowRatePerSeconds).times(86400);
+        let reserveFactor = new BigNumber(allMarkets[i].reserveFactorMantissa).div(e18);
+        let addFee = borrowRatePerDay.times(totalBorrows[i]).div(e18).times(reserveFactor).times(price[i]).div(e18).div(e18);
+        tvl = tvl.plus(addTVL[i]);
+        fee = fee.plus(addFee);
     }
-    tvl = tvl.toFormat(2)
-    // let mCap
+    tvl = tvl.toFormat(2);
+    fee = fee.toFormat(2);
+    let circulatingSupply = new BigNumber(10000000).minus(BigNumber(props.mainstate.comptrollerState.compARMBalance).plus(props.mainstate.comptrollerState.treasuryARMBalance).div(e18));
+    let rewardPool = new BigNumber(props.mainstate.comptrollerState.compARMBalance).div(e18);
+    let treasury = new BigNumber(props.mainstate.comptrollerState.treasuryARMBalance).div(e18);
+    let marketCap = circulatingSupply.times(props.mainstate.price.armPrice).div(e18);
+    
+    let aurumMinted = new BigNumber(props.mainstate.comptrollerState.totalMintedAURUM).div(e18);
+    let goldPrice = new BigNumber(props.mainstate.price.goldPrice).div(e18);
+    let aurumMCap = aurumMinted.times(goldPrice);
 
     return (
         <div>
             <h1>Welcome to AurumDeFi</h1>
-            <div className='main-info-top'>
+            <div className='main-info-bottom'>
                 <div className={'main-items tvl'}>
                     <h3>
                         TVL
@@ -116,33 +144,75 @@ const MainInfo = (props) => {
                         {tvl} $
                     </p>
                 </div>
-                
+                <div className={'main-items tvl mobile'}>
+                    <h3>
+                        Fee
+                    </h3>
+                    <p>
+                        {fee} $/day
+                    </p>
+                </div>
             </div>
             <div className='main-info-bottom'>
-                <div className={'main-items'}>
+                <div className={'main-items mobile'}>
                     <h3>
-                        ARM circulating
+                        ARM pool
                     </h3>
                     <p>
-                        0
+                        {rewardPool.toFormat(2)}
+                    </p>
+                </div>
+                <div className={'main-items mobile'}>
+                    <h3>
+                        ARM Treasury
+                    </h3>
+                    <p>
+                        {treasury.toFormat(2)}
                     </p>
                 </div>
                 <div className={'main-items'}>
                     <h3>
-                        Market cap
+                        ARM circulation
                     </h3>
                     <p>
-                        0
+                        {circulatingSupply.toFormat(2)}
                     </p>
                 </div>
+                <div className={'main-items mobile'}>
+                    <h3>
+                        ARM M.cap
+                    </h3>
+                    <p>
+                        {marketCap.toFormat(2)}
+                    </p>
+                </div>
+            </div>
+            <div className='main-info-bottom'>
                 <div className={'main-items'}>
                     <h3>
                         AURUM minted
                     </h3>
                     <p>
-                        {BigNumber(props.mainstate.comptrollerState.totalMintedAURUM).div(e18).toFormat(2)}
+                        {aurumMinted.toFormat(2)}
                     </p>
                 </div>
+                <div className={'main-items mobile'}>
+                    <h3>
+                        Gold price
+                    </h3>
+                    <p>
+                        {goldPrice.toFormat(2)}
+                    </p>
+                </div>
+                <div className={'main-items mobile'}>
+                    <h3>
+                        AURUM M.Cap
+                    </h3>
+                    <p>
+                        {aurumMCap.toFormat(2)}
+                    </p>
+                </div>
+                
             </div>
             <div>
                 <table className='table'>
@@ -151,8 +221,10 @@ const MainInfo = (props) => {
                             <th> Assets </th>
                             <th className='mobile'> Collateral Factor</th>
                             <th> Reward/day </th>
-                            <th> PriceOracle </th>
-                            <th className='mobile'> TVL </th>
+                            <th style={{textAlign: 'right'}}> PriceOracle </th>
+                            <th className='mobile' style={{textAlign: 'right'}}> Supply </th>
+                            <th className='mobile' style={{textAlign: 'right'}}> Borrow </th>
+                            <th className='mobile'> Utility </th>
                         </tr>
                     </thead>
                     <tbody>

@@ -10,34 +10,41 @@
     margin: auto;
     margin-top: 1vh;
     width: 100%;
-    padding: 2vw;
+    padding: 0.7vh;
     background: linear-gradient(
         to right,
-        rgb(250, 206, 86) 0%,
-        rgb(226, 139, 26) 30%,
+        rgb(216, 177, 71) 0%,
+        rgb(204, 134, 42) 30%,
         rgb(94, 64, 9) 100%
     );
     border: 0.2vw solid rgb(218, 137, 16);
     box-shadow: 0.5vh 0.7vh black;
-    border-radius: 2vw;
+    border-radius: 2vh;
 }
 .main-items h3{
-    font-size: 4vh;
+    font-size: 2.5vh;
+    text-shadow: 0.1vh 0.2vh rgb(245, 178, 102);
 }
 .main-items p{
-    font-size: 4vh;
+    font-size: 3vh;
 }
 
-.tvl {
-    display: flex;
-}
 .tvl p {
+    width: 80%;
+    margin: auto;
     justify-self: right;
 }
-.tvl h1{
-    text-align: left;
+.tvl h3{
+    font-size: 3vh;
+    width: 20%;
+    margin: auto;
+    text-align: center;
 }
 @media screen and (min-width: 1000px){ /*Hide Navbar*/
+    .tvl {
+        display: flex;
+        width: 50%;
+    }
     .main-info-bottom{
         display: flex;
     }

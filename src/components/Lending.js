@@ -119,7 +119,7 @@ const MainLending = (props) => {
                 </div>
                 <div className='claim-reward-box'>
                     <div>
-                        <h3>Your Reward</h3>
+                        <h3>ARM Reward</h3>
                     </div>
                     <div className='reward-value'>
                         <p>{BigNumber(props.mainstate.comptrollerState.getArmAccrued).div(e18).toFormat(2)}</p>
@@ -161,6 +161,8 @@ const MainLending = (props) => {
                             <tr>
                                 <th> Assets </th>
                                 <th> APR </th>
+                                <th className='mobile'> Supply </th>
+                                <th className='mobile'> Borrow </th>
                                 <th className='mobile'> {page==='supply' ? 'Your Deposit'          : 'Pool cash'} </th>
                                 <th className='mobile'> {page==='supply' ? 'Your wallet balance'   : 'Your Debt'} </th>
                                 <th> {page==='supply' ? 'Collateral'            : 'Wallet Balance'} </th>

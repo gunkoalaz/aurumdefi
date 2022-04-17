@@ -466,16 +466,22 @@ const AssetList = (props) => {
 
     //deltaTime is 'seconds' after last asset update
     //borrowRatePerSeconds   and  SupplyRatePerSeconds   will be multiply by deltaTime to get real-time update position
-    let deltaTime = props.mainstate.time - props.markets.accrualTimestamp
+    let deltaTime = props.mainstate.time - props.markets.accrualTimestamp;
 
     // APR and interest COMPLETE, NO BUG calculation
-    let apr = BigNumber(props.markets.supplyRatePerSeconds).div(e18).times(secToYear).times(100)
-    let totalSupply = BigNumber(props.markets.cash).plus(props.markets.totalBorrows).minus(props.markets.totalReserves)
+    let apr = BigNumber(props.markets.supplyRatePerSeconds).div(e18).times(secToYear).times(100);
+    let totalSupply = BigNumber(props.markets.cash).plus(props.markets.totalBorrows).minus(props.markets.totalReserves);
     let supplyRewardAPR = BigNumber(props.markets.aurumSpeeds).times(secToYear).div(totalSupply).div(props.markets.underlyingPrice).times(props.mainstate.price.armPrice).times(100)
-    let totalSupplyAPR = supplyRewardAPR.plus(apr)
+    if(supplyRewardAPR.isNaN()){
+        supplyRewardAPR = BigNumber(0);
+    }
+    let totalSupplyAPR = supplyRewardAPR.plus(apr);
 
-    let interest = BigNumber(props.markets.borrowRatePerSeconds).div(e18).times(secToYear).times(100)
+    let interest = BigNumber(props.markets.borrowRatePerSeconds).div(e18).times(secToYear).times(100);
     let borrowRewardAPR = BigNumber(props.markets.aurumSpeeds).times(secToYear).div(props.markets.totalBorrows).div(props.markets.underlyingPrice).times(props.mainstate.price.armPrice).times(100)
+    if(borrowRewardAPR.isNaN()){
+        borrowRewardAPR = BigNumber(0);
+    }
     let totalBorrowAPR = borrowRewardAPR.minus(interest)
 
     // apr = apr.toFormat(2)
@@ -587,6 +593,12 @@ const AssetList = (props) => {
                     <td className={props.page === 'borrow' && totalBorrowAPR.isLessThan(0) ? 'asset-number-negative' : 'asset-number-positive'}>
                         <h5>{props.page === 'supply' ? totalSupplyAPR.toFormat(2) : totalBorrowAPR.toFormat(2)} %</h5>
                         <p>{props.page === 'supply' ? '('+apr.toFormat(2)+'+'+ supplyRewardAPR.toFormat(2)+')' : '('+borrowRewardAPR.toFormat(2)+'-'+interest.toFormat(2)+')'}</p>
+                    </td>
+                    <td className='asset-number mobile'>
+                        <h5>{cashMinusReserve.div(e18).toFormat(2)}</h5>
+                    </td>
+                    <td className='asset-number mobile'>
+                        <h5>{BigNumber(props.markets.totalBorrows).div(e18).toFormat(2)}</h5>
                     </td>
                     <td className='asset-number mobile'>
                         <h5>{props.page === 'supply' ? updateDeposit : showAvailableBorrow}</h5>

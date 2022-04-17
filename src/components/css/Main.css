@@ -7,7 +7,7 @@
     right: 1vw;
     margin: 0px;
     text-align: center;
-    font-size: 2vh;
+    font-size: 1.8vh;
 }
 
 @media screen and (min-width: 1000px){ /*Hide Navbar*/
@@ -17,13 +17,14 @@
 }
 
 .mainbox h1{
+    font-size: 3.5vh;
     color: gold;
-    margin-bottom: 4vh;
+    margin-bottom: 3vh;
 }
 .mainbox p{
     margin: auto;
-    color: whitesmoke;
-    text-shadow: 0.2vh 0.2vh black;
+    color: rgb(254, 255, 205);
+    text-shadow: 0.3vh 0.3vh rgb(43, 43, 43);
 }
 .button{
     text-align: center;
@@ -36,7 +37,7 @@
     );
     margin: 0.5vh;
     font-weight: bold;
-    font-size: 2vh;
+    font-size: 1.8vh;
     width: 13vh;
     border: 0.1vw solid black;
     border-radius: 5vw;
@@ -62,7 +63,7 @@
     );
     margin: 0.5vh;
     font-weight: bold;
-    font-size: 2vh;
+    font-size: 1.8vh;
     width: 13vh;
     color: gray;
     border: 0.1vw solid black;

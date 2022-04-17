@@ -17,7 +17,7 @@ import NoMatch from './NoMatch.js';
 //Blockchain components
 import Web3 from 'web3';
 import ARM from '../truffle_abis/ARM.json';
-// import StakingARM from '../truffle_abis/StakingARM.json';
+import StakingARM from '../truffle_abis/StakingARM.json';
 import Comptroller from '../truffle_abis/Comptroller.json';
 import ComptrollerStorage from '../truffle_abis/ComptrollerStorage.json';
 import ComptrollerCalculation from '../truffle_abis/ComptrollerCalculation.json';
@@ -30,6 +30,7 @@ import ERC20 from '../truffle_abis/ERC20.json';
 
 // const e18 = 1000000000000000000
 const MAX_UINT = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
+const TREASURY = '0xa94E41461C508F227fdF061EB9a056A54678b93B';
 
 
 const initialState = {
@@ -177,6 +178,7 @@ class App extends Component {
         const comptrollerCalculationLoader = ComptrollerCalculation.networks[networkId]
         const AURUMLoader = AURUM.networks[networkId]
         const AurumControllerLoader = AurumController.networks[networkId]
+        const armLoader = ARM.networks[networkId]
         let currentTime = parseInt(Date.now() / 1000)
 
             const comptroller = new web3.eth.Contract(Comptroller.abi, comptrollerLoader.address);
@@ -184,6 +186,7 @@ class App extends Component {
             const compCalculation = new web3.eth.Contract(ComptrollerCalculation.abi, comptrollerCalculationLoader.address);
             const aurum = new web3.eth.Contract(AURUM.abi, AURUMLoader.address)
             const aurumController = new web3.eth.Contract(AurumController.abi, AurumControllerLoader.address)
+            const arm = new web3.eth.Contract(ARM.abi, armLoader.address)
             let isProtocolPaused = await comptroller.methods.isProtocolPaused().call()
             let goldMintRate = await compStorage.methods.goldMintRate().call()
             let getMintedGOLDs = await comptroller.methods.getMintedGOLDs(this.state.account).call()
@@ -194,6 +197,8 @@ class App extends Component {
             let closeFactor = await compStorage.methods.closeFactorMantissa().call()
             let getArmAccrued = await compCalculation.methods.getUpdateARMAccrued(this.state.account, currentTime).call()
             let totalMintedAURUM = await aurum.methods.totalSupply().call()
+            let compARMBalance = await arm.methods.balanceOf(compStorage._address).call()
+            let treasuryARMBalance = await arm.methods.balanceOf(TREASURY).call()
 
             let comptrollerState = {
                 contract: comptroller,
@@ -210,6 +215,8 @@ class App extends Component {
                 liquidationIncentive: liquidationIncentive,
                 closeFactor: closeFactor,
                 totalMintedAURUM: totalMintedAURUM,
+                compARMBalance: compARMBalance,
+                treasuryARMBalance: treasuryARMBalance,
             }
             res = true;
             this.setState({comptrollerState});
@@ -243,7 +250,7 @@ class App extends Component {
                 goldPrice: goldPrice.toString(),
             }
             this.setState({price})
-
+            
             let markets = []
             let i
             let getAllMarkets = await compStorage.methods.getAllMarkets().call()
@@ -522,7 +529,7 @@ class App extends Component {
                 {
                     if(value[0] === true && value[1] === true && value[2] === true){
                         res = true;
-                        this.setState({loading:false})
+                        this.setState({loading: false});
                     } else {
                         res = false;
                     }

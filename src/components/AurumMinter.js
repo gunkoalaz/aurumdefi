@@ -317,7 +317,7 @@ const AurumMinterMain = (props) => {
                         </div>
                     </div>
                     <div className='mint-action-box'>
-                        <div className='flex'>
+                        <div className='mint-action-detail'>
                             <div className="mint-action-info">
                                 <h3>Minted AURUM</h3>
                                 <p className={'maxbutton'} onClick={setMaxRepay}>{mintedAurum}</p>
