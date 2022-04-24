@@ -23,15 +23,15 @@
     "absolutePath": "project:/src/contracts/interface/IGOLDVault.sol",
     "exportedSymbols": {
       "IGOLDVault": [
-        15930
+        17216
       ]
     },
-    "id": 15931,
+    "id": 17217,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 15926,
+        "id": 17212,
         "literals": [
           "solidity",
           "^",
@@ -39,7 +39,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "33:23:21"
+        "src": "33:23:22"
       },
       {
         "abstract": false,
@@ -48,62 +48,62 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 15930,
+        "id": 17216,
         "linearizedBaseContracts": [
-          15930
+          17216
         ],
         "name": "IGOLDVault",
-        "nameLocation": "70:10:21",
+        "nameLocation": "70:10:22",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "functionSelector": "faa1809e",
-            "id": 15929,
+            "id": 17215,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "updatePendingRewards",
-            "nameLocation": "99:20:21",
+            "nameLocation": "99:20:22",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 15927,
+              "id": 17213,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "119:2:21"
+              "src": "119:2:22"
             },
             "returnParameters": {
-              "id": 15928,
+              "id": 17214,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "130:0:21"
+              "src": "130:0:22"
             },
-            "scope": 15930,
-            "src": "90:41:21",
+            "scope": 17216,
+            "src": "90:41:22",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 15931,
-        "src": "60:74:21",
+        "scope": 17217,
+        "src": "60:74:22",
         "usedErrors": []
       }
     ],
-    "src": "33:101:21"
+    "src": "33:101:22"
   },
   "legacyAST": {
     "absolutePath": "project:/src/contracts/interface/IGOLDVault.sol",
     "exportedSymbols": {
       "IGOLDVault": [
-        15930
+        17216
       ]
     },
-    "id": 15931,
+    "id": 17217,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 15926,
+        "id": 17212,
         "literals": [
           "solidity",
           "^",
@@ -111,7 +111,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "33:23:21"
+        "src": "33:23:22"
       },
       {
         "abstract": false,
@@ -120,48 +120,48 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 15930,
+        "id": 17216,
         "linearizedBaseContracts": [
-          15930
+          17216
         ],
         "name": "IGOLDVault",
-        "nameLocation": "70:10:21",
+        "nameLocation": "70:10:22",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "functionSelector": "faa1809e",
-            "id": 15929,
+            "id": 17215,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "updatePendingRewards",
-            "nameLocation": "99:20:21",
+            "nameLocation": "99:20:22",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 15927,
+              "id": 17213,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "119:2:21"
+              "src": "119:2:22"
             },
             "returnParameters": {
-              "id": 15928,
+              "id": 17214,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "130:0:21"
+              "src": "130:0:22"
             },
-            "scope": 15930,
-            "src": "90:41:21",
+            "scope": 17216,
+            "src": "90:41:22",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 15931,
-        "src": "60:74:21",
+        "scope": 17217,
+        "src": "60:74:22",
         "usedErrors": []
       }
     ],
-    "src": "33:101:21"
+    "src": "33:101:22"
   },
   "compiler": {
     "name": "solc",
@@ -169,7 +169,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-04-16T15:53:56.966Z",
+  "updatedAt": "2022-04-24T15:41:11.220Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

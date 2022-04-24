@@ -4,6 +4,7 @@
 }
 .popup-box{
     width: 90vw;
+    max-width: 1000px;
     background-color: rgb(102, 141, 103);
     border-radius: 5vw;
     padding: 2vw;
@@ -15,6 +16,7 @@
 }
 .popup-borrow-box{
     width: 90vw;
+    max-width: 1000px;
     background-color: rgb(199, 120, 107);
     border-radius: 5vw;
     font-size: 10vw;
@@ -22,6 +24,18 @@
     border: 0.3vw dashed rgb(92, 92, 92);
     opacity: 1;
     font-size: 2vw;
+    animation-name: fadeup;
+    animation-duration: 0.5s;
+}
+.popup-box-firstpage{
+    width: 90vw;
+    max-width: 1000px;
+    background-color: rgba(221, 195, 79, 0.8);
+    border-radius: 5vw;
+    padding: 2vw;
+    border: 0.3vh dashed rgb(92, 92, 92);
+    opacity: 1;
+    font-size: 2.5vh;
     animation-name: fadeup;
     animation-duration: 0.5s;
 }
@@ -107,4 +121,32 @@
     .mint-action {
         display: flex;
     }
+}
+
+.button-popup{
+    text-align: center;
+    color: rgb(43, 43, 43);
+    background: linear-gradient(
+        to bottom,
+        rgb(255, 251, 195) 0%,
+        rgb(255, 187, 110) 30%,
+        rgb(109, 87, 54) 100%
+    );
+    margin: auto;
+    font-weight: bold;
+    font-size: 2vh;
+    border: 0.1vw solid black;
+    border-radius: 5vw;
+    box-shadow:0.1vw 0.2vw rgb(43, 43, 43);
+}
+
+.button-popup:hover{
+    text-decoration: none;
+    color: rgb(43, 43, 43);
+    background: linear-gradient(
+        to bottom,
+        rgb(255, 251, 195) 0%,
+        rgb(255, 245, 110) 30%,
+        rgb(184, 173, 30) 100%
+    );
 }

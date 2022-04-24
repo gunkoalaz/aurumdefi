@@ -18,6 +18,8 @@ const AurumInterestRateModel = artifacts.require('AurumInterestRateModel');
 // const AurumPriceOracle = artifacts.require('AurumPriceOracle');   Change to Centralized feed version.
 const AurumOracleCentralized = artifacts.require('AurumOracleCentralized');
 const MultisigAurumOracle = artifacts.require('MultisigAurumOracle');
+const TreasuryVault = artifacts.require('TreasuryWallet');
+const TreasuryAURUM = artifacts.require('TreasuryAURUM');
 
 module.exports = async function (deployer, network, accounts) {
 
@@ -33,6 +35,7 @@ module.exports = async function (deployer, network, accounts) {
 
 //Testnet
     // KUMA = '0x20c2aD0E490Da3070Ee3718F55C36BF7D7BAfd36'   //
+    // BUSD = '0x20c2aD0E490Da3070Ee3718F55C36BF7D7BAfd36'   //
     // ETH  = '0xf4a29654CaA42842138329154D3aF9921575b6c0'   //
     // BNB  = '0xB173e143F1FDC8f6bBAd9AD11322B7F0B53C7cd0'   //
     // NEAR = '0xDe9adfC9a5939F7cb92d8E42fBd18a3182E1A90e'   //
@@ -74,17 +77,29 @@ module.exports = async function (deployer, network, accounts) {
     // const KUB = kub.address;
     
     //Pending update
-    const compStorage = '0x04Bd7445993dF442291995BcBC780f67196094De'
-    const oracle = '0xEe5FA91b7F02a8839Dc8e87236e5E41bF1c43262';
+    const compStorage = '0x09AfB5A4620D34F99721d04eD0DA2A5c6B291Bf8';
+    const oracle = '0x589dcfd92cd1C9b11D640cFE84d493ee08dcabdB';
+    const AURUM = '0x8f9ed0Fe472e045597DD71093822eE3884BeA1BA';
+    // const testWallet = '0x7dE7e0f02f7229E37501d19482e96E97779f7299';
 
     // await deployer.deploy(Comptroller,compStorage);
     // const comptroller = await Comptroller.deployed();
     
     
     await deployer.deploy(MultisigAurumOracle, oracle, ManagerWallet, 2);
+        
+    // await deployer.deploy(TreasuryVault, BUSD, '100');
+    // const treasuryVault = await TreasuryVault.deployed();
+    // await deployer.deploy(TreasuryAURUM, BUSD, AURUM);
+    // const treasuryAurum = await TreasuryAURUM.deployed();
 
+    // await treasuryAurum._setFee(web3.utils.toWei('0.25','Ether'), {from: owner});
+    // await treasuryAurum._setPriceOracle(oracle, {from: owner});
 
-
+    // await treasuryVault._setAdmin(DevWallet, {from: owner});
+    // console.log("transfer TreasuryVault owner to DevWallet");
+    // await treasuryAurum._setAdmin(DevWallet, {from: owner});
+    // console.log("transfer TreasuryAURUM owner to DevWallet");
 
 //     //Deploy essential component
 //     await deployer.deploy(ARM);      //Gov token

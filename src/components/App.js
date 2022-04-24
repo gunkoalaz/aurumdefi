@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import Popup from 'reactjs-popup';
+import './css/Popup.css';
+import { ExclamationTriangleFill } from 'react-bootstrap-icons';
 
 //Web components
 import ParticleSettings from './ParticleSettings.js';
@@ -595,12 +598,39 @@ class App extends Component {
                 }
             })
         }
-        
+
         return(
             <div style={{height: '100vh'}}>
                 <div style={{position: 'fixed'}}>
                     <ParticleSettings/>
                 </div>
+                    <Popup open modal nested>
+                    {close => (
+                        <div className="popup-box-firstpage">
+                            <button className="closeButton" onClick={close}>
+                            &times;
+                            </button>
+                                <h1 style={{textAlign: "center", color: "maroon"}}><ExclamationTriangleFill /> Please read before using DAPP</h1>
+                                <div className="content">
+                                <p>Dear users, AurumDeFi is now in ALPHA version. The smart contracts of AurumDeFi are now on REI mainnet. We would like to inform you that <span style={{color: 'red'}}>the smart contract is not audited yet.</span>
+                                    Please study the document before invest in this protocol, we do our best for security check and willing to audit the contracts in the future.
+                                </p>
+                                <a href="https://aurumdefi.gitbook.io/aurum-defi/">Read the whitepaper</a><span> If you have any question feel free to ask us in the </span> <a href="https://t.me/aurumdefiofficial">Telegram.</a>
+                                
+                            </div>
+                            <div style={{display: "flex", margin: "3vh"}}>
+                            <button
+                                className="button-popup"
+                                onClick={() => {
+                                close();
+                                }}
+                            >
+                                OK, I have read and understand the risk.
+                            </button>
+                            </div>
+                        </div>
+                        )}
+                    </Popup>
                 <BrowserRouter>
                     <Navbar price={this.state.price} networkId={this.state.networkId}/>
                     <Header 

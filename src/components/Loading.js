@@ -5,6 +5,7 @@ import './css/Main.css'
 
 const Loading = (props) => {
     let content;
+
     if(props.mainstate.account === '0x0'){
         content = 
         <div>

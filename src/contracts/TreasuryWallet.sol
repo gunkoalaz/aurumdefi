@@ -16,14 +16,11 @@ contract TreasuryWallet {
 
     bool locked;
 
-    uint8 reinvestRatio; // 0 = 0%, 100 = 100%
+    uint8 public reinvestRatio; // 0 = 0%, 100 = 100%
 
-    constructor (address busd_, address compStorage_, address uniswapRouters_, address armVault_, uint8 reinvestRatio_) {
+    constructor (address busd_, uint8 reinvestRatio_) {
         admin = msg.sender;
         busd = busd_;
-        compStorage = compStorage_;
-        uniswapRouters = uniswapRouters_;
-        armVault = armVault_;
 
         reinvestRatio = reinvestRatio_;
         locked = false;
@@ -38,7 +35,7 @@ contract TreasuryWallet {
     event TransferREI(address to, uint amount);
 
     event SetAdmin(address oldAdmin, address newAdmin);
-    event SetComptroller(address oldComptroller, address newComptroller);
+    event SetComptrollerStorage(address oldComptrollerStorage, address newComptrollerStorage);
     event SetUniswapRouters(address oldUniswapRouters, address newUniswapRouters);
     event SetARMVault(address oldARMVault, address newARMVault);
     event SetReinvestRatio(uint8 oldRatio, uint8 newRatio);
@@ -71,7 +68,10 @@ contract TreasuryWallet {
     }
 
     // Call swap function of Uniswap V2
-    function swap(address tokenA, address tokenB, uint amountIn) internal returns(uint amountOut) {
+    function swap(address tokenA, address tokenB, uint amountIn) internal returns(uint) {
+        if(tokenA == tokenB){
+            return amountIn; //no need for swap
+        }
         address varRouter = uniswapRouters;
         IUniswapV2Router routerContract = IUniswapV2Router(varRouter);
         IERC20 tokenIn = IERC20(tokenA);
@@ -84,13 +84,14 @@ contract TreasuryWallet {
 
         //Setting path
         address[] memory path;
+        path = new address[](2);
         path[0] = tokenA;
         path[1] = tokenB;
 
         //Swap A to B
         (uint[] memory amount) = routerContract.swapExactTokensForTokens(amountIn, 1, path, address(this), block.timestamp);
 
-        amountOut = amount[amount.length-1]; // return amountOut;
+        return amount[1]; // return amountOut;
     }
 
     /* Reinvest and Withdraw function
@@ -187,12 +188,12 @@ contract TreasuryWallet {
         emit SetAdmin(oldAdmin, newAdmin);
     }
 
-    function _setComptroller (address newComptroller) external onlyAdmin {
-        require(newComptroller != address(0));
-        address oldComptroller = compStorage;
-        compStorage = newComptroller;
+    function _setComptrollerStorage (address newComptrollerStorage) external onlyAdmin {
+        require(newComptrollerStorage != address(0));
+        address oldComptrollerStorage = compStorage;
+        compStorage = newComptrollerStorage;
 
-        emit SetComptroller(oldComptroller, newComptroller);
+        emit SetComptrollerStorage(oldComptrollerStorage, newComptrollerStorage);
     }
 
     function _setUniswapRouters(address newUniswapRouters) external onlyAdmin {

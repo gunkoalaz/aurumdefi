@@ -39,7 +39,7 @@ const Navbar = (props) => {
                     <div className="flex">
                         <a href="https://github.com/gunkoalaz/aurumdefi" target={"_blank"} className="iconlink"><Github /></a>
                         <a href="https://aurumdefi.gitbook.io/aurum-defi/" target={"_blank"} className="iconlink"><Book /></a>
-                        <a href="https://t.me/aurumdefi" target={"_blank"} className="iconlink"><Telegram /></a>
+                        <a href="https://t.me/aurumdefiofficial" target={"_blank"} className="iconlink"><Telegram /></a>
                     </div>
                 </div>
             </div>

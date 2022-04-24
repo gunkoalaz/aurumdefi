@@ -618,7 +618,9 @@ const AssetList = (props) => {
                     </td>
                 </tr>
             } >
+
             {/* Popup content start here */}
+            
             { close => (
                 props.page === 'supply' ? <PopupSupply 
                     logo = {logo}
