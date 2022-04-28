@@ -49,6 +49,7 @@ const initialState = {
     loadedVault: false,
     loadingNow: 0,
     loading: true,
+    loadingAppData: true,
     autoupdate: false,
 }
 
@@ -127,8 +128,8 @@ class App extends Component {
     async loadArmVault() {
         let res;
         try {
-                const web3 = window.web3
-                const networkId = await web3.eth.net.getId()
+            const web3 = window.web3
+            const networkId = await web3.eth.net.getId()
             // Load ARM data
             const armLoader = ARM.networks[networkId]
             const arm = new web3.eth.Contract(ARM.abi, armLoader.address)
@@ -258,7 +259,6 @@ class App extends Component {
             let i
             let getAllMarkets = await compStorage.methods.getAllMarkets().call()
 
-            this.setState({loadingNow: 50});
             for(i=0; i< getAllMarkets.length; i++) {
                     let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
                     let name = await lendToken.methods.name().call();
@@ -273,16 +273,16 @@ class App extends Component {
                     let getCash = await lendToken.methods.getCash().call();
                     let exchangeRateStored = await lendToken.methods.exchangeRateStored().call();
                     let borrowAddress = await lendToken.methods.getBorrowAddress().call();
-                    let balanceOf = await lendToken.methods.balanceOf(this.state.account).call();
-                    let borrowBalanceStored = await lendToken.methods.borrowBalanceStored(this.state.account).call();
                     let collateralFactorMantissa = await compStorage.methods.getMarketCollateralFactorMantissa(lendToken._address).call();
                     let getUnderlyingPrice = await aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call();
                     let borrowCaps = await compStorage.methods.getBorrowCaps(lendToken._address).call();
-                    let membership = await compStorage.methods.checkMembership(this.state.account, lendToken._address).call();
-                    let allowance = await lendToken.methods.allowance(this.state.account, lendToken._address).call();
                     let aurumSpeeds = await compStorage.methods.getAurumSpeeds(lendToken._address).call();
                     let mintPause = await compStorage.methods.getMintGuardianPaused(lendToken._address).call();
                     let borrowPause = await compStorage.methods.getBorrowGuardianPaused(lendToken._address).call();
+                    let balanceOf = await lendToken.methods.balanceOf(this.state.account).call();
+                    let borrowBalanceStored = await lendToken.methods.borrowBalanceStored(this.state.account).call();
+                    let membership = await compStorage.methods.checkMembership(this.state.account, lendToken._address).call();
+                    let allowance = await lendToken.methods.allowance(this.state.account, lendToken._address).call();
         
                     //Underlying parameters
                     let underlyingAddress 
@@ -320,10 +320,10 @@ class App extends Component {
                         //Personal info
                         membership: membership,
                         balanceOf: balanceOf.toString(),
+                        borrowBalanceStored: borrowBalanceStored.toString(),
                         allowance: allowance.toString(),
                         underlyingAllowance: underlyingAllowance.toString(),
                         underlyingBalance: underlyingBalance.toString(),
-                        borrowBalanceStored: borrowBalanceStored.toString(),
         
         
         
@@ -348,10 +348,8 @@ class App extends Component {
                         aurumSpeeds: aurumSpeeds.toString(),
                     }
                     markets.push(marketsInfo)
-                    this.setState({loadingNow: this.state.loadingNow+6});
             }
             res = true;
-            this.setState({loadingNow: 100});
             this.setState({markets});
             this.setState({autoupdate: false})
         } catch {
@@ -481,6 +479,169 @@ class App extends Component {
             this.setState({loading: false})
         })
     }
+    async loadAppData() {
+        let res;
+        try {
+            const web3 = new Web3(window.ethereum);
+            const networkId = 55555;
+
+            const arm = new web3.eth.Contract(ARM.abi, ARM.networks[networkId].address);
+            // const stakingARM = new web3.eth.Contract(StakingARM.abi, StakingARM.networks[networkId].address)
+            const comptroller = new web3.eth.Contract(Comptroller.abi, Comptroller.networks[networkId].address);
+            const compStorage = new web3.eth.Contract(ComptrollerStorage.abi, ComptrollerStorage.networks[networkId].address);
+            const aurum = new web3.eth.Contract(AURUM.abi, AURUM.networks[networkId].address)
+            const aurumController = new web3.eth.Contract(AurumController.abi, AurumController.networks[networkId].address)
+            const aurumPriceOracle = new web3.eth.Contract(AurumPriceOracle.abi, AurumPriceOracle.networks[networkId].address)
+
+            // let getRewardRemaining = await stakingARM.methods.getRewardRemaining().call()
+            // let getRewardSpendingDuration = await stakingARM.methods.getRewardSpendingDuration().call()
+            // let getTotalStakedARM = await stakingARM.methods.getTotalStakedARM().call()
+            // let getLastRewardTimestamp = await stakingARM.methods.getLastRewardTimestamp().call()
+            // let getAccRewardPerShare = await stakingARM.methods.getAccRewardPerShare().call()
+            
+            this.setState({loadingNow: this.state.loadingNow+10});
+            // let armVault = {
+            //     contract: stakingARM,
+            //     armContract: arm,
+            //     // armBalance: armBalance.toString(),
+            //     getTotalStakedARM: getTotalStakedARM.toString(),
+            //     // userStakingBalance: stakingARMBalance.toString(),
+            //     totalAvailableReward: getRewardRemaining.toString(),
+            //     rewardDistributionIndex: getRewardSpendingDuration.toString(),
+            //     // getRewardBalanceOf: getRewardBalanceOf.toString(),
+            //     // armAllowanceToVault: armAllowanceToVault.toString(),
+            //     getLastRewardTimestamp: getLastRewardTimestamp.toString(),
+            //     getAccRewardPerShare: getAccRewardPerShare.toString(),
+            // }
+
+
+            // Load comptroller data
+            let isProtocolPaused = await compStorage.methods.protocolPaused().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'})
+            console.log('1');
+            let goldMintRate = await compStorage.methods.goldMintRate().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'})
+            // let getMintedGOLDs = await comptroller.methods.getMintedGOLDs(this.state.account).call()
+            // let goldBalance = await aurum.methods.balanceOf(this.state.account).call()
+            // let getAssetsIn = await comptroller.methods.getAssetsIn(this.state.account).call()
+            // let aurumAllowance = await aurum.methods.allowance(this.state.account, aurumController._address).call()
+            let liquidationIncentive = await compStorage.methods.liquidationIncentiveMantissa().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'})
+            let closeFactor = await compStorage.methods.closeFactorMantissa().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'})
+            // let getArmAccrued = await compCalculation.methods.getUpdateARMAccrued(this.state.account, currentTime).call()
+            let totalMintedAURUM = await aurum.methods.totalSupply().call()
+            let compARMBalance = await arm.methods.balanceOf(compStorage._address).call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'})
+            let treasuryARMBalance = await arm.methods.balanceOf(TREASURY).call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'})
+
+            this.setState({loadingNow: this.state.loadingNow+10});
+            let comptrollerState = {
+                contract: comptroller,
+                storage: compStorage,
+                AURUM: aurum,
+                aurumController: aurumController,
+                isProtocolPaused: isProtocolPaused,
+                goldMintRate: (goldMintRate / 10000),
+                // getMintedGOLDs: getMintedGOLDs.toString(),
+                // goldBalance: goldBalance.toString(),
+                // aurumAllowance: aurumAllowance.toString(),
+                // getAssetsIn: getAssetsIn,
+                // getArmAccrued: getArmAccrued,
+                liquidationIncentive: liquidationIncentive,
+                closeFactor: closeFactor,
+                totalMintedAURUM: totalMintedAURUM,
+                compARMBalance: compARMBalance,
+                treasuryARMBalance: treasuryARMBalance,
+            }
+
+
+            let armPrice = await aurumPriceOracle.methods.assetPrices(arm._address).call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'})
+            let goldPrice = await aurumPriceOracle.methods.getGoldPrice().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'})
+            let price = {
+                armPrice: armPrice.toString(),
+                goldPrice: goldPrice.toString(),
+            }
+            
+            let markets = []
+            let i
+            let getAllMarkets = await compStorage.methods.getAllMarkets().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'})
+
+            this.setState({loadingNow: this.state.loadingNow+2});
+
+            for(i=0; i< getAllMarkets.length; i++) {
+                    let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
+                    let name = await lendToken.methods.name().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let symbol = await lendToken.methods.symbol().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let decimals = await lendToken.methods.decimals().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let borrowRatePerSeconds = await lendToken.methods.borrowRatePerSeconds().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let supplyRatePerSeconds = await lendToken.methods.supplyRatePerSeconds().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let reserveFactorMantissa = await lendToken.methods.reserveFactorMantissa().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let accrualTimestamp = await lendToken.methods.accrualTimestamp().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let totalBorrows = await lendToken.methods.totalBorrows().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let totalReserves = await lendToken.methods.totalReserves().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let getCash = await lendToken.methods.getCash().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let exchangeRateStored = await lendToken.methods.exchangeRateStored().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let borrowAddress = await lendToken.methods.getBorrowAddress().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let collateralFactorMantissa = await compStorage.methods.getMarketCollateralFactorMantissa(lendToken._address).call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let getUnderlyingPrice = await aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let borrowCaps = await compStorage.methods.getBorrowCaps(lendToken._address).call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let aurumSpeeds = await compStorage.methods.getAurumSpeeds(lendToken._address).call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let mintPause = await compStorage.methods.getMintGuardianPaused(lendToken._address).call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+                    let borrowPause = await compStorage.methods.getBorrowGuardianPaused(lendToken._address).call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'});
+        
+                    //Underlying parameters
+                    let underlyingAddress 
+                    let underlying 
+                    let underlyingSymbol
+                    if(symbol !== 'lendREI') {
+                        underlyingAddress = await lendToken.methods.underlying().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'})
+                        underlying = new web3.eth.Contract(ERC20.abi, underlyingAddress)
+                        underlyingSymbol = await underlying.methods.symbol().call({from: '0x7419e1c2b7b473a418cc582aa40d8dfbb89b8224'})
+                    } else {
+                        lendToken = new web3.eth.Contract(LendREI.abi, getAllMarkets[i])
+                        underlyingAddress = ''
+                        underlying = ''
+                        underlyingSymbol = 'REI'
+                    }
+        
+                    let marketsInfo = {
+                        index: parseInt(i),
+                        contract: lendToken,
+                        underlyingContract: underlying,
+                        
+                        borrowAddress: borrowAddress,
+                        
+                        name: name.toString(), 
+                        symbol: symbol.toString(), 
+                        underlyingSymbol: underlyingSymbol.toString(),
+                        decimals: decimals.toString(), 
+          
+                        //Market calculating variables
+                        borrowRatePerSeconds: borrowRatePerSeconds.toString(),
+                        supplyRatePerSeconds: supplyRatePerSeconds.toString(),
+                        reserveFactorMantissa: reserveFactorMantissa.toString(),
+                        collateralFactorMantissa: collateralFactorMantissa.toString(),
+                        accrualTimestamp: accrualTimestamp.toString(),
+                        exchangeRateStored: exchangeRateStored.toString(),
+                        underlyingPrice: getUnderlyingPrice.toString(),
+                        
+                        //Market variables
+                        mintPause: mintPause,
+                        borrowPause: borrowPause,
+                        totalBorrows: totalBorrows.toString(),
+                        totalReserves: totalReserves.toString(),
+                        cash: getCash.toString(),
+                        borrowCaps: borrowCaps.toString(),
+        
+                        aurumSpeeds: aurumSpeeds.toString(),
+                    }
+                    markets.push(marketsInfo)
+                    this.setState({loadingNow: this.state.loadingNow+6});
+            }
+            this.setState({/*armVault,*/ comptrollerState, price, markets, loadingNow: 100, loading: false})
+        } catch (err) {
+            console.log(err);
+        }
+        res = true;
+        this.setState({loadedVault: true});
+        return res;
+    }
     //
     // Common Web3 function
     //
@@ -488,10 +649,12 @@ class App extends Component {
         let connect;
         if(window.ethereum){
             window.web3 = new Web3(window.ethereum)
+            console.log("Connect via window.ethereum");
             connect = true
             // const accounts = await window.ethereum.send('eth_requestAccounts');
         } else if(window.web3){
                 window.web3 = new Web3(window.web3.currentProvider)
+                console.log("Connect via window.web3");
                 connect = true
             }
             else {
@@ -584,6 +747,10 @@ class App extends Component {
 
     
     render() {
+        if(this.state.loadingAppData === true){
+            this.loadAppData();
+            this.setState({loadingAppData: false});
+        }
         if(window.ethereum) {
             window.ethereum.on('accountsChanged', (accounts) => {
                 if(this.state.loading === false){
@@ -598,7 +765,6 @@ class App extends Component {
                 }
             })
         }
-
         return(
             <div style={{height: '100vh'}}>
                 <div style={{position: 'fixed'}}>
