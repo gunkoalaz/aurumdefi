@@ -23,15 +23,15 @@
     "absolutePath": "project:/src/contracts/interface/IGOLDVault.sol",
     "exportedSymbols": {
       "IGOLDVault": [
-        17562
+        17609
       ]
     },
-    "id": 17563,
+    "id": 17610,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 17558,
+        "id": 17605,
         "literals": [
           "solidity",
           "0.8",
@@ -47,9 +47,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 17562,
+        "id": 17609,
         "linearizedBaseContracts": [
-          17562
+          17609
         ],
         "name": "IGOLDVault",
         "nameLocation": "70:10:21",
@@ -57,7 +57,7 @@
         "nodes": [
           {
             "functionSelector": "faa1809e",
-            "id": 17561,
+            "id": 17608,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -65,25 +65,25 @@
             "nameLocation": "99:20:21",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 17559,
+              "id": 17606,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "119:2:21"
             },
             "returnParameters": {
-              "id": 17560,
+              "id": 17607,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "130:0:21"
             },
-            "scope": 17562,
+            "scope": 17609,
             "src": "90:41:21",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 17563,
+        "scope": 17610,
         "src": "60:74:21",
         "usedErrors": []
       }
@@ -94,15 +94,15 @@
     "absolutePath": "project:/src/contracts/interface/IGOLDVault.sol",
     "exportedSymbols": {
       "IGOLDVault": [
-        17562
+        17609
       ]
     },
-    "id": 17563,
+    "id": 17610,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 17558,
+        "id": 17605,
         "literals": [
           "solidity",
           "0.8",
@@ -118,9 +118,9 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 17562,
+        "id": 17609,
         "linearizedBaseContracts": [
-          17562
+          17609
         ],
         "name": "IGOLDVault",
         "nameLocation": "70:10:21",
@@ -128,7 +128,7 @@
         "nodes": [
           {
             "functionSelector": "faa1809e",
-            "id": 17561,
+            "id": 17608,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -136,25 +136,25 @@
             "nameLocation": "99:20:21",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 17559,
+              "id": 17606,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "119:2:21"
             },
             "returnParameters": {
-              "id": 17560,
+              "id": 17607,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "130:0:21"
             },
-            "scope": 17562,
+            "scope": 17609,
             "src": "90:41:21",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 17563,
+        "scope": 17610,
         "src": "60:74:21",
         "usedErrors": []
       }
@@ -167,7 +167,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-04-28T14:57:09.290Z",
+  "updatedAt": "2022-04-29T17:56:46.699Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -6,13 +6,23 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract AURUM is IERC20 {
 
     // --- Auth -----------------------
-    // rely, deny => set permission of specific address (AURUMController contract) to mint AURUM
-    mapping (address => uint) public wards;
-    function rely(address guy) external auth { wards[guy] = 1; } //allowed
-    function deny(address guy) external auth { wards[guy] = 0; } //not allowed
-    modifier auth {
-        require(wards[msg.sender] == 1, "AURUM/not-authorized");
-        _;
+    // The original VAI token contract using rely,deny function to add/remove admin address
+    // This contract will simplify it using 2 authorized address
+    // 1. Admin can set minter but can't mint token
+    // 2. Minter can mint token
+
+
+    address public admin;
+    address public aurumMinter;
+
+    modifier onlyAdmin {
+      require(msg.sender == admin, "Unauthorized");
+      _;
+    }
+
+    modifier onlyMinter(){
+      require(msg.sender == aurumMinter, "Unauthorized");
+      _;
     }
     //--------------------------------
 
@@ -26,15 +36,15 @@ contract AURUM is IERC20 {
     string private _symbol;
     string private _name;
     
-    // address _owner;  :: no need owner variable
+    event TransferAdmin(address from, address to);
+    event SetMinter(address oldMinter, address newMinter);
 
     constructor() {
       _name = "Gold AURUM";
       _symbol = "AURUM";
       _decimals = 18;
-      wards[msg.sender] = 1;  // same as set ownership
 
-      // _owner = msg.sender;
+      admin = msg.sender;
     }
 
     /**
@@ -144,7 +154,7 @@ contract AURUM is IERC20 {
       return true;
     }
       // MINT function only `wards` address is allowed to use
-      function mint(address usr, uint wad) external auth {
+      function mint(address usr, uint wad) external onlyMinter {
           _balances[usr] += wad;
           _totalSupply += wad;
           emit Transfer(address(0), usr, wad);
@@ -207,8 +217,17 @@ contract AURUM is IERC20 {
       emit Approval(owner, spender, amount);
     }
 
-    //Transfer owner to public  :: turn off due to using 'wards' variable
-    // function transferOwnership (address _to) onlyOwner external{
-    //   _owner = _to;
-    // }
+    function _transferAdmin (address _to) onlyAdmin external{
+      address _from = admin;
+      admin = _to;
+
+      emit TransferAdmin(_from, _to);
+    }
+
+    function _setMinter (address newMinter) onlyAdmin external{
+      address oldMinter = aurumMinter;
+      aurumMinter = newMinter;
+
+      emit SetMinter(oldMinter, newMinter);
+    }
 }

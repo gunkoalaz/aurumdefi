@@ -42,6 +42,7 @@ contract StakingARM is StakingARMInterface{
         owner = msg.sender;
         rewardSpendingDuration = 30 days; // set default is 30 days
         lastRewardTimestamp = block.timestamp;
+        locked = false;
     }
 
     error TransferFail();
@@ -305,10 +306,7 @@ contract StakingARM is StakingARMInterface{
 
     //Withdraw ARM token without caring reward
     function emergencyWithdraw() external reentrancyGuard {
-        bool success = armToken.transfer(msg.sender,stakingBalance[msg.sender]);
-        if(!success){
-            revert TransferFail();
-        }
+        armToken.transfer(msg.sender,stakingBalance[msg.sender]);
         emit EmergencyWithdraw(msg.sender, stakingBalance[msg.sender]);
         isStaking[msg.sender] = false;
         rewardBalanceOf[msg.sender] = 0;

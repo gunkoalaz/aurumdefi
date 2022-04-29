@@ -38,8 +38,8 @@ const TREASURY = '0xa94E41461C508F227fdF061EB9a056A54678b93B';
 
 const initialState = {
     account: '0x0',
-    chainId: 0,
-    networkId: 0,
+    chainId: 55555,
+    networkId: 55555,
     price: {armPrice: '0', goldPrice: '0'},
     markets: [] ,
     allShortage: [],
@@ -380,109 +380,113 @@ class App extends Component {
     }
 
     async loadLiquidateList() {
-        this.setState({loading: true})
-        const web3 = window.web3
-        const networkId = await web3.eth.net.getId()
-        const compStorage = new web3.eth.Contract(ComptrollerStorage.abi, ComptrollerStorage.networks[networkId].address)
-        const aurumController = new web3.eth.Contract(AurumController.abi, AurumController.networks[networkId].address)
-        const compCalculate = new web3.eth.Contract(ComptrollerCalculation.abi, ComptrollerCalculation.networks[networkId].address)
-        const aurumPriceOracle = new web3.eth.Contract(AurumPriceOracle.abi, AurumPriceOracle.networks[networkId].address)
+        if(this.state.account === '0x0'){
+            window.alert('Please login first.');
+        } else {
+            this.setState({loading: true})
+            const web3 = window.web3
+            const networkId = await web3.eth.net.getId()
+            const compStorage = new web3.eth.Contract(ComptrollerStorage.abi, ComptrollerStorage.networks[networkId].address)
+            const aurumController = new web3.eth.Contract(AurumController.abi, AurumController.networks[networkId].address)
+            const compCalculate = new web3.eth.Contract(ComptrollerCalculation.abi, ComptrollerCalculation.networks[networkId].address)
+            const aurumPriceOracle = new web3.eth.Contract(AurumPriceOracle.abi, AurumPriceOracle.networks[networkId].address)
 
-        // Load all account borrow on each markets
-        let i
-        let allBorrower = []
-        
-        let getAllMarkets = await compStorage.methods.getAllMarkets().call()
+            // Load all account borrow on each markets
+            let i
+            let allBorrower = []
+            
+            let getAllMarkets = await compStorage.methods.getAllMarkets().call()
 
-        for(i=0; i< getAllMarkets.length; i++) {
-            let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
-            let getBorrowAddress = await lendToken.methods.getBorrowAddress().call()
-            let j
-            for(j=0; j< getBorrowAddress.length; j++){
-                if(!allBorrower.includes(getBorrowAddress[j])){
-                    allBorrower.push(getBorrowAddress[j])
+            for(i=0; i< getAllMarkets.length; i++) {
+                let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
+                let getBorrowAddress = await lendToken.methods.getBorrowAddress().call()
+                let j
+                for(j=0; j< getBorrowAddress.length; j++){
+                    if(!allBorrower.includes(getBorrowAddress[j])){
+                        allBorrower.push(getBorrowAddress[j])
+                    }
+                }
+
+            }
+            let getGoldMinter = await aurumController.methods.getGoldMinter().call()
+            for(i=0; i< getGoldMinter.length; i++){
+                if(!allBorrower.includes(getGoldMinter[i])){
+                    allBorrower.push(getGoldMinter[i])
                 }
             }
-
-        }
-        let getGoldMinter = await aurumController.methods.getGoldMinter().call()
-        for(i=0; i< getGoldMinter.length; i++){
-            if(!allBorrower.includes(getGoldMinter[i])){
-                allBorrower.push(getGoldMinter[i])
+            // this.setState({allBorrower: allBorrower})
+            let isShortage = []
+            // Check each borrower position
+            for(i=0; i< allBorrower.length; i++){
+                isShortage[i] = await compCalculate.methods.isShortage(allBorrower[i]).call()
             }
-        }
-        // this.setState({allBorrower: allBorrower})
-        let isShortage = []
-        // Check each borrower position
-        for(i=0; i< allBorrower.length; i++){
-            isShortage[i] = await compCalculate.methods.isShortage(allBorrower[i]).call()
-        }
-        Promise.all(isShortage).then( async(isShortage)=> {
-            let allShortage = []
-            for(i=0; i<allBorrower.length; i++){
-                
-                if(isShortage[i]){
+            Promise.all(isShortage).then( async(isShortage)=> {
+                let allShortage = []
+                for(i=0; i<allBorrower.length; i++){
                     
-                    let markets = await compStorage.methods.getAssetsIn(allBorrower[i]).call()
-                    let j
-                    let borrowAsset = []
-                    let collateralAsset = []
-                    // Get info in each markets for liquidating Borrow and Balance
-                    for(j=0; j<markets.length ; j++){
-                        let lendToken = new web3.eth.Contract(LendToken.abi, markets[j])
-                        let symbol = await lendToken.methods.symbol().call()
-                        let borrowAmount = await lendToken.methods.borrowBalanceStored(allBorrower[i]).call()
-                        let collateralAmount = await lendToken.methods.balanceOf(allBorrower[i]).call()
-                        let exchangeRate = await lendToken.methods.exchangeRateStored().call()
-                        let price = await aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call()
-                        let underlyingAddress 
-                        let underlying 
-                        let underlyingSymbol
-                        if(symbol === 'lendREI'){
-                            underlyingAddress = ''
-                            underlying = ''
-                            underlyingSymbol = 'REI'
+                    if(isShortage[i]){
+                        
+                        let markets = await compStorage.methods.getAssetsIn(allBorrower[i]).call()
+                        let j
+                        let borrowAsset = []
+                        let collateralAsset = []
+                        // Get info in each markets for liquidating Borrow and Balance
+                        for(j=0; j<markets.length ; j++){
+                            let lendToken = new web3.eth.Contract(LendToken.abi, markets[j])
+                            let symbol = await lendToken.methods.symbol().call()
+                            let borrowAmount = await lendToken.methods.borrowBalanceStored(allBorrower[i]).call()
+                            let collateralAmount = await lendToken.methods.balanceOf(allBorrower[i]).call()
+                            let exchangeRate = await lendToken.methods.exchangeRateStored().call()
+                            let price = await aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call()
+                            let underlyingAddress 
+                            let underlying 
+                            let underlyingSymbol
+                            if(symbol === 'lendREI'){
+                                underlyingAddress = ''
+                                underlying = ''
+                                underlyingSymbol = 'REI'
 
-                        } else {
-                            underlyingAddress = await lendToken.methods.underlying().call()
-                            underlying = new web3.eth.Contract(ERC20.abi, underlyingAddress)
-                            underlyingSymbol = await underlying.methods.symbol().call()
+                            } else {
+                                underlyingAddress = await lendToken.methods.underlying().call()
+                                underlying = new web3.eth.Contract(ERC20.abi, underlyingAddress)
+                                underlyingSymbol = await underlying.methods.symbol().call()
 
+                            }
+                            if(borrowAmount > 0) {
+                                borrowAsset.push({
+                                    asset: lendToken._address,
+                                    symbol: underlyingSymbol,
+                                    amount: borrowAmount,
+                                    price: price,
+                                })
+                            }
+                            if(collateralAmount > 0) {
+                                collateralAsset.push({
+                                    asset: lendToken._address,
+                                    symbol: symbol,
+                                    amount: collateralAmount,
+                                    price: price,
+                                    exchangeRate: exchangeRate,
+                                })
+                            }
                         }
-                        if(borrowAmount > 0) {
-                            borrowAsset.push({
-                                asset: lendToken._address,
-                                symbol: underlyingSymbol,
-                                amount: borrowAmount,
-                                price: price,
-                            })
+                        let mintedGold = await compStorage.methods.getMintedGOLDs(allBorrower[i]).call()
+
+
+                        let info = {
+                            index: i,
+                            borrower: allBorrower[i],
+                            borrowAsset: borrowAsset,
+                            collateralAsset: collateralAsset,
+                            mintedGold: mintedGold,
                         }
-                        if(collateralAmount > 0) {
-                            collateralAsset.push({
-                                asset: lendToken._address,
-                                symbol: symbol,
-                                amount: collateralAmount,
-                                price: price,
-                                exchangeRate: exchangeRate,
-                            })
-                        }
+                        allShortage.push(info)
                     }
-                    let mintedGold = await compStorage.methods.getMintedGOLDs(allBorrower[i]).call()
-
-
-                    let info = {
-                        index: i,
-                        borrower: allBorrower[i],
-                        borrowAsset: borrowAsset,
-                        collateralAsset: collateralAsset,
-                        mintedGold: mintedGold,
-                    }
-                    allShortage.push(info)
                 }
-            }
-            this.setState({allShortage})
-            this.setState({loading: false})
-        })
+                this.setState({allShortage})
+                this.setState({loading: false})
+            })
+        }
     }
     async loadAppData() {
         let res;
@@ -630,30 +634,29 @@ class App extends Component {
                     ]
                     Promise.all(allValue).then( (result) => {
                         let resultObj = Object.assign({
-                            lendToken,
-                            name,
-                            symbol,
-                            decimals,
-                            borrowRatePerSeconds,
-                            supplyRatePerSeconds,
-                            reserveFactorMantissa,
-                            accrualTimestamp,
-                            totalBorrows,
-                            totalReserves,
-                            getCash,
-                            exchangeRateStored,
-                            borrowAddress,
-                            collateralFactorMantissa,
-                            getUnderlyingPrice,
-                            borrowCaps,
-                            aurumSpeeds,
-                            mintPause,
-                            borrowPause,
-                            underlyingAddress,
-                            underlying,
-                            underlyingSymbol
-                        }, result);
-                            console.log(resultObj.name);
+                            lendToken: result[0],
+                            name: result[1],
+                            symbol: result[2],
+                            decimals: result[3],
+                            borrowRatePerSeconds: result[4],
+                            supplyRatePerSeconds: result[5],
+                            reserveFactorMantissa: result[6],
+                            accrualTimestamp: result[7],
+                            totalBorrows: result[8],
+                            totalReserves: result[9],
+                            getCash: result[10],
+                            exchangeRateStored: result[11],
+                            borrowAddress: result[12],
+                            collateralFactorMantissa: result[13],
+                            getUnderlyingPrice: result[14],
+                            borrowCaps: result[15],
+                            aurumSpeeds: result[16],
+                            mintPause: result[17],
+                            borrowPause: result[18],
+                            underlyingAddress: result[19],
+                            underlying: result[20],
+                            underlyingSymbol: result[21]
+                        });
                             let marketsInfo = {
                             index: parseInt(i),
                             contract: Promise.resolve(resultObj.lendToken),

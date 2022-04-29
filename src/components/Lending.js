@@ -64,31 +64,40 @@ const MainLending = (props) => {
         }
     } 
 
+
     let mintedAurum = BigNumber(superState.comptrollerState.getMintedGOLDs)
     let goldPrice = BigNumber(superState.price.goldPrice).div(e18).toFixed(2)
     // let mintedAurumPosition = mintedAurum.times(goldPrice).div(e18)
-
+    
     userTotalBorrow = userTotalBorrow.plus(  mintedAurum.times(goldPrice)  )
-
-    if(isNaN(userTotalBorrow)) {userTotalBorrow = 0}
-    if(isNaN(userTotalSupply)) {userTotalSupply = 0}
-    if(isNaN(userTotalCredits)) {userTotalCredits = 0}
-
+    
     userTotalBorrow = userTotalBorrow.div(e18)
     userTotalSupply = userTotalSupply.div(e18)
     userTotalCredits = userTotalCredits.div(e18)
+    
     userRemainingCredits = userTotalCredits.minus(userTotalBorrow)
 
     if(userRemainingCredits.isLessThan(userTotalCredits.times(0.2)) && userTotalCredits.isGreaterThan(0)){
         danger = true;
     }
+
+    
+    if(userRemainingCredits.isLessThan(0)){
+        userRemainingCredits = BigNumber(0);
+    }
+
+    let armReward = BigNumber(props.mainstate.comptrollerState.getArmAccrued).div(e18)
+    
+    if(isNaN(userTotalBorrow)) {userTotalBorrow = BigNumber(0)}
+    if(isNaN(userTotalSupply)) {userTotalSupply = BigNumber(0)}
+    if(isNaN(userTotalCredits)) {userTotalCredits = BigNumber(0)}
+    if(isNaN(userRemainingCredits)) {userRemainingCredits = BigNumber(0)}
+    if(isNaN(armReward)) {armReward = BigNumber(0)}
+    
     floatUserTotalBorrow = userTotalBorrow.toFormat(2)
     floatUserTotalSupply = userTotalSupply.toFormat(2)
     floatUserRemainingCredits = userRemainingCredits.toFormat(2)
     
-    if(userRemainingCredits.isLessThan(0)){
-        userRemainingCredits = 0
-    }
 
     function manualClaimReward() {
         props.mainstate.comptrollerState.contract.methods.claimARMAllMarket(props.mainstate.account).send({from: props.mainstate.account, gas: '1000000'}).on('transactionHash', (hash) => {
@@ -122,7 +131,7 @@ const MainLending = (props) => {
                         <h3>ARM Reward</h3>
                     </div>
                     <div className='reward-value'>
-                        <p>{BigNumber(props.mainstate.comptrollerState.getArmAccrued).div(e18).toFormat(2)}</p>
+                        <p>{armReward.toFormat(2)}</p>
                         <button className='button' onClick={manualClaimReward}>Claim</button>
                     </div>
                 </div>
