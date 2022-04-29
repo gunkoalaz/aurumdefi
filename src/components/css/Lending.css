@@ -38,9 +38,8 @@
 }
 .reward-value {
     margin: auto;
-    display: flex;
+    display: flex-end;
     font-size: 2vh;
-    justify-content: end;
 }
 .reward-value p {
     margin: auto;

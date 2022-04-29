@@ -49,6 +49,7 @@ const initialState = {
     loadedVault: false,
     loadingNow: 0,
     loading: true,
+    loadingAppData: true,
     autoupdate: false,
 }
 
@@ -119,7 +120,12 @@ class App extends Component {
         this.state = initialState;
     }
 
-    
+    componentDidMount() {
+        if(this.state.loadingAppData === true){
+            let loadApp = this.loadAppData();
+            this.setState({loadingAppData: false});
+        }
+    }
     componentWillUnmount() {
         // clearInterval(this.interval);
         // clearInterval(this.marketInterval);
@@ -127,8 +133,8 @@ class App extends Component {
     async loadArmVault() {
         let res;
         try {
-                const web3 = window.web3
-                const networkId = await web3.eth.net.getId()
+            const web3 = window.web3
+            const networkId = await web3.eth.net.getId()
             // Load ARM data
             const armLoader = ARM.networks[networkId]
             const arm = new web3.eth.Contract(ARM.abi, armLoader.address)
@@ -258,7 +264,6 @@ class App extends Component {
             let i
             let getAllMarkets = await compStorage.methods.getAllMarkets().call()
 
-            this.setState({loadingNow: 50});
             for(i=0; i< getAllMarkets.length; i++) {
                     let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
                     let name = await lendToken.methods.name().call();
@@ -273,16 +278,16 @@ class App extends Component {
                     let getCash = await lendToken.methods.getCash().call();
                     let exchangeRateStored = await lendToken.methods.exchangeRateStored().call();
                     let borrowAddress = await lendToken.methods.getBorrowAddress().call();
-                    let balanceOf = await lendToken.methods.balanceOf(this.state.account).call();
-                    let borrowBalanceStored = await lendToken.methods.borrowBalanceStored(this.state.account).call();
                     let collateralFactorMantissa = await compStorage.methods.getMarketCollateralFactorMantissa(lendToken._address).call();
                     let getUnderlyingPrice = await aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call();
                     let borrowCaps = await compStorage.methods.getBorrowCaps(lendToken._address).call();
-                    let membership = await compStorage.methods.checkMembership(this.state.account, lendToken._address).call();
-                    let allowance = await lendToken.methods.allowance(this.state.account, lendToken._address).call();
                     let aurumSpeeds = await compStorage.methods.getAurumSpeeds(lendToken._address).call();
                     let mintPause = await compStorage.methods.getMintGuardianPaused(lendToken._address).call();
                     let borrowPause = await compStorage.methods.getBorrowGuardianPaused(lendToken._address).call();
+                    let balanceOf = await lendToken.methods.balanceOf(this.state.account).call();
+                    let borrowBalanceStored = await lendToken.methods.borrowBalanceStored(this.state.account).call();
+                    let membership = await compStorage.methods.checkMembership(this.state.account, lendToken._address).call();
+                    let allowance = await lendToken.methods.allowance(this.state.account, lendToken._address).call();
         
                     //Underlying parameters
                     let underlyingAddress 
@@ -320,10 +325,10 @@ class App extends Component {
                         //Personal info
                         membership: membership,
                         balanceOf: balanceOf.toString(),
+                        borrowBalanceStored: borrowBalanceStored.toString(),
                         allowance: allowance.toString(),
                         underlyingAllowance: underlyingAllowance.toString(),
                         underlyingBalance: underlyingBalance.toString(),
-                        borrowBalanceStored: borrowBalanceStored.toString(),
         
         
         
@@ -348,10 +353,8 @@ class App extends Component {
                         aurumSpeeds: aurumSpeeds.toString(),
                     }
                     markets.push(marketsInfo)
-                    this.setState({loadingNow: this.state.loadingNow+6});
             }
             res = true;
-            this.setState({loadingNow: 100});
             this.setState({markets});
             this.setState({autoupdate: false})
         } catch {
@@ -481,6 +484,229 @@ class App extends Component {
             this.setState({loading: false})
         })
     }
+    async loadAppData() {
+        let res;
+        try {
+            const web3 = new Web3('https://rei-rpc.moonrhythm.io');
+            const networkId = 55555;
+            const arm = new web3.eth.Contract(ARM.abi, ARM.networks[networkId].address);
+            // const stakingARM = new web3.eth.Contract(StakingARM.abi, StakingARM.networks[networkId].address)
+            const comptroller = new web3.eth.Contract(Comptroller.abi, Comptroller.networks[networkId].address);
+            const compStorage = new web3.eth.Contract(ComptrollerStorage.abi, ComptrollerStorage.networks[networkId].address);
+            const aurum = new web3.eth.Contract(AURUM.abi, AURUM.networks[networkId].address)
+            const aurumController = new web3.eth.Contract(AurumController.abi, AurumController.networks[networkId].address)
+            const aurumPriceOracle = new web3.eth.Contract(AurumPriceOracle.abi, AurumPriceOracle.networks[networkId].address)
+
+            // let getRewardRemaining = await stakingARM.methods.getRewardRemaining().call()
+            // let getRewardSpendingDuration = await stakingARM.methods.getRewardSpendingDuration().call()
+            // let getTotalStakedARM = await stakingARM.methods.getTotalStakedARM().call()
+            // let getLastRewardTimestamp = await stakingARM.methods.getLastRewardTimestamp().call()
+            // let getAccRewardPerShare = await stakingARM.methods.getAccRewardPerShare().call()
+            
+            this.setState({loadingNow: this.state.loadingNow+20});
+            // let armVault = {
+            //     contract: stakingARM,
+            //     armContract: arm,
+            //     // armBalance: armBalance.toString(),
+            //     getTotalStakedARM: getTotalStakedARM.toString(),
+            //     // userStakingBalance: stakingARMBalance.toString(),
+            //     totalAvailableReward: getRewardRemaining.toString(),
+            //     rewardDistributionIndex: getRewardSpendingDuration.toString(),
+            //     // getRewardBalanceOf: getRewardBalanceOf.toString(),
+            //     // armAllowanceToVault: armAllowanceToVault.toString(),
+            //     getLastRewardTimestamp: getLastRewardTimestamp.toString(),
+            //     getAccRewardPerShare: getAccRewardPerShare.toString(),
+            // }
+
+
+            // Load comptroller data
+            let isProtocolPaused = await compStorage.methods.protocolPaused().call()
+            let goldMintRate = await compStorage.methods.goldMintRate().call()
+            // let getMintedGOLDs = await comptroller.methods.getMintedGOLDs(this.state.account).call()
+            // let goldBalance = await aurum.methods.balanceOf(this.state.account).call()
+            // let getAssetsIn = await comptroller.methods.getAssetsIn(this.state.account).call()
+            // let aurumAllowance = await aurum.methods.allowance(this.state.account, aurumController._address).call()
+            let liquidationIncentive = await compStorage.methods.liquidationIncentiveMantissa().call()
+            let closeFactor = await compStorage.methods.closeFactorMantissa().call()
+            // let getArmAccrued = await compCalculation.methods.getUpdateARMAccrued(this.state.account, currentTime).call()
+            let totalMintedAURUM = await aurum.methods.totalSupply().call()
+            let compARMBalance = await arm.methods.balanceOf(compStorage._address).call()
+            let treasuryARMBalance = await arm.methods.balanceOf(TREASURY).call()
+
+            this.setState({loadingNow: this.state.loadingNow+20});
+            let comptrollerState = {
+                contract: comptroller,
+                storage: compStorage,
+                AURUM: aurum,
+                aurumController: aurumController,
+                isProtocolPaused: isProtocolPaused,
+                goldMintRate: (goldMintRate / 10000),
+                // getMintedGOLDs: getMintedGOLDs.toString(),
+                // goldBalance: goldBalance.toString(),
+                // aurumAllowance: aurumAllowance.toString(),
+                // getAssetsIn: getAssetsIn,
+                // getArmAccrued: getArmAccrued,
+                liquidationIncentive: liquidationIncentive,
+                closeFactor: closeFactor,
+                totalMintedAURUM: totalMintedAURUM,
+                compARMBalance: compARMBalance,
+                treasuryARMBalance: treasuryARMBalance,
+            }
+
+
+            let armPrice = await aurumPriceOracle.methods.assetPrices(arm._address).call()
+            let goldPrice = await aurumPriceOracle.methods.getGoldPrice().call()
+            let price = {
+                armPrice: armPrice.toString(),
+                goldPrice: goldPrice.toString(),
+            }
+            
+            let markets = []
+            let i
+            let getAllMarkets = await compStorage.methods.getAllMarkets().call()
+
+            this.setState({loadingNow: this.state.loadingNow+10});
+
+            for(i=0; i< getAllMarkets.length; i++) {
+                    let lendToken = new web3.eth.Contract(LendToken.abi, getAllMarkets[i])
+                    let name =  lendToken.methods.name().call();
+                    let symbol =  await lendToken.methods.symbol().call();
+                    let decimals =  lendToken.methods.decimals().call();
+                    let borrowRatePerSeconds =  lendToken.methods.borrowRatePerSeconds().call();
+                    let supplyRatePerSeconds =  lendToken.methods.supplyRatePerSeconds().call();
+                    let reserveFactorMantissa =  lendToken.methods.reserveFactorMantissa().call();
+                    let accrualTimestamp =  lendToken.methods.accrualTimestamp().call();
+                    let totalBorrows =  lendToken.methods.totalBorrows().call();
+                    let totalReserves =  lendToken.methods.totalReserves().call();
+                    let getCash =  lendToken.methods.getCash().call();
+                    let exchangeRateStored =  lendToken.methods.exchangeRateStored().call();
+                    let borrowAddress =  lendToken.methods.getBorrowAddress().call();
+                    let collateralFactorMantissa =  compStorage.methods.getMarketCollateralFactorMantissa(lendToken._address).call();
+                    let getUnderlyingPrice =  aurumPriceOracle.methods.getUnderlyingPrice(lendToken._address).call();
+                    let borrowCaps =  compStorage.methods.getBorrowCaps(lendToken._address).call();
+                    let aurumSpeeds =  compStorage.methods.getAurumSpeeds(lendToken._address).call();
+                    let mintPause =  compStorage.methods.getMintGuardianPaused(lendToken._address).call();
+                    let borrowPause =  compStorage.methods.getBorrowGuardianPaused(lendToken._address).call();
+
+                    //Underlying parameters
+                    let underlyingAddress 
+                    let underlying 
+                    let underlyingSymbol
+
+                    if(symbol !== 'lendREI') {
+                        underlyingAddress = await lendToken.methods.underlying().call()
+                        underlying = new web3.eth.Contract(ERC20.abi, underlyingAddress)
+                        underlyingSymbol = await underlying.methods.symbol().call()
+                    } else {
+                        lendToken = new web3.eth.Contract(LendREI.abi, getAllMarkets[i])
+                        underlyingAddress = ''
+                        underlying = ''
+                        underlyingSymbol = 'REI'
+                    }
+
+                    const allValue = [
+                        lendToken,
+                        name,
+                        symbol,
+                        decimals,
+                        borrowRatePerSeconds,
+                        supplyRatePerSeconds,
+                        reserveFactorMantissa,
+                        accrualTimestamp,
+                        totalBorrows,
+                        totalReserves,
+                        getCash,
+                        exchangeRateStored,
+                        borrowAddress,
+                        collateralFactorMantissa,
+                        getUnderlyingPrice,
+                        borrowCaps,
+                        aurumSpeeds,
+                        mintPause,
+                        borrowPause,
+                        underlyingAddress,
+                        underlying,
+                        underlyingSymbol
+                    ]
+                    Promise.all(allValue).then( (result) => {
+                        let resultObj = Object.assign({
+                            lendToken,
+                            name,
+                            symbol,
+                            decimals,
+                            borrowRatePerSeconds,
+                            supplyRatePerSeconds,
+                            reserveFactorMantissa,
+                            accrualTimestamp,
+                            totalBorrows,
+                            totalReserves,
+                            getCash,
+                            exchangeRateStored,
+                            borrowAddress,
+                            collateralFactorMantissa,
+                            getUnderlyingPrice,
+                            borrowCaps,
+                            aurumSpeeds,
+                            mintPause,
+                            borrowPause,
+                            underlyingAddress,
+                            underlying,
+                            underlyingSymbol
+                        }, result);
+                            console.log(resultObj.name);
+                            let marketsInfo = {
+                            index: parseInt(i),
+                            contract: Promise.resolve(resultObj.lendToken),
+                            underlyingContract: resultObj.underlying,
+                            
+                            borrowAddress: resultObj.borrowAddress,
+                                
+                            name: resultObj.name.toString(), 
+                            symbol: resultObj.symbol.toString(), 
+                            underlyingSymbol: resultObj.underlyingSymbol.toString(),
+                            decimals: resultObj.decimals.toString(), 
+                            
+                            //Market calculating variables
+                            borrowRatePerSeconds: resultObj.borrowRatePerSeconds.toString(),
+                            supplyRatePerSeconds: resultObj.supplyRatePerSeconds.toString(),
+                            reserveFactorMantissa: resultObj.reserveFactorMantissa.toString(),
+                            collateralFactorMantissa: resultObj.collateralFactorMantissa.toString(),
+                            accrualTimestamp: resultObj.accrualTimestamp.toString(),
+                            exchangeRateStored: resultObj.exchangeRateStored.toString(),
+                            underlyingPrice: resultObj.getUnderlyingPrice.toString(),
+                            
+                            //Market variables
+                            mintPause: resultObj.mintPause,
+                            borrowPause: resultObj.borrowPause,
+                            totalBorrows: resultObj.totalBorrows.toString(),
+                            totalReserves: resultObj.totalReserves.toString(),
+                            cash: resultObj.getCash.toString(),
+                            borrowCaps: resultObj.borrowCaps.toString(),
+                            
+                            aurumSpeeds: resultObj.aurumSpeeds.toString(),
+                        }
+                        markets.push(marketsInfo)
+                        this.setState({loadingNow: this.state.loadingNow+6});
+                    });
+            }
+            this.setState({/*armVault,*/ comptrollerState, price, markets, loadingNow: 100, loading: false})
+        } catch (err) {
+            console.log(err);
+        }
+        res = true;
+        return res;
+    }
+
+    async loadUserData() {
+        let res;
+        try {
+
+        } catch (err) {
+            console.log(err);
+        }
+        res = true;
+        return res;
+    }
     //
     // Common Web3 function
     //
@@ -488,10 +714,12 @@ class App extends Component {
         let connect;
         if(window.ethereum){
             window.web3 = new Web3(window.ethereum)
+            console.log("Connect via window.ethereum");
             connect = true
             // const accounts = await window.ethereum.send('eth_requestAccounts');
         } else if(window.web3){
                 window.web3 = new Web3(window.web3.currentProvider)
+                console.log("Connect via window.web3");
                 connect = true
             }
             else {
@@ -578,12 +806,14 @@ class App extends Component {
     disconnectAurumDeFi = async () =>{
         clearInterval(this.marketInterval);
         this.setState(initialState);
+        this.loadAppData();
     }
 
 
 
     
     render() {
+
         if(window.ethereum) {
             window.ethereum.on('accountsChanged', (accounts) => {
                 if(this.state.loading === false){
@@ -598,7 +828,6 @@ class App extends Component {
                 }
             })
         }
-
         return(
             <div style={{height: '100vh'}}>
                 <div style={{position: 'fixed'}}>
