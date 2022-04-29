@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.12;
 
 import './interface/IAurumOracleCentralized.sol';
 
@@ -16,6 +16,8 @@ contract AurumOracleCentralized is IAurumOracleCentralized {
         uint128[6] timestamp;
         uint8 currentIndex;
     }
+    mapping (address => bool) alreadyInit;
+    bool goldInit;
     
     mapping (address => PriceList) asset;
     PriceList goldPrice; // gold price TWAP
@@ -47,6 +49,8 @@ contract AurumOracleCentralized is IAurumOracleCentralized {
         _;
     }
 
+    error RepeatedInit(address token);
+
     event Initialized_Asset(address token, uint128 price, uint128 timestamp);
     event Initialized_Gold(uint128 price, uint128 timestamp);
     event SetNewAdmin(address oldAdmin, address newAdmin);
@@ -55,6 +59,9 @@ contract AurumOracleCentralized is IAurumOracleCentralized {
 
     // Initialized Asset before updateAssetPrice, make sure that lastPrice not equal to 0, and Timestamp not equal to 0.
     function initializedAsset(address token, uint128 price) external onlyAdmin{
+        if(alreadyInit[token]){
+            revert RepeatedInit(token);
+        }
         uint8 i;
         uint128 currentTime = uint128(block.timestamp);
         for(i=0;i<6;i++){
@@ -62,9 +69,13 @@ contract AurumOracleCentralized is IAurumOracleCentralized {
             asset[token].timestamp[i] = currentTime;
         }
         asset[token].currentIndex = 0;
+        alreadyInit[token] = true;
         emit Initialized_Asset(token, price, currentTime);
     }
     function initializedGold(uint128 price) external onlyAdmin{
+        if(goldInit){
+            revert RepeatedInit(address(0));
+        }
         uint8 i;
         uint128 currentTime = uint128(block.timestamp);
         for(i=0;i<6;i++){
@@ -72,6 +83,7 @@ contract AurumOracleCentralized is IAurumOracleCentralized {
             goldPrice.timestamp[i] = currentTime;
         }
         goldPrice.currentIndex = 0;
+        goldInit = true;
         emit Initialized_Gold(price, currentTime);
     }
 

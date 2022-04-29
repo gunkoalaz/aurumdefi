@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.12;
 
 import './interface/ComptrollerInterface.sol';
 import './interface/UniswapInterface.sol';
@@ -26,6 +26,8 @@ contract TreasuryWallet {
         locked = false;
     }
 
+    error ApproveFail();
+    error TransferFail();
 
     event SendBUSDToVault(uint amount);
     event Swap(address tokenIn, address tokenOut, uint amount);
@@ -62,7 +64,9 @@ contract TreasuryWallet {
         require(amount > 0, "BAD_INPUT");
         
         bool success = kBUSD.transfer(vault, amount);
-        require(success,"Transfer failed");
+        if(!success){
+            revert TransferFail();
+        }        
 
         emit SendBUSDToVault(amount);
     }
@@ -80,7 +84,10 @@ contract TreasuryWallet {
         require(amountIn > 0, "BAD_INPUT");
 
         //Approve the tokenA
-        tokenIn.approve(varRouter, amountIn);
+        bool success = tokenIn.approve(varRouter, amountIn);
+        if(!success){
+            revert ApproveFail();
+        }        
 
         //Setting path
         address[] memory path;
@@ -103,7 +110,10 @@ contract TreasuryWallet {
         require(amount > 0, "BAD_INPUT");
 
         //Approve underlying
-        underlying.approve(address(lendToken), amount); // Deposit underlying to lendToken contract
+        bool success = underlying.approve(address(lendToken), amount); // Deposit underlying to lendToken contract
+        if(!success){
+            revert ApproveFail();
+        }        
 
         //Deposit
         lendToken.mint(amount);

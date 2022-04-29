@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.12;
 
 import './interface/ComptrollerInterface.sol';
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -96,7 +96,7 @@ contract Comptroller is ComptrollerInterface {
     // 1. Protocol not pause
     // 2. The lendToken is listed
     // Then update the reward SupplyIndex
-    function mintAllowed(address lendToken, address minter) external{
+    function mintAllowed(address lendToken, address minter) external returns(bool){
         bool protocolPaused = compStorage.protocolPaused();
         if(protocolPaused){ revert ProtocolPaused(); }
         // Pausing is a very serious situation - we revert to sound the alarms
@@ -109,6 +109,9 @@ contract Comptroller is ComptrollerInterface {
         // Keep the flywheel moving
         compStorage.updateARMSupplyIndex(lendToken);
         compStorage.distributeSupplierARM(lendToken, minter);
+
+        // All pass return true;
+        return true;
     }
 
     //
@@ -119,16 +122,16 @@ contract Comptroller is ComptrollerInterface {
     //      4. if all pass then redeem is allowed.
     //
 
-    function redeemAllowed(address lendToken, address redeemer, uint redeemTokens) external{
-        bool protocolPaused = compStorage.protocolPaused();
-        if(protocolPaused){ revert ProtocolPaused(); }
+    function redeemAllowed(address lendToken, address redeemer, uint redeemTokens) external returns(bool){
+        // bool protocolPaused = compStorage.protocolPaused();
+        // if(protocolPaused){ revert ProtocolPaused(); }
         if (!compStorage.isMarketListed(lendToken)) {         //Can't redeem the asset which not list in market.
             revert MarketNotList();
         }
 
         /* If the redeemer is not 'in' the market (this token not in collateral calculation), then we can bypass the liquidity check */
         if (!compStorage.checkMembership(redeemer, LendTokenInterface(lendToken)) ) {
-            return ;
+            return true;
         }
 
         /* Otherwise, perform a hypothetical liquidity check to guard against shortfall */
@@ -140,6 +143,9 @@ contract Comptroller is ComptrollerInterface {
 
         compStorage.updateARMSupplyIndex(lendToken);
         compStorage.distributeSupplierARM(lendToken, redeemer);
+
+        // All pass return true;
+        return true;
     }
 
     //
@@ -151,7 +157,7 @@ contract Comptroller is ComptrollerInterface {
     //      4.2 Predict the loan after borrow. if the loan is over (shortfall) then user can't borrow.
     //      5. if all pass, return no ERROR.
     //
-    function borrowAllowed(address lendToken, address borrower, uint borrowAmount) external{
+    function borrowAllowed(address lendToken, address borrower, uint borrowAmount) external returns(bool){
         bool protocolPaused = compStorage.protocolPaused();
         if(protocolPaused){ revert ProtocolPaused(); }
         // Pausing is a very serious situation - we revert to sound the alarms
@@ -189,12 +195,14 @@ contract Comptroller is ComptrollerInterface {
         uint borrowIndex = LendTokenInterface(lendToken).borrowIndex();
         compStorage.updateARMBorrowIndex(lendToken, borrowIndex);
         compStorage.distributeBorrowerARM(lendToken, borrower, borrowIndex);
+
+        return true;
     }
     
     //
     // repay is mostly allowed.  except the market is closed.
     //
-    function repayBorrowAllowed(address lendToken, address borrower) external {
+    function repayBorrowAllowed(address lendToken, address borrower) external returns(bool){
         bool protocolPaused = compStorage.protocolPaused();
         if(protocolPaused){ revert ProtocolPaused(); }
 
@@ -206,6 +214,8 @@ contract Comptroller is ComptrollerInterface {
         uint borrowIndex = LendTokenInterface(lendToken).borrowIndex();
         compStorage.updateARMBorrowIndex(lendToken, borrowIndex);
         compStorage.distributeBorrowerARM(lendToken, borrower, borrowIndex);
+
+        return true;
     }
 
     //
@@ -216,7 +226,7 @@ contract Comptroller is ComptrollerInterface {
     //      4. check if repayAmount > maximumClose   then revert.
     //      5. if all pass => allowed
     //
-    function liquidateBorrowAllowed(address lendTokenBorrowed, address lendTokenCollateral, address borrower, uint repayAmount) external view{
+    function liquidateBorrowAllowed(address lendTokenBorrowed, address lendTokenCollateral, address borrower, uint repayAmount) external view returns(bool){
         bool protocolPaused = compStorage.protocolPaused();
         if(protocolPaused){ revert ProtocolPaused(); }
 
@@ -243,6 +253,8 @@ contract Comptroller is ComptrollerInterface {
         if (repayAmount > maxClose) {
             revert InsufficientLiquidity();
         }
+
+        return true;
     }
 
 
@@ -254,7 +266,7 @@ contract Comptroller is ComptrollerInterface {
     //      3. if all pass => (allowed).
     //      
     //  lendTokenBorrowed is the called LendToken or aurumController.
-    function seizeAllowed(address lendTokenCollateral, address lendTokenBorrowed, address liquidator, address borrower) external{
+    function seizeAllowed(address lendTokenCollateral, address lendTokenBorrowed, address liquidator, address borrower) external returns(bool){
         bool protocolPaused = compStorage.protocolPaused();
         if(protocolPaused){ revert ProtocolPaused(); }
         // Pausing is a very serious situation - we revert to sound the alarms
@@ -273,13 +285,15 @@ contract Comptroller is ComptrollerInterface {
         compStorage.updateARMSupplyIndex(lendTokenCollateral);
         compStorage.distributeSupplierARM(lendTokenCollateral, borrower);
         compStorage.distributeSupplierARM(lendTokenCollateral, liquidator);
+
+        return true;
     }
 
     //
     //  TransferAllowed is simply automatic allowed when redeeming is allowed (redeeming then transfer)
     //  So just check if this token is redeemable ?
     //
-    function transferAllowed(address lendToken, address src, address dst, uint transferTokens) external {
+    function transferAllowed(address lendToken, address src, address dst, uint transferTokens) external returns(bool){
         bool protocolPaused = compStorage.protocolPaused();
         if(protocolPaused){ revert ProtocolPaused(); }
         // Pausing is a very serious situation - we revert to sound the alarms
@@ -293,6 +307,8 @@ contract Comptroller is ComptrollerInterface {
         compStorage.updateARMSupplyIndex(lendToken);
         compStorage.distributeSupplierARM(lendToken, src);
         compStorage.distributeSupplierARM(lendToken, dst);
+
+        return true;
     }
 
     /*** Liquidity/Liquidation Calculations ***/
@@ -324,7 +340,10 @@ contract Comptroller is ComptrollerInterface {
         if(msg.sender != admin) { revert AdminOnly();}
         address oldAdmin = admin;
         address newAdmin = pendingAdmin;
+        require(newAdmin != address(0), "Set pending admin first");
+
         admin = pendingAdmin;
+        pendingAdmin = address(0);
         //Also set ComptrollerStorage's new admin to the same as comptroller.
         compStorage._setNewStorageAdmin(newAdmin);
 

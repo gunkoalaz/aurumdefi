@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.12;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
@@ -178,8 +178,8 @@ contract AURUM is IERC20 {
     * - `sender` must have a balance of at least `amount`.
     */
     function _transfer(address sender, address recipient, uint256 amount) internal {
-      require(sender != address(0), "BEP20: transfer from the zero address");
-      require(recipient != address(0), "BEP20: transfer to the zero address");
+      require(sender != address(0), "transfer from the zero address");
+      require(recipient != address(0), "transfer to the zero address");
 
       _balances[sender] -= amount;
       _balances[recipient] += amount;
@@ -200,8 +200,8 @@ contract AURUM is IERC20 {
     * - `spender` cannot be the zero address.
     */
     function _approve(address owner, address spender, uint256 amount) internal {
-      require(owner != address(0), "BEP20: approve from the zero address");
-      require(spender != address(0), "BEP20: approve to the zero address");
+      require(owner != address(0), "approve from the zero address");
+      require(spender != address(0), "approve to the zero address");
 
       _allowances[owner][spender] = amount;
       emit Approval(owner, spender, amount);

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.12;
 
 import './interface/ComptrollerInterface.sol';
 import './interface/EIP20NonStandardInterface.sol';
@@ -96,6 +96,9 @@ contract LendToken is LendTokenInterface{
     // Market Events
     // -------------
 
+    error NotAllowed();
+    error BadInput();
+
     event Mint(address minter, uint mintAmount, uint mintTokens);                                                               //Emit when tokens are minted
     event Redeem(address redeemer, uint redeemAmount, uint redeemTokens);                                                       //Emit when tokens are redeemed
     event RedeemFee(address redeemer, uint feeAmount, uint redeemTokens);                                                       //Emit when tokens are redeemed and fee are transferred
@@ -138,11 +141,14 @@ contract LendToken is LendTokenInterface{
      */
     function transferTokens(address spender, address src, address dst, uint tokens) internal{
         /* Fail if transfer not allowed */
-        comptroller.transferAllowed(address(this), src, dst, tokens);
+        bool allowed = comptroller.transferAllowed(address(this), src, dst, tokens);
+        if(!allowed){
+            revert NotAllowed();
+        }
 
         /* Do not allow self-transfers */
         if (src == dst) {
-            revert ("BAD_INPUT");
+            revert BadInput();
         }
 
         /* Get the allowance, infinite for the account owner */
@@ -446,7 +452,10 @@ contract LendToken is LendTokenInterface{
      */
     function mintFresh(address minter, uint mintAmount) internal returns (uint) {
         /* Fail if mint not allowed */
-        comptroller.mintAllowed(address(this), minter);
+        bool allowed = comptroller.mintAllowed(address(this), minter);
+        if(!allowed){
+            revert NotAllowed();
+        }
 
         uint exchangeRateMantissa;
         uint mintTokens;
@@ -541,9 +550,6 @@ contract LendToken is LendTokenInterface{
     function redeemFresh(address redeemer, uint redeemTokensIn, uint redeemAmountIn) internal{
         require(redeemTokensIn == 0 || redeemAmountIn == 0, "BAD_INPUT");
 
-
-
-
         RedeemVars memory vars;
 
         
@@ -578,7 +584,10 @@ contract LendToken is LendTokenInterface{
         }
 
         /* Fail if redeem not allowed */
-        comptroller.redeemAllowed(address(this), redeemer, vars.redeemTokens);
+        bool allowed = comptroller.redeemAllowed(address(this), redeemer, vars.redeemTokens);
+        if(!allowed){
+            revert NotAllowed();
+        }
 
 
         /*
@@ -655,7 +664,10 @@ contract LendToken is LendTokenInterface{
     */
     function borrowFresh(address  borrower, uint borrowAmount) internal {
         /* Fail if borrow not allowed */
-        comptroller.borrowAllowed(address(this), borrower, borrowAmount);
+        bool allowed = comptroller.borrowAllowed(address(this), borrower, borrowAmount);
+        if(!allowed){
+            revert NotAllowed();
+        }
 
         /* Fail gracefully if protocol has insufficient underlying cash */
         if (getCash() < borrowAmount) {
@@ -725,7 +737,10 @@ contract LendToken is LendTokenInterface{
      */
     function repayBorrowFresh(address payer, address borrower, uint repayAmount) internal returns (uint) {
         /* Fail if repayBorrow not allowed */
-        comptroller.repayBorrowAllowed(address(this), borrower);
+        bool allowed = comptroller.repayBorrowAllowed(address(this), borrower);
+        if(!allowed){
+            revert NotAllowed();
+        }
 
         uint localvarsRepayAmount;
         uint borrowerIndex;
@@ -799,7 +814,10 @@ contract LendToken is LendTokenInterface{
         address liquidator = msg.sender;
 
         /* Fail if liquidate not allowed */
-        comptroller.liquidateBorrowAllowed(address(this), address(lendTokenCollateral), borrower, repayAmount);
+        bool allowed = comptroller.liquidateBorrowAllowed(address(this), address(lendTokenCollateral), borrower, repayAmount);
+        if(!allowed){
+            revert NotAllowed();
+        }
 
         /* Verify lendTokenCollateral market's lastTimestamp equals current timestamp */
         if (lendTokenCollateral.accrualTimestamp() != block.timestamp) {
@@ -875,7 +893,10 @@ contract LendToken is LendTokenInterface{
      */
     function seizeInternal(address seizerToken, address liquidator, address borrower, uint seizeTokens) internal{
         /* Fail if seize not allowed */
-        comptroller.seizeAllowed(address(this), seizerToken, liquidator, borrower);
+        bool allowed = comptroller.seizeAllowed(address(this), seizerToken, liquidator, borrower);
+        if(!allowed){
+            revert NotAllowed();
+        }
 
         /* Fail if borrower = liquidator */
         if (borrower == liquidator) {

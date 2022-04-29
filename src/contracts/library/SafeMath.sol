@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.12;
 
 // This use for test token
 // In solidity ^0.8.0 no need SafeMath to prevent underflow / overflow

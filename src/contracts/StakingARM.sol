@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.12;
 
 import "./interface/StakingARMInterface.sol";
 
@@ -43,6 +43,8 @@ contract StakingARM is StakingARMInterface{
         rewardSpendingDuration = 30 days; // set default is 30 days
         lastRewardTimestamp = block.timestamp;
     }
+
+    error TransferFail();
 
     event Stake(address _staker, uint _amount);
     event Unstake(address _unstaker, uint _amount);
@@ -183,16 +185,22 @@ contract StakingARM is StakingARMInterface{
         //4. update accRewardPerShare = totalRemainingBalance / totalStakingBalance / rewardSpendingDuration
 
         updateRewardBlock();
-
+        bool success;
         if(rewardBalanceOf[msg.sender]>0){
           uint256 toBePaid = rewardBalanceOf[msg.sender];
           rewardBalanceOf[msg.sender]=0;
-          rewardToken.transfer(msg.sender, toBePaid);
+          success = rewardToken.transfer(msg.sender, toBePaid);
+          if(!success){
+              revert TransferFail();
+          }
           emit ClaimReward(msg.sender, toBePaid);
         }
 
         //Transfer ARM to contract address then update balance
-        armToken.transferFrom(msg.sender,address(this),_amount);
+        success = armToken.transferFrom(msg.sender,address(this),_amount);
+        if(!success){
+            revert TransferFail();
+        }
         stakingBalance[msg.sender] += _amount;
 
         //add staker address to the arrays for rewarding reasons
@@ -222,7 +230,10 @@ contract StakingARM is StakingARMInterface{
         if(rewardBalanceOf[msg.sender]>0){
           uint256 toBePaid = rewardBalanceOf[msg.sender];
           rewardBalanceOf[msg.sender]=0;    //set balance to 0 before transfer to double prevent reentrancy guard
-          rewardToken.transfer(msg.sender, toBePaid);
+          bool success = rewardToken.transfer(msg.sender, toBePaid);
+          if(!success){
+              revert TransferFail();
+          }
           emit ClaimReward(msg.sender, toBePaid);
         }
     }
@@ -240,15 +251,18 @@ contract StakingARM is StakingARMInterface{
         //4. update accRewardPerShare = totalRemainingBalance / totalStakingBalance / rewardSpendingDuration
 
         updateRewardBlock();
-
+        bool success;
         if(rewardBalanceOf[msg.sender]>0){
-          rewardToken.transfer(msg.sender, rewardBalanceOf[msg.sender]);
+          success = rewardToken.transfer(msg.sender, rewardBalanceOf[msg.sender]);
+          if(!success){
+              revert TransferFail();
+          }
           emit ClaimReward(msg.sender, rewardBalanceOf[msg.sender]);
           rewardBalanceOf[msg.sender]=0;
         }
 
         //Transfer ARM to unstaker
-        armToken.transfer(msg.sender,_amount);
+        success = armToken.transfer(msg.sender,_amount);
         //calculate balance after transfer
         stakingBalance[msg.sender] -= _amount;
         if(stakingBalance[msg.sender]==0){
@@ -291,7 +305,10 @@ contract StakingARM is StakingARMInterface{
 
     //Withdraw ARM token without caring reward
     function emergencyWithdraw() external reentrancyGuard {
-        armToken.transfer(msg.sender,stakingBalance[msg.sender]);
+        bool success = armToken.transfer(msg.sender,stakingBalance[msg.sender]);
+        if(!success){
+            revert TransferFail();
+        }
         emit EmergencyWithdraw(msg.sender, stakingBalance[msg.sender]);
         isStaking[msg.sender] = false;
         rewardBalanceOf[msg.sender] = 0;

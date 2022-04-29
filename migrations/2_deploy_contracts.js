@@ -77,16 +77,13 @@ module.exports = async function (deployer, network, accounts) {
     // const KUB = kub.address;
     
     //Pending update
-    const compStorage = '0x09AfB5A4620D34F99721d04eD0DA2A5c6B291Bf8';
-    const oracle = '0x589dcfd92cd1C9b11D640cFE84d493ee08dcabdB';
-    const AURUM = '0x8f9ed0Fe472e045597DD71093822eE3884BeA1BA';
+    // const compStorage = '0x09AfB5A4620D34F99721d04eD0DA2A5c6B291Bf8';
+    // const oracle = '0x589dcfd92cd1C9b11D640cFE84d493ee08dcabdB';
+    // const AURUM = '0x8f9ed0Fe472e045597DD71093822eE3884BeA1BA';
     // const testWallet = '0x7dE7e0f02f7229E37501d19482e96E97779f7299';
 
     // await deployer.deploy(Comptroller,compStorage);
     // const comptroller = await Comptroller.deployed();
-    
-    
-    await deployer.deploy(MultisigAurumOracle, oracle, ManagerWallet, 2);
         
     // await deployer.deploy(TreasuryVault, BUSD, '100');
     // const treasuryVault = await TreasuryVault.deployed();

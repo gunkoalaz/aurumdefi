@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.12;
 
 import './interface/ComptrollerInterface.sol';
 import './interface/UniswapInterface.sol';
@@ -18,6 +18,9 @@ contract TreasuryAURUM {
     PriceOracle public oracle;  //getGoldPrice
 
     bool locked;    //Reentrance
+
+    error ApproveFail();
+    error TransferFail();
 
     event SetAdmin(address oldAdmin, address newAdmin);
     event SetFee(uint oldFee, uint newFee);
@@ -58,8 +61,15 @@ contract TreasuryAURUM {
         IUniswapV2Router routerContract = IUniswapV2Router(varRouter);
 
         // Approve
-        tokenA_.approve(varRouter, amountInA);
-        tokenB_.approve(varRouter, amountInB);
+        bool success;
+        success = tokenA_.approve(varRouter, amountInA);
+        if(!success){
+            revert ApproveFail();
+        }        
+        success = tokenB_.approve(varRouter, amountInB);
+        if(!success){
+            revert ApproveFail();
+        }        
 
         (amountA, amountB, liquidity) = routerContract.addLiquidity(
             tokenA,
@@ -85,7 +95,10 @@ contract TreasuryAURUM {
         IERC20 LPToken = IERC20(factory.getPair(address(tokenA), address(tokenB)));
 
         //Approve
-        LPToken.approve(varRouter, amount);
+        bool success = LPToken.approve(varRouter, amount);
+        if(!success){
+            revert ApproveFail();
+        }        
 
         (amountOutA, amountOutB) = routerContract.removeLiquidity(
             tokenA,
@@ -110,7 +123,10 @@ contract TreasuryAURUM {
         require(amountIn > 0, "BAD_INPUT");
 
         //Approve the tokenA
-        tokenIn.approve(varRouter, amountIn);
+        bool success = tokenIn.approve(varRouter, amountIn);
+        if(!success){
+            revert ApproveFail();
+        }        
 
         //Setting path
         address[] memory path;
@@ -295,14 +311,33 @@ contract TreasuryAURUM {
         uint balanceLPToken = LPToken.balanceOf(address(this));
 
         //Approve all tokens
-        busd_.approve(to, balanceBUSD);
-        aurum_.approve(to, balanceAURUM);
-        LPToken.approve(to, balanceLPToken);
+        bool success;
+        success = busd_.approve(to, balanceBUSD);
+        if(!success){
+            revert ApproveFail();
+        }
+        success = aurum_.approve(to, balanceAURUM);
+        if(!success){
+            revert ApproveFail();
+        }
+        success = LPToken.approve(to, balanceLPToken);
+        if(!success){
+            revert ApproveFail();
+        }
 
         //Transfer all tokens
-        busd_.transfer(to, balanceBUSD);
-        aurum_.transfer(to, balanceAURUM);
-        LPToken.transfer(to, balanceLPToken);
+        success = busd_.transfer(to, balanceBUSD);
+        if(!success){
+            revert TransferFail();
+        }
+        success = aurum_.transfer(to, balanceAURUM);
+        if(!success){
+            revert TransferFail();
+        }
+        success = LPToken.transfer(to, balanceLPToken);
+        if(!success){
+            revert TransferFail();
+        }
 
         emit Migrate(to, balanceBUSD, balanceAURUM, balanceLPToken);
     }
