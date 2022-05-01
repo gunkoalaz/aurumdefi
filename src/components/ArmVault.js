@@ -4,46 +4,68 @@ import './css/Main.css'
 import './css/ArmVault.css'
 import armlogo from '../armlogo.png'
 import Loading from './Loading.js'
-import Constructing from './Constructing.js'
+// import Constructing from './Constructing.js'
 import Web3 from 'web3'
 
+const BigNumber = require('bignumber.js');
 const e18 = 1000000000000000000
 const MAX_UINT = "115792089237316195423570985008687907853269984665640564039457584007913129639935"
 
 const MainArmVault = (props) => {
     const superState = props.mainstate.armVault
-    const armContract = superState.armContract
+    // const armContract = superState.armContract
     const stakingArmContract = superState.contract
 
 
     const accRewardPerShare = superState.getAccRewardPerShare
-    const rewardDistributionIndex = superState.rewardDistributionIndex / 60 / 60 / 24
+    let rewardDistributionIndex = superState.rewardDistributionIndex / 60 / 60 / 24
+    if(isNaN(rewardDistributionIndex)) {rewardDistributionIndex = BigNumber(0).toFixed(0)};
 
-    let armBalance = superState.armBalance
-    let armAllowanceToVault = superState.armAllowanceToVault
-    let userStakingBalance = superState.userStakingBalance
-    let getTotalStakedARM = superState.getTotalStakedARM
-    let totalAvailableReward = superState.totalAvailableReward
-    let getRewardBalanceOf = superState.getRewardBalanceOf
+    let armBalance = new BigNumber(superState.armBalance);
+    let armLPBalance = new BigNumber(superState.armLPBalance);
+    let armLPAllowanceToVault = new BigNumber(superState.armLPAllowanceToVault)
+    let userStakingBalance = new BigNumber(superState.userStakingBalance)
+    let getTotalStakedARM = new BigNumber(superState.getTotalStakedARM)
+    let totalAvailableReward = new BigNumber(superState.totalAvailableReward)
+    let getRewardBalanceOf = new BigNumber(superState.getRewardBalanceOf)
 
-    const armPrice = props.mainstate.price.armPrice
+    let armInLP = new BigNumber(superState.armInLP);
+    let busdInLP = new BigNumber(superState.busdInLP);
+    let totalSupplyLP = new BigNumber(superState.totalSupplyLP);
+
+    if(isNaN(armBalance)) {armBalance = BigNumber(0)};
+    if(isNaN(armLPBalance)) {armLPBalance = BigNumber(0)};
+    if(isNaN(armLPAllowanceToVault)) {armLPAllowanceToVault = BigNumber(0)};
+    if(isNaN(userStakingBalance)) {userStakingBalance = BigNumber(0)};
+    if(isNaN(getTotalStakedARM)) {getTotalStakedARM = BigNumber(0)};
+    if(isNaN(totalAvailableReward)) {totalAvailableReward = BigNumber(0)};
+    if(isNaN(getRewardBalanceOf)) {getRewardBalanceOf = BigNumber(0)};
+
+    const armPrice = props.mainstate.price.armPrice;
 
 
     let timeSinceLastReward = props.mainstate.time - superState.getLastRewardTimestamp
     let updatePendingReward = (timeSinceLastReward * accRewardPerShare / e18 * userStakingBalance / e18) + getRewardBalanceOf
-    let updateTotalAvailableReward = totalAvailableReward / e18 - (getTotalStakedARM / e18 * accRewardPerShare / e18 * timeSinceLastReward)
-    let APR = parseFloat(updateTotalAvailableReward * 365 * e18 / rewardDistributionIndex * e18 / getTotalStakedARM / armPrice * 100).toFixed(2)
+    let updateTotalAvailableReward = totalAvailableReward.div(e18).minus(getTotalStakedARM.div(e18).times(accRewardPerShare).div(e18).times(timeSinceLastReward))
+    let APR = (updateTotalAvailableReward.times(365).times(e18).div(rewardDistributionIndex).times(e18).div(getTotalStakedARM).div(armPrice).times(totalSupplyLP).div(armInLP).times(100)).toFixed(2)
+    if(isNaN(updateTotalAvailableReward)) {updateTotalAvailableReward = BigNumber(0)};
+    if(isNaN(APR)) {APR = BigNumber(0).toFixed(2)};
+    if(isNaN(updatePendingReward)) {updatePendingReward = BigNumber(0)};
     updatePendingReward = parseFloat(updatePendingReward).toFixed(4)
     updateTotalAvailableReward = parseFloat(updateTotalAvailableReward).toFixed(4)
 
-        getTotalStakedARM = Web3.utils.fromWei(getTotalStakedARM,'Ether')
-        getTotalStakedARM = parseFloat(getTotalStakedARM).toFixed(4)
-        totalAvailableReward = Web3.utils.fromWei(totalAvailableReward,'Ether')
-        totalAvailableReward = parseFloat(totalAvailableReward).toFixed(4)
-        getRewardBalanceOf = Web3.utils.fromWei(getRewardBalanceOf,'Ether')
-        userStakingBalance = Web3.utils.fromWei(userStakingBalance,'Ether')
-        armAllowanceToVault = Web3.utils.fromWei(armAllowanceToVault,'Ether')
-        armBalance = Web3.utils.fromWei(armBalance,'Ether')
+    getTotalStakedARM = getTotalStakedARM.div(e18);
+    totalAvailableReward = totalAvailableReward.div(e18);
+    totalAvailableReward = totalAvailableReward.toFixed(2,1)
+    getRewardBalanceOf = getRewardBalanceOf.div(e18).toFixed(6,1);
+    userStakingBalance = userStakingBalance.div(e18).toFixed(4,1);
+    armLPAllowanceToVault = armLPAllowanceToVault.div(e18).toFixed(4,1);
+    armBalance = armBalance.div(e18).toFixed(4,1);
+
+    let stakedArmInLP = getTotalStakedARM.times(armInLP).div(totalSupplyLP)
+    let stakedBUSDInLP = getTotalStakedARM.times(busdInLP).div(totalSupplyLP)
+    if(isNaN(stakedArmInLP)) {stakedArmInLP = BigNumber(0)};
+    if(isNaN(stakedBUSDInLP)) {stakedBUSDInLP = BigNumber(0)};
 
     const [valueStake, setStake] = useState()
     const [valueUnstake, setUnstake] = useState()
@@ -120,7 +142,7 @@ const MainArmVault = (props) => {
     //Smart contract interact function
     //
     const approve = () => {
-        armContract.methods.approve(stakingArmContract._address, MAX_UINT).send({from: props.mainstate.account}).on('transactionHash', (hash) => {
+        superState.armLPContract.methods.approve(stakingArmContract._address, MAX_UINT).send({from: props.mainstate.account}).on('transactionHash', (hash) => {
             props.update()
         })
     }
@@ -128,6 +150,7 @@ const MainArmVault = (props) => {
         let amount
         amount = valueStake.toString()
         amount = Web3.utils.toWei(amount, 'Ether')
+        console.log(amount);
         stakingArmContract.methods.stakeARM(amount).send({from: props.mainstate.account}).on('transactionHash', (hash) => {
             props.update()
         })
@@ -147,7 +170,7 @@ const MainArmVault = (props) => {
     }
 
     const setMaxStake = () => {
-        setStake(armBalance)
+        setStake(armLPBalance.div(e18).toFixed(12,1))
     }
     const setMaxUnstake = () => {
         setUnstake(userStakingBalance)
@@ -155,13 +178,13 @@ const MainArmVault = (props) => {
 
     //Component button
     let approveFirst
-    if( parseInt(armAllowanceToVault) === 0 ){
+    if( parseInt(armLPAllowanceToVault) === 0 ){
         approveFirst = <button className='button' onClick={approve}>Approve</button>
     } else {
         if (valueStake === '' || valueStake === null || isNaN(valueStake) || valueStake === '0'){
             approveFirst = <button className='button-inactive'>Stake</button>
         } else {
-            if (superState.armAllowanceToVault / e18 >= valueStake || valueStake === '' ) {
+            if (superState.armLPAllowanceToVault / e18 >= valueStake || valueStake === '' ) {
                 approveFirst = <button className='button' onClick={staking}>Stake</button>
             } else {
                 approveFirst = <button className='button' onClick={approve}>Approve</button>
@@ -208,8 +231,11 @@ const MainArmVault = (props) => {
                 </div>
                 <div className='vault-body'>
                     <div className='vault-info'>
-                        <h1>Vault ARM staked</h1>
-                        <p>{getTotalStakedARM}</p>
+                        <h1>Vault ARM-LP staked</h1>
+                        <p>{getTotalStakedARM.toFixed(4,1)} LP</p>
+                        <p style={{color:'lightgray', fontSize: '1rem'}}>({stakedArmInLP.toFixed(2,1)} ARM + 
+                        {stakedBUSDInLP.toFixed(2,1)} BUSD)
+                         </p>
 
                         <h1>Available reward</h1>
                         <p>{updateTotalAvailableReward} kBUSD</p>
@@ -223,8 +249,8 @@ const MainArmVault = (props) => {
                     <div className='vault-stake'>
                         <div className='vault-stake-component'>
                             <div className='vault-stake-detail'>
-                                <h5>Your available ARM</h5>
-                                <p onClick={setMaxStake} className="maxbutton">{armBalance}</p>
+                                <h5>Your available ARM LPToken</h5>
+                                <p onClick={setMaxStake} className="maxbutton">{armLPBalance.div(e18).toFixed(6,1)}</p>
                             </div>
                             <div className='flexRt'>
                                 <input className='input'
@@ -232,7 +258,7 @@ const MainArmVault = (props) => {
                                     placeholder='0' 
                                     onChange={stakeAmountChange}
                                     min = {'0'}
-                                    max = {armBalance}
+                                    max = {parseFloat(armLPBalance.div(e18).toFixed(6,1))}
                                     value={valueStake}
                                 />
                                 <div className='vault-button'>
@@ -284,12 +310,7 @@ const ArmVault = (props) => {
         content = <Loading mainstate={props.mainstate}/>
     }
     else {
-        if(props.mainstate.networkId === 55556) {
-            content = <Constructing />
-            // content = <MainArmVault mainstate={superState} update={props.updateWeb3}/>
-        } else {
-            content = <Constructing />
-        }
+        content = <MainArmVault mainstate={superState} update={props.updateWeb3}/>
     }
     return (
         <div>

@@ -14,13 +14,13 @@ interface ComptrollerInterface {
 
     /*** Policy Hooks ***/
 
-    function mintAllowed(address lendToken, address minter) external returns(bool);
-    function redeemAllowed(address lendToken, address redeemer, uint redeemTokens) external returns(bool);
-    function borrowAllowed(address lendToken, address borrower, uint borrowAmount) external returns(bool);
-    function repayBorrowAllowed(address lendToken, address borrower) external returns(bool);
-    function liquidateBorrowAllowed(address lendTokenBorrowed, address lendTokenCollateral, address borrower, uint repayAmount) external returns(bool);
-    function seizeAllowed(address lendTokenCollateral, address lendTokenBorrowed, address liquidator, address borrower) external returns(bool);
-    function transferAllowed(address lendToken, address src, address dst, uint transferTokens) external returns(bool);
+    function mintAllowed(address lendToken, address minter) external;
+    function redeemAllowed(address lendToken, address redeemer, uint redeemTokens) external;
+    function borrowAllowed(address lendToken, address borrower, uint borrowAmount) external;
+    function repayBorrowAllowed(address lendToken, address borrower) external;
+    function liquidateBorrowAllowed(address lendTokenBorrowed, address lendTokenCollateral, address borrower, uint repayAmount) external;
+    function seizeAllowed(address lendTokenCollateral, address lendTokenBorrowed, address liquidator, address borrower) external;
+    function transferAllowed(address lendToken, address src, address dst, uint transferTokens) external;
 
     /*** Liquidity/Liquidation Calculations ***/
 

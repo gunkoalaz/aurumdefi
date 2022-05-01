@@ -153,7 +153,7 @@ contract AURUM is IERC20 {
       _approve(msg.sender, spender, _allowances[msg.sender][spender] - subtractedValue);
       return true;
     }
-      // MINT function only `wards` address is allowed to use
+      // MINT function only `aurumMinter` address is allowed to use
       function mint(address usr, uint wad) external onlyMinter {
           _balances[usr] += wad;
           _totalSupply += wad;

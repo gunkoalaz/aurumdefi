@@ -44,6 +44,7 @@ const initialState = {
     markets: [] ,
     allShortage: [],
     comptrollerState: {},
+    armVault: {},
 
     loadedMarket: false,
     loadedVault: false,
@@ -122,7 +123,7 @@ class App extends Component {
 
     componentDidMount() {
         if(this.state.loadingAppData === true){
-            let loadApp = this.loadAppData();
+            this.loadAppData();
             this.setState({loadingAppData: false});
         }
     }
@@ -142,6 +143,11 @@ class App extends Component {
             const stakingARMLoader = StakingARM.networks[networkId]
             const stakingARM = new web3.eth.Contract(StakingARM.abi, stakingARMLoader.address)
             if(stakingARMLoader) {
+                let armLPaddress = await stakingARM.methods.armToken().call();
+                let busdaddress = await stakingARM.methods.rewardToken().call();
+                const armLPContract = new web3.eth.Contract(ERC20.abi, armLPaddress);
+                const busdLPContract = new web3.eth.Contract(ERC20.abi, busdaddress);
+
                 let stakingARMBalance = await stakingARM.methods.getStakingBalance(this.state.account).call()
                 let getRewardRemaining = await stakingARM.methods.getRewardRemaining().call()
                 let getRewardSpendingDuration = await stakingARM.methods.getRewardSpendingDuration().call()
@@ -151,11 +157,23 @@ class App extends Component {
                 let getLastRewardTimestamp = await stakingARM.methods.getLastRewardTimestamp().call()
                 let getAccRewardPerShare = await stakingARM.methods.getAccRewardPerShare().call()
                 let armBalance = await arm.methods.balanceOf(this.state.account).call()
+
+                let armLPBalance = await armLPContract.methods.balanceOf(this.state.account).call();
+                let armLPAllowanceToVault = await armLPContract.methods.allowance(this.state.account, stakingARM._address).call();
+                let armInLP = await arm.methods.balanceOf(armLPaddress).call();
+                let busdInLP = await busdLPContract.methods.balanceOf(armLPaddress).call();
+                let totalSupplyLP = await armLPContract.methods.totalSupply().call();
                 
                 let armVault = {
                     contract: stakingARM,
                     armContract: arm,
+                    armLPContract: armLPContract,
                     armBalance: armBalance.toString(),
+                    armLPBalance: armLPBalance.toString(),
+                    armLPAllowanceToVault: armLPAllowanceToVault.toString(),
+                    armInLP: armInLP.toString(),
+                    busdInLP: busdInLP.toString(),
+                    totalSupplyLP: totalSupplyLP.toString(),
                     getTotalStakedARM: getTotalStakedARM.toString(),
                     userStakingBalance: stakingARMBalance.toString(),
                     totalAvailableReward: getRewardRemaining.toString(),
@@ -310,49 +328,109 @@ class App extends Component {
                         underlyingAllowance = MAX_UINT.toString()
                     }
         
-                    let marketsInfo = {
-                        index: parseInt(i),
-                        contract: lendToken,
-                        underlyingContract: underlying,
-                        
-                        borrowAddress: borrowAddress,
-                        
-                        name: name.toString(), 
-                        symbol: symbol.toString(), 
-                        underlyingSymbol: underlyingSymbol.toString(),
-                        decimals: decimals.toString(), 
-        
-                        //Personal info
-                        membership: membership,
-                        balanceOf: balanceOf.toString(),
-                        borrowBalanceStored: borrowBalanceStored.toString(),
-                        allowance: allowance.toString(),
-                        underlyingAllowance: underlyingAllowance.toString(),
-                        underlyingBalance: underlyingBalance.toString(),
-        
-        
-        
-        
-                        //Market calculating variables
-                        borrowRatePerSeconds: borrowRatePerSeconds.toString(),
-                        supplyRatePerSeconds: supplyRatePerSeconds.toString(),
-                        reserveFactorMantissa: reserveFactorMantissa.toString(),
-                        collateralFactorMantissa: collateralFactorMantissa.toString(),
-                        accrualTimestamp: accrualTimestamp.toString(),
-                        exchangeRateStored: exchangeRateStored.toString(),
-                        underlyingPrice: getUnderlyingPrice.toString(),
-                        
-                        //Market variables
-                        mintPause: mintPause,
-                        borrowPause: borrowPause,
-                        totalBorrows: totalBorrows.toString(),
-                        totalReserves: totalReserves.toString(),
-                        cash: getCash.toString(),
-                        borrowCaps: borrowCaps.toString(),
-        
-                        aurumSpeeds: aurumSpeeds.toString(),
-                    }
-                    markets.push(marketsInfo)
+                    const allValue = [
+                        lendToken,
+                        name,
+                        symbol,
+                        decimals,
+                        borrowRatePerSeconds,
+                        supplyRatePerSeconds,
+                        reserveFactorMantissa,
+                        accrualTimestamp,
+                        totalBorrows,
+                        totalReserves,
+                        getCash,
+                        exchangeRateStored,
+                        borrowAddress,
+                        collateralFactorMantissa,
+                        getUnderlyingPrice,
+                        borrowCaps,
+                        aurumSpeeds,
+                        mintPause,
+                        borrowPause,
+                        underlyingAddress,
+                        underlying,
+                        underlyingSymbol,
+                        balanceOf,
+                        borrowBalanceStored,
+                        membership,
+                        allowance,
+                        underlyingBalance,
+                        underlyingAllowance
+                    ];
+                    [
+                        lendToken,
+                        name,
+                        symbol,
+                        decimals,
+                        borrowRatePerSeconds,
+                        supplyRatePerSeconds,
+                        reserveFactorMantissa,
+                        accrualTimestamp,
+                        totalBorrows,
+                        totalReserves,
+                        getCash,
+                        exchangeRateStored,
+                        borrowAddress,
+                        collateralFactorMantissa,
+                        getUnderlyingPrice,
+                        borrowCaps,
+                        aurumSpeeds,
+                        mintPause,
+                        borrowPause,
+                        underlyingAddress,
+                        underlying,
+                        underlyingSymbol,
+                        balanceOf,
+                        borrowBalanceStored,
+                        membership,
+                        allowance,
+                        underlyingBalance,
+                        underlyingAllowance
+                    ] = await Promise.all(allValue)
+                        let marketsInfo = {
+                            index: parseInt(i),
+                            contract: lendToken,
+                            underlyingContract: underlying,
+                            
+                            borrowAddress: borrowAddress,
+                            
+                            name: name.toString(), 
+                            symbol: symbol.toString(), 
+                            underlyingSymbol: underlyingSymbol.toString(),
+                            decimals: decimals.toString(), 
+            
+                            //Personal info
+                            membership: membership,
+                            balanceOf: balanceOf.toString(),
+                            borrowBalanceStored: borrowBalanceStored.toString(),
+                            allowance: allowance.toString(),
+                            underlyingAllowance: underlyingAllowance.toString(),
+                            underlyingBalance: underlyingBalance.toString(),
+            
+            
+            
+            
+                            //Market calculating variables
+                            borrowRatePerSeconds: borrowRatePerSeconds.toString(),
+                            supplyRatePerSeconds: supplyRatePerSeconds.toString(),
+                            reserveFactorMantissa: reserveFactorMantissa.toString(),
+                            collateralFactorMantissa: collateralFactorMantissa.toString(),
+                            accrualTimestamp: accrualTimestamp.toString(),
+                            exchangeRateStored: exchangeRateStored.toString(),
+                            underlyingPrice: getUnderlyingPrice.toString(),
+                            
+                            //Market variables
+                            mintPause: mintPause,
+                            borrowPause: borrowPause,
+                            totalBorrows: totalBorrows.toString(),
+                            totalReserves: totalReserves.toString(),
+                            cash: getCash.toString(),
+                            borrowCaps: borrowCaps.toString(),
+            
+                            aurumSpeeds: aurumSpeeds.toString(),
+                        }
+                        markets.push(marketsInfo)
             }
             res = true;
             this.setState({markets});
@@ -492,35 +570,37 @@ class App extends Component {
         let res;
         try {
             const web3 = new Web3('https://rei-rpc.moonrhythm.io');
-            const networkId = 55555;
+            const networkId = this.state.networkId;
             const arm = new web3.eth.Contract(ARM.abi, ARM.networks[networkId].address);
-            // const stakingARM = new web3.eth.Contract(StakingARM.abi, StakingARM.networks[networkId].address)
+            const stakingARM = new web3.eth.Contract(StakingARM.abi, StakingARM.networks[networkId].address)
             const comptroller = new web3.eth.Contract(Comptroller.abi, Comptroller.networks[networkId].address);
             const compStorage = new web3.eth.Contract(ComptrollerStorage.abi, ComptrollerStorage.networks[networkId].address);
             const aurum = new web3.eth.Contract(AURUM.abi, AURUM.networks[networkId].address)
             const aurumController = new web3.eth.Contract(AurumController.abi, AurumController.networks[networkId].address)
             const aurumPriceOracle = new web3.eth.Contract(AurumPriceOracle.abi, AurumPriceOracle.networks[networkId].address)
 
-            // let getRewardRemaining = await stakingARM.methods.getRewardRemaining().call()
-            // let getRewardSpendingDuration = await stakingARM.methods.getRewardSpendingDuration().call()
-            // let getTotalStakedARM = await stakingARM.methods.getTotalStakedARM().call()
-            // let getLastRewardTimestamp = await stakingARM.methods.getLastRewardTimestamp().call()
-            // let getAccRewardPerShare = await stakingARM.methods.getAccRewardPerShare().call()
+            let getRewardRemaining = await stakingARM.methods.getRewardRemaining().call()
+            let getRewardSpendingDuration = await stakingARM.methods.getRewardSpendingDuration().call()
+            let getTotalStakedARM = await stakingARM.methods.getTotalStakedARM().call()
+            let getLastRewardTimestamp = await stakingARM.methods.getLastRewardTimestamp().call()
+            let getAccRewardPerShare = await stakingARM.methods.getAccRewardPerShare().call()
+            let armLPContract = await stakingARM.methods.rewardToken().call();
             
             this.setState({loadingNow: this.state.loadingNow+20});
-            // let armVault = {
-            //     contract: stakingARM,
-            //     armContract: arm,
-            //     // armBalance: armBalance.toString(),
-            //     getTotalStakedARM: getTotalStakedARM.toString(),
-            //     // userStakingBalance: stakingARMBalance.toString(),
-            //     totalAvailableReward: getRewardRemaining.toString(),
-            //     rewardDistributionIndex: getRewardSpendingDuration.toString(),
-            //     // getRewardBalanceOf: getRewardBalanceOf.toString(),
-            //     // armAllowanceToVault: armAllowanceToVault.toString(),
-            //     getLastRewardTimestamp: getLastRewardTimestamp.toString(),
-            //     getAccRewardPerShare: getAccRewardPerShare.toString(),
-            // }
+            let armVault = {
+                contract: stakingARM,
+                armContract: arm,
+                armLPContract: armLPContract,
+                // armBalance: armBalance.toString(),
+                getTotalStakedARM: getTotalStakedARM.toString(),
+                // userStakingBalance: stakingARMBalance.toString(),
+                totalAvailableReward: getRewardRemaining.toString(),
+                rewardDistributionIndex: getRewardSpendingDuration.toString(),
+                // getRewardBalanceOf: getRewardBalanceOf.toString(),
+                // armAllowanceToVault: armAllowanceToVault.toString(),
+                getLastRewardTimestamp: getLastRewardTimestamp.toString(),
+                getAccRewardPerShare: getAccRewardPerShare.toString(),
+            }
 
 
             // Load comptroller data
@@ -631,68 +711,66 @@ class App extends Component {
                         underlyingAddress,
                         underlying,
                         underlyingSymbol
-                    ]
-                    Promise.all(allValue).then( (result) => {
-                        let resultObj = Object.assign({
-                            lendToken: result[0],
-                            name: result[1],
-                            symbol: result[2],
-                            decimals: result[3],
-                            borrowRatePerSeconds: result[4],
-                            supplyRatePerSeconds: result[5],
-                            reserveFactorMantissa: result[6],
-                            accrualTimestamp: result[7],
-                            totalBorrows: result[8],
-                            totalReserves: result[9],
-                            getCash: result[10],
-                            exchangeRateStored: result[11],
-                            borrowAddress: result[12],
-                            collateralFactorMantissa: result[13],
-                            getUnderlyingPrice: result[14],
-                            borrowCaps: result[15],
-                            aurumSpeeds: result[16],
-                            mintPause: result[17],
-                            borrowPause: result[18],
-                            underlyingAddress: result[19],
-                            underlying: result[20],
-                            underlyingSymbol: result[21]
-                        });
-                            let marketsInfo = {
-                            index: parseInt(i),
-                            contract: Promise.resolve(resultObj.lendToken),
-                            underlyingContract: resultObj.underlying,
+                    ];
+                    [
+                        lendToken,
+                        name,
+                        symbol,
+                        decimals,
+                        borrowRatePerSeconds,
+                        supplyRatePerSeconds,
+                        reserveFactorMantissa,
+                        accrualTimestamp,
+                        totalBorrows,
+                        totalReserves,
+                        getCash,
+                        exchangeRateStored,
+                        borrowAddress,
+                        collateralFactorMantissa,
+                        getUnderlyingPrice,
+                        borrowCaps,
+                        aurumSpeeds,
+                        mintPause,
+                        borrowPause,
+                        underlyingAddress,
+                        underlying,
+                        underlyingSymbol
+                    ] = await Promise.all(allValue);
+                        let marketsInfo = {
+                        index: parseInt(i),
+                        contract: lendToken,
+                        underlyingContract: underlying,
+                        
+                        borrowAddress: borrowAddress,
                             
-                            borrowAddress: resultObj.borrowAddress,
-                                
-                            name: resultObj.name.toString(), 
-                            symbol: resultObj.symbol.toString(), 
-                            underlyingSymbol: resultObj.underlyingSymbol.toString(),
-                            decimals: resultObj.decimals.toString(), 
-                            
-                            //Market calculating variables
-                            borrowRatePerSeconds: resultObj.borrowRatePerSeconds.toString(),
-                            supplyRatePerSeconds: resultObj.supplyRatePerSeconds.toString(),
-                            reserveFactorMantissa: resultObj.reserveFactorMantissa.toString(),
-                            collateralFactorMantissa: resultObj.collateralFactorMantissa.toString(),
-                            accrualTimestamp: resultObj.accrualTimestamp.toString(),
-                            exchangeRateStored: resultObj.exchangeRateStored.toString(),
-                            underlyingPrice: resultObj.getUnderlyingPrice.toString(),
-                            
-                            //Market variables
-                            mintPause: resultObj.mintPause,
-                            borrowPause: resultObj.borrowPause,
-                            totalBorrows: resultObj.totalBorrows.toString(),
-                            totalReserves: resultObj.totalReserves.toString(),
-                            cash: resultObj.getCash.toString(),
-                            borrowCaps: resultObj.borrowCaps.toString(),
-                            
-                            aurumSpeeds: resultObj.aurumSpeeds.toString(),
-                        }
-                        markets.push(marketsInfo)
-                        this.setState({loadingNow: this.state.loadingNow+6});
-                    });
+                        name: name.toString(), 
+                        symbol: symbol.toString(), 
+                        underlyingSymbol: underlyingSymbol.toString(),
+                        decimals: decimals.toString(), 
+                        
+                        //Market calculating variables
+                        borrowRatePerSeconds: borrowRatePerSeconds.toString(),
+                        supplyRatePerSeconds: supplyRatePerSeconds.toString(),
+                        reserveFactorMantissa: reserveFactorMantissa.toString(),
+                        collateralFactorMantissa: collateralFactorMantissa.toString(),
+                        accrualTimestamp: accrualTimestamp.toString(),
+                        exchangeRateStored: exchangeRateStored.toString(),
+                        underlyingPrice: getUnderlyingPrice.toString(),
+                        
+                        //Market variables
+                        mintPause: mintPause,
+                        borrowPause: borrowPause,
+                        totalBorrows: totalBorrows.toString(),
+                        totalReserves: totalReserves.toString(),
+                        cash: getCash.toString(),
+                        borrowCaps: borrowCaps.toString(),
+                        
+                        aurumSpeeds: aurumSpeeds.toString(),
+                    }
+                    markets.push(marketsInfo)
+                    this.setState({loadingNow: this.state.loadingNow+6});
             }
-            this.setState({/*armVault,*/ comptrollerState, price, markets, loadingNow: 100, loading: false})
+            this.setState({armVault, comptrollerState, price, markets, loadingNow: 100, loading: false})
         } catch (err) {
             console.log(err);
         }

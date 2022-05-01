@@ -15,6 +15,9 @@ contract TreasuryAURUM {
     address public uniswapFactory;      //Used for get AURUM/kBUSD LP address
     uint public swapfee;                //Uniswap swap fee
 
+    uint public period;     //Interval that arbitrage function can be used
+    uint public lastUpdate; //Recorded last arbitrage activate time.
+
     PriceOracle public oracle;  //getGoldPrice
 
     bool locked;    //Reentrance
@@ -48,6 +51,7 @@ contract TreasuryAURUM {
         busd = busd_;
         aurum = aurum_;
 
+        period = 3600;   // 1 hr
     }
 
     function addLiquidity(address tokenA, address tokenB, uint amountInA, uint amountInB) internal returns(uint amountA, uint amountB, uint liquidity) {
@@ -164,11 +168,23 @@ contract TreasuryAURUM {
         uint lpBalanceBUSD;
         uint lpBalanceAURUM;
     }
+
     function arbitrage() external noReentrance{
+        //Check and update Activate time   this function can only use once in a period time.
+        uint currentTime = block.timestamp;
+        uint lastTime = lastUpdate;
+        uint period_ = period;
+        if(period_ + lastTime > currentTime){
+            revert ("Too Frequent");
+        } else {
+            lastUpdate = currentTime;
+        }
+
         arbitrageInternal();
     }
 
     function arbitrageInternal() internal {
+
         IERC20 busd_ = IERC20(busd);
         IERC20 aurum_ = IERC20(aurum);
 
@@ -243,6 +259,7 @@ contract TreasuryAURUM {
         addLiquidity(address(busd_), address(aurum_), vars.balanceBUSD, vars.balanceAURUM);
     }
 
+    //Square root mathematic library  this function fork from uniswap
     function sqrt(uint y) internal pure returns (uint z) {
         if (y > 3) {
             z = y;

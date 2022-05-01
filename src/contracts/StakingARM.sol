@@ -306,10 +306,11 @@ contract StakingARM is StakingARMInterface{
 
     //Withdraw ARM token without caring reward
     function emergencyWithdraw() external reentrancyGuard {
-        armToken.transfer(msg.sender,stakingBalance[msg.sender]);
-        emit EmergencyWithdraw(msg.sender, stakingBalance[msg.sender]);
+        uint withdrawBl = stakingBalance[msg.sender];
         isStaking[msg.sender] = false;
         rewardBalanceOf[msg.sender] = 0;
         stakingBalance[msg.sender] = 0;
+        armToken.transfer(msg.sender, withdrawBl);
+        emit EmergencyWithdraw(msg.sender, withdrawBl);
     }
 }

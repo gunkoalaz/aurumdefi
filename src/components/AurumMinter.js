@@ -3,7 +3,7 @@ import { useState } from "react"
 import './css/AurumMinter.css'
 import AURUMlogo from '../aurum.png'
 import Loading from './Loading.js'
-import Constructing from "./Constructing"
+// import Constructing from "./Constructing"
 import Web3 from "web3"
 
 const BigNumber = require('bignumber.js');

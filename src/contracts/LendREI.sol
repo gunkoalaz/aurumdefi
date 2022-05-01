@@ -135,11 +135,8 @@ contract LendREI{
      */
     function transferTokens(address spender, address src, address dst, uint tokens) internal{
         /* Fail if transfer not allowed */
-        bool allowed = comptroller.transferAllowed(address(this), src, dst, tokens);
-        if(!allowed){
-            revert NotAllowed();
-        }
-
+        comptroller.transferAllowed(address(this), src, dst, tokens);
+        
         /* Do not allow self-transfers */
         if (src == dst) {
             revert ("BAD_INPUT");
@@ -444,10 +441,7 @@ contract LendREI{
      */
     function mintFresh(address minter, uint mintAmount) internal returns (uint) {
         /* Fail if mint not allowed */
-        bool allowed = comptroller.mintAllowed(address(this), minter);
-        if(!allowed){
-            revert NotAllowed();
-        }
+        comptroller.mintAllowed(address(this), minter);
 
         uint exchangeRateMantissa;
         uint mintTokens;
@@ -569,10 +563,7 @@ contract LendREI{
         }
 
             /* Fail if redeem not allowed */
-        bool allowed = comptroller.redeemAllowed(address(this), redeemer, vars.redeemTokens);
-        if(!allowed){
-            revert NotAllowed();
-        }
+        comptroller.redeemAllowed(address(this), redeemer, vars.redeemTokens);
 
         /*
          * We calculate the new total supply and redeemer balance, checking for underflow:
@@ -639,10 +630,7 @@ contract LendREI{
       */
     function borrowFresh(address  borrower, uint borrowAmount) internal {
         /* Fail if borrow not allowed */
-        bool allowed = comptroller.borrowAllowed(address(this), borrower, borrowAmount);
-        if(!allowed){
-            revert NotAllowed();
-        }
+        comptroller.borrowAllowed(address(this), borrower, borrowAmount);
 
         /* Fail gracefully if protocol has insufficient underlying cash */
         if (getCashPrior() < borrowAmount) {
@@ -706,10 +694,7 @@ contract LendREI{
      */
     function repayBorrowFresh(address payer, address borrower, uint repayAmount) internal returns (uint) {
         /* Fail if repayBorrow not allowed */
-        bool allowed = comptroller.repayBorrowAllowed(address(this), borrower);
-        if(!allowed){
-            revert NotAllowed();
-        }
+        comptroller.repayBorrowAllowed(address(this), borrower);
 
         uint localvarsRepayAmount;
         uint borrowerIndex;
@@ -785,10 +770,7 @@ contract LendREI{
         address liquidator = msg.sender;
 
         /* Fail if liquidate not allowed */
-        bool allowed = comptroller.liquidateBorrowAllowed(address(this), address(lendTokenCollateral), borrower, repayAmount);
-        if(!allowed){
-            revert NotAllowed();
-        }
+        comptroller.liquidateBorrowAllowed(address(this), address(lendTokenCollateral), borrower, repayAmount);
 
         /* Verify lendTokenCollateral market's lastTimestamp equals current timestamp */
         if (lendTokenCollateral.accrualTimestamp() != block.timestamp) {
@@ -864,10 +846,7 @@ contract LendREI{
      */
     function seizeInternal(address seizerToken, address liquidator, address borrower, uint seizeTokens) internal{
         /* Fail if seize not allowed */
-        bool allowed = comptroller.seizeAllowed(address(this), seizerToken, liquidator, borrower);
-        if(!allowed){
-            revert NotAllowed();
-        }
+        comptroller.seizeAllowed(address(this), seizerToken, liquidator, borrower);
 
         /* Fail if borrower = liquidator */
         if (borrower == liquidator) {
