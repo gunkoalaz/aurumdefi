@@ -33,6 +33,7 @@ contract LendToken is LendTokenInterface{
         uint principal;
         uint interestIndex;
     }
+    
     mapping (address => BorrowSnapshot) public accountBorrows;    //Outstanding borrow balances for each account
     function getAccountBorrows(address user) public view returns(uint, uint) { 
         return (accountBorrows[user].principal, accountBorrows[user].interestIndex);

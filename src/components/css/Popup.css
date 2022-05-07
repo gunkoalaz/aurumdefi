@@ -30,7 +30,7 @@
 .popup-box-firstpage{
     width: 90vw;
     max-width: 1000px;
-    background-color: rgba(221, 195, 79, 0.8);
+    background-color: rgb(221, 195, 79);
     border-radius: 5vw;
     padding: 2vw;
     border: 0.3vh dashed rgb(92, 92, 92);

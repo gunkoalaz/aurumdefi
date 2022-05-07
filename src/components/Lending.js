@@ -49,24 +49,25 @@ const MainLending = (props) => {
         // borrowBalance[i] = parseFloat(superState.markets[i].borrowBalanceStored / e18)
         // totalBorrow[i] = parseFloat(superState.markets[i].totalBorrow) / e18
         // totalSupply[i] = parseFloat(parseFloat(superState.markets[i].totalBorrow) + superState.getCash - superState.totalReserves)
-        oraclePrice[i] = parseFloat(superState.markets[i].underlyingPrice ) / e18
+        oraclePrice[i] = BigNumber(superState.markets[i].underlyingPrice).div(1e18)
 
         // userTotalBorrow = BigNumber(superState.markets[i].borrowBalanceStored).times(oraclePrice[i]).plus(userTotalBorrow)
 
         let userPendingTotalSupply = BigNumber(superState.markets[i].balanceOf).times(superState.markets[i].exchangeRateStored).div(e18).times(oraclePrice[i]).times(deltaTime).times(superState.markets[i].supplyRatePerSeconds).div(e18)
-        userTotalSupply = BigNumber(superState.markets[i].balanceOf).times(oraclePrice[i]).times(superState.markets[i].exchangeRateStored).div(e18).plus(userTotalSupply).plus(userPendingTotalSupply);
+        userPendingTotalSupply = userPendingTotalSupply.plus(BigNumber(superState.markets[i].balanceOf).times(oraclePrice[i]).times(superState.markets[i].exchangeRateStored).div(e18))
+        userTotalSupply = userTotalSupply.plus(userPendingTotalSupply);
 
         let thisBorrow = (BigNumber(superState.markets[i].borrowBalanceStored).div(e18).times(superState.markets[i].borrowRatePerSeconds).times(deltaTime) ).plus(superState.markets[i].borrowBalanceStored)
         thisBorrow = thisBorrow.times(oraclePrice[i])
         userTotalBorrow = userTotalBorrow.plus(thisBorrow)
         if(superState.markets[i].membership === true){
-            userTotalCredits = BigNumber(superState.markets[i].balanceOf).times(superState.markets[i].collateralFactorMantissa).times(oraclePrice[i]).div(e18).plus(userTotalCredits)
+            userTotalCredits = BigNumber((userPendingTotalSupply).times(superState.markets[i].collateralFactorMantissa)).div(e18).plus(userTotalCredits)
         }
     } 
 
 
     let mintedAurum = BigNumber(superState.comptrollerState.getMintedGOLDs)
-    let goldPrice = BigNumber(superState.price.goldPrice).div(e18).toFixed(2)
+    let goldPrice = BigNumber(superState.price.goldPrice).div(e18)
     // let mintedAurumPosition = mintedAurum.times(goldPrice).div(e18)
     
     userTotalBorrow = userTotalBorrow.plus(  mintedAurum.times(goldPrice)  )
@@ -79,6 +80,7 @@ const MainLending = (props) => {
 
     if(userRemainingCredits.isLessThan(userTotalCredits.times(0.2)) && userTotalCredits.isGreaterThan(0)){
         danger = true;
+        console.log(userRemainingCredits.toFixed(18));
     }
 
     
@@ -94,9 +96,9 @@ const MainLending = (props) => {
     if(isNaN(userRemainingCredits)) {userRemainingCredits = BigNumber(0)}
     if(isNaN(armReward)) {armReward = BigNumber(0)}
     
-    floatUserTotalBorrow = userTotalBorrow.toFormat(2)
-    floatUserTotalSupply = userTotalSupply.toFormat(2)
-    floatUserRemainingCredits = userRemainingCredits.toFormat(2)
+    floatUserTotalBorrow = userTotalBorrow.toFormat(2,0)
+    floatUserTotalSupply = userTotalSupply.toFormat(2,0)
+    floatUserRemainingCredits = userRemainingCredits.toFormat(2,0)
     
 
     function manualClaimReward() {
@@ -172,7 +174,7 @@ const MainLending = (props) => {
                                 <th> APR </th>
                                 <th className='mobile'> Supply </th>
                                 <th className='mobile'> Borrow </th>
-                                <th className='mobile'> {page==='supply' ? 'Your Deposit'          : 'Pool cash'} </th>
+                                <th className='mobile'> {page==='supply' ? 'Your Deposit'          : 'Max borrow'} </th>
                                 <th className='mobile'> {page==='supply' ? 'Your wallet balance'   : 'Your Debt'} </th>
                                 <th> {page==='supply' ? 'Collateral'            : 'Wallet Balance'} </th>
                             </tr>

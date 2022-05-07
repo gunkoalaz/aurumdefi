@@ -258,6 +258,7 @@ const PopupBorrow = (props) => {
     let maxBorrow = props.maxBorrow.toFixed(6,1)
     let safeBorrow = props.safeBorrow.toFixed(6,1)
 
+
     //Input manipulator
     const stakeAmountChange = (e) => {
         let oldAmount = valueBorrow;
@@ -499,12 +500,10 @@ const AssetList = (props) => {
     tempDeposit = tempDeposit.div(e18)
     tempDeposit = tempDeposit.times(EXCHANGE_RATE)
     let deposit = (tempDeposit.div(e18).times(props.markets.supplyRatePerSeconds).times(deltaTime).plus(tempDeposit)).div(e18)
-    let updateDeposit = deposit.toFormat(3, 1)
 
     let debt = new BigNumber(props.markets.borrowBalanceStored)
-    debt = debt.div(e18).times(props.markets.borrowRatePerSeconds).times(deltaTime).plus(props.markets.borrowBalanceStored).integerValue()
+    debt = debt.times(props.markets.borrowRatePerSeconds).div(e18).times(deltaTime).plus(props.markets.borrowBalanceStored)
     debt = debt.div(e18)
-    let updateDebt = debt.toFormat(3, 1)
 
     // User balance
     let balance = new BigNumber(props.markets.underlyingBalance).div(e18)
@@ -527,7 +526,6 @@ const AssetList = (props) => {
         availableBorrow = cashMinusReserve
     }
     //Turn availableBorrow to USD
-    let showAvailableBorrow = availableBorrow.div(e18).toFormat(2, 1)
     availableBorrow = availableBorrow.times(props.markets.underlyingPrice).div(e18).div(e18)
 
     //Calculate maxBorrow
@@ -541,19 +539,20 @@ const AssetList = (props) => {
     } else {
         maxBorrow = availableBorrow
     }
-    maxBorrow = maxBorrow.div(props.markets.underlyingPrice).times(e18)
+    maxBorrow = maxBorrow.times(e18).div(props.markets.underlyingPrice)
 
+    let showAvailableBorrow = maxBorrow
     //Not yet modified
     let safeBorrow = new BigNumber(props.totalCredits).times(0.6).minus(props.totalBorrows)
-    safeBorrow = safeBorrow.div(props.markets.underlyingPrice).times(e18)
-
+    safeBorrow = safeBorrow.times(e18).div(props.markets.underlyingPrice)
+    
     if (safeBorrow.isGreaterThan(maxBorrow)) {
         safeBorrow = maxBorrow
     }
     if (safeBorrow < 0){
         safeBorrow = 0
     }
-
+    
     let logo
     switch(props.markets.underlyingSymbol) {
         case 'BTC'  : logo = BTClogo; break;
@@ -601,10 +600,10 @@ const AssetList = (props) => {
                         <h5>{BigNumber(props.markets.totalBorrows).div(e18).toFormat(2)}</h5>
                     </td>
                     <td className='asset-number mobile'>
-                        <h5>{props.page === 'supply' ? updateDeposit : showAvailableBorrow}</h5>
+                        <h5>{props.page === 'supply' ? deposit.toFormat(3,1) : showAvailableBorrow.toFormat(2,1)}</h5>
                     </td>
                     <td className='asset-number mobile'>
-                        <h5>{props.page === 'supply' ? displayBalance : updateDebt}</h5>
+                        <h5>{props.page === 'supply' ? displayBalance : debt.toFormat(3,1)}</h5>
                     </td>
                     <td>
                         {props.page === 'supply' ? 
